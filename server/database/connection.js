@@ -16,16 +16,18 @@ async function connectMongo() {
         //use the collection
         const collection = db.collection("users")
 
+
+        //Lets define a document
         let userDocument = {
             _id: 0,
             username: "Femboy",
             armyColor: "pink",
             favoriteCO: "Lash"
         }
-        //insert document
+        //insert the document
         //await collection.insertOne(userDocument);
 
-        // find document
+        // find he documents in our collection and iterate through every one of them
         const myDoc = await collection.find()
         myDoc.forEach(doc => console.log(doc));
 
