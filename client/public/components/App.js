@@ -1,21 +1,60 @@
 import React from "react";
 import {useState, useEffect} from "react";
 import axios from "axios";
-const pp = "Javi";
+import '../App.sass'
+import awLogo from "../images/awLogo.webp"
 export function App() {
-    console.log('i was read')
-    const [data, setData] = useState({})
-    useEffect(()=> {
+
+
+    let userArray = [];
+    const [data, setData] = useState()
+    useEffect(() => {
         axios.get("/home")
             .then(res => {
-                console.log(res)
-                setData(res.data)
+                //console.log(res.data)
+
+                let userData = res.data.pushData
+                console.log(userData[0].armyColor)
+                userData.forEach((user, index) => {
+                    console.log(user)
+                    userArray.push(
+                        <div className="users" key={index}>
+                            <p> Username: {user.username}</p>
+                            <p> Army Color: {user.armyColor}</p>
+                            <p> Favorite CO: {user.favoriteCO}</p>
+                            <br/>
+                        </div>
+                    )
+                    setData(userArray)
+                })
+
             }).catch(e => console.error(e));
-    }, [pp]);
+    }, []);
+
 
     return (
         <div>
-            <h1> Welcome {data.name ? data.name : "newbie"}!</h1>
+            <img src={awLogo} alt=""/>
+            <h1>Welcome to AW-Competitive</h1>
+            <p>This application depends on us running our server and client at the same time in order for React (our frontend) talks with Express (our middleman backend) to communicate with MongoDB (our database) for everything to work correctly</p>
+            <h2>Add a new User to MongoDB:</h2>
+            <form method='post' action="/createUser">
+                <label htmlFor="username"> Username:</label>
+                <input type="text" name="username"/>
+
+                <label htmlFor="armyColor"> ArmyColor:</label>
+                <input type="text" name="armyColor"/>
+
+                <label htmlFor="favoriteCO"> Favorite CO:</label>
+                <input type="text" name="favoriteCO"/>
+
+
+                <button type="submit"> Add new user</button>
+                <br/>
+
+            </form>
+            <h3> Data from MongoDB</h3>
+            {data}
         </div>
     )
 }

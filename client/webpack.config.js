@@ -25,6 +25,7 @@ module.exports = {
     },
     module: {
         rules: [
+            //Loads our JS
             {
                 test: /\.js$/, //matches only things that have js at the end
                 exclude: /node_modules/,
@@ -35,14 +36,20 @@ module.exports = {
                     }
                 }
             },
+            //Loads our styling
             {
-                test: /\.scss$/,
+                test: /\.sass$/,
                 use: [
                     "style-loader",
                     "css-loader",
                     "sass-loader",
                 ],
-            }
+            },
+            //Loads our images
+            {
+                test: /\.(png|svg|jpg|jpeg|gif|webp)$/i,
+                type: 'asset/resource',
+            },
 
         ]
     }

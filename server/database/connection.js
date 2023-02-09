@@ -6,41 +6,33 @@ const client = new MongoClient(uri, {
     useUnifiedTopology: true,
 })
 const dbName = "users"
-async function connectMongo() {
-    console.log("i was read")
-    try {
-        await client.connect();
-        console.log("connected correctly")
-        const db = client.db(dbName)
+let db = ''
+module.exports = {
+    connectToServer: async () => {
 
-        //use the collection
-        const collection = db.collection("users")
+        try {
+            await client.connect();
+            db = client.db(dbName)
+            console.log('connected correctly')
 
-
-        //Lets define a document
-        let userDocument = {
-            _id: 0,
-            username: "Femboy",
-            armyColor: "pink",
-            favoriteCO: "Lash"
+        } catch (e) {
+            console.error(e);
         }
-        //insert the document
-        //await collection.insertOne(userDocument);
 
-        // find he documents in our collection and iterate through every one of them
-        const myDoc = await collection.find()
-        myDoc.forEach(doc => console.log(doc));
-
-
-
-
-    } catch (e) {
-        console.error(e);
-    } finally {
-        await client.close;
+    },
+    getDatabase: () => {
+        return db
     }
 
 }
 
-exports.connectMongo = connectMongo;
+/*
+            //use the collection
 
+
+            // find he documents in our collection and iterate through every one of them
+            myDoc = await collection.find()
+            myDoc.forEach(doc => console.log(doc));
+
+
+ */
