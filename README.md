@@ -11,5 +11,15 @@ Below you'll find guides to set up the website in your computer and start workin
 
 # Some key resources for development
 ### [How to ask for help/guidance when you are stuck](https://github.com/JaviTrek/AW-Competitive/discussions/33)
-### [How to do add your first commit]
+### [How to do commit your work to the project](https://github.com/JaviTrek/AW-Competitive/discussions/34)
 
+### Documentation for our tech stack
+[React](https://beta.reactjs.org/learn)
+
+[SASS](https://sass-lang.com/documentation/)
+
+[CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)
+
+[Express.js](https://expressjs.com/)
+
+[Webpack](https://webpack.js.org/)
