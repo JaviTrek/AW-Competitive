@@ -3,28 +3,17 @@ import {useState, useEffect} from "react";
 import axios from "axios";
 import '../App.sass'
 import awLogo from "../images/awLogo.webp"
-export function App() {
+export function About() {
 
 
     let userArray = [];
+    console.log('i WAS GOTTEN')
     const [data, setData] = useState()
     useEffect(() => {
-        axios.get("/home")
+        axios.get("/about")
             .then(res => {
-                let userData = res.data.pushData
-                console.log(userData[0].armyColor)
-                userData.forEach((user, index) => {
-                    console.log(user)
-                    userArray.push(
-                        <div className="users" key={index}>
-                            <p> Username: {user.username}</p>
-                            <p> Army Color: {user.armyColor}</p>
-                            <p> Favorite CO: {user.favoriteCO}</p>
-                            <br/>
-                        </div>
-                    )
-                    setData(userArray)
-                })
+                setData(res)
+                console.log(res.data)
 
             }).catch(e => console.error(e));
     }, []);
@@ -54,7 +43,6 @@ export function App() {
 
             </form>
             <h3> Data from MongoDB</h3>
-            {data}
 
         </div>
     )
