@@ -25,7 +25,7 @@ module.exports = {
 
         proxy: [
             {
-                context: ['/home',],
+                context: ['/home', '/createUser'],
                 target:  'http://localhost:4000'
             }
         ],
