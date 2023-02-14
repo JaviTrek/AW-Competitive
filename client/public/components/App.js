@@ -2,6 +2,7 @@ import React from "react";
 import {useState, useEffect} from "react";
 import axios from "axios";
 import '../App.sass'
+import { Outlet } from "react-router-dom";
 import awLogo from "../images/awLogo.webp"
 export function App() {
 
@@ -11,8 +12,6 @@ export function App() {
     useEffect(() => {
         axios.get("/home")
             .then(res => {
-                //console.log(res.data)
-
                 let userData = res.data.pushData
                 console.log(userData[0].armyColor)
                 userData.forEach((user, index) => {
@@ -32,9 +31,14 @@ export function App() {
     }, []);
 
 
+
+
     return (
         <div>
+
             <img src={awLogo} alt=""/>
+
+
             <h1>Welcome to AW-Competitive</h1>
             <p>This application depends on us running our server and client at the same time in order for React (our frontend) talks with Express (our middleman backend) to communicate with MongoDB (our database) for everything to work correctly</p>
             <h2>Add a new User to MongoDB:</h2>
@@ -55,6 +59,11 @@ export function App() {
             </form>
             <h3> Data from MongoDB</h3>
             {data}
+            <br/>
+            <Outlet />
+            <br/>
+
+
         </div>
     )
 }
