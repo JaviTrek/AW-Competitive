@@ -1,4 +1,5 @@
 import React from "react";
+
 import {useState, useEffect} from "react";
 import axios from "axios";
 import '../App.sass'
@@ -19,6 +20,7 @@ export function About() {
     return (
         <div>
             <h1>About Page!</h1>
+            <h2>This is the about component!</h2>
 
         </div>
     )
