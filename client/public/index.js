@@ -8,12 +8,15 @@ const container = document.getElementById('app');
 const router = createBrowserRouter([
     {
         path: '/',
-        element: <App/>
+        element: <App/>,
+        children: [
+            {
+                path: 'about',
+                element: <About />
+            }
+        ],
     },
-    {
-        path: 'about',
-        element: <About />
-    }
+
 ])
 
 

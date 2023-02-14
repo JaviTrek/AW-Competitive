@@ -8,7 +8,8 @@ module.exports = {
 
     output: {
         path: path.join(__dirname, '/dist'),
-        filename: "bundle.js"
+        filename: "bundle.js",
+        publicPath: '/'
 
     },
     plugins: [
@@ -19,9 +20,16 @@ module.exports = {
     devServer: {
         port: 3000,
         hot: "only",
-        proxy: {
-            '/': 'http://localhost:4000',
-        },
+
+        historyApiFallback: true,
+
+        proxy: [
+            {
+                context: ['/home',],
+                target:  'http://localhost:4000'
+            }
+        ],
+
     },
     module: {
         rules: [

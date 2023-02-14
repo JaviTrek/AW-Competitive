@@ -30,6 +30,7 @@ app.listen(port, () => {
 
 //This /home route is used by our home page
 app.get("/home", async (req, res) => {
+    console.log("get home")
     let dbConnect = database.getDatabase()
     //use the collection
     let collection = dbConnect.collection("users")
@@ -38,18 +39,15 @@ app.get("/home", async (req, res) => {
     // find he documents in our collection and iterate through every one of them
     await myDoc.forEach(doc => pushData.push(doc));
 
-    console.log(pushData)
     res.json({
         pushData
     })
 })
 
-app.get("/about", (req,res) => {
-res.json({
-    doctor: "potato"
-})
-});
 
+app.get("/about", async (req, res) => {
+    res.send("hello")
+})
 
 
 
@@ -57,7 +55,6 @@ res.json({
 // POST REQUESTS
 // ------------
 app.post('/createUser', async (req, res) => {
-    console.log('hello')
     let dbConnect = database.getDatabase()
     //use the collection
     let collection = dbConnect.collection("users")
