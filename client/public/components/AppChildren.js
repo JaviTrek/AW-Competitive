@@ -1,10 +1,9 @@
 import React from "react";
-
 import {useState, useEffect} from "react";
 import axios from "axios";
 import '../App.sass'
 
-export function About() {
+export function AppChildren() {
 
     const [about, setAbout] = useState()
     useEffect(() => {
@@ -18,8 +17,8 @@ export function About() {
 
     return (
         <div>
-            <h1>About Page!</h1>
-            <p>This is the about component!</p>
+           <h3>I'm a child</h3>
+            <p>I can be added to pages!</p>
 
         </div>
     )

@@ -1,7 +1,9 @@
 import React from 'react';
 import {createBrowserRouter, RouterProvider,} from "react-router-dom"
 import {App} from "./components/App"
+
 import {About} from "./components/About"
+import {AppChildren} from "./components/AppChildren"
 import {createRoot} from 'react-dom/client';
 
 const container = document.getElementById('app');
@@ -11,10 +13,15 @@ const router = createBrowserRouter([
         element: <App/>,
         children: [
             {
-                path: 'about',
-                element: <About />
+                path: 'children',
+                element: <AppChildren />
             }
         ],
+
+    },
+    {
+        path: 'about',
+        element: <About />
     },
 
 ])
