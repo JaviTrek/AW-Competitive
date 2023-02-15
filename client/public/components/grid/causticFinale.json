@@ -1,5 +1,19 @@
 {
   "mapName": "Caustic Finale",
   "mapRows": 18,
-  "mapColumns": 18
+  "mapColumns": 18,
+  "mapTiles": [
+    {
+    "a0": {
+      "terrain": "plains",
+      "hasUnit": {
+        "unitType": "",
+        "unitHealth": "",
+        "unitColor": "",
+        "unitStatus": ""
+      }
+    }
+  }
+
+  ]
 }

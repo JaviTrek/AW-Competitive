@@ -1,4 +1,8 @@
 @for $i from 1 through 30
-  .gridSize#{i}
-    grid-template-columns: repeat(#{i}, 1fr)
-    background-color: palegreen
+  .gridSize#{$i}
+    grid-template-columns: repeat($i, 1fr)
+    display: grid
+
+
+.blue
+  background-color: palegreen

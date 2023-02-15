@@ -17,7 +17,8 @@ export function MapGrid() {
             <div className={`gridSize${mapData.mapColumns}`}>
                     <div>hello 1</div>
                 <div>hello 1</div>
-                <div>hello 1</div><div>hello 1</div>
+                <div>hello 1</div>
+                <div>hello 1</div>
 
 
 
@@ -33,6 +34,9 @@ export function MapGrid() {
 
         <div>
             {map}
+            <div className="blue">
+                <h1>hello</h1>
+            </div>
         </div>
     )
 
