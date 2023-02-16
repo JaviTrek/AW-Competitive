@@ -1,4 +1,5 @@
 # Welcome to AW-Competitive!
+test
 Welcome to the team! Whether you are just getting your feet wet with programming or already have made some pull requests to production, there will always be a space for you to help and learn about web development.
 
 ## [What is Advance Wars? Our project outline](https://github.com/JaviTrek/AW-Competitive/discussions/30)
