@@ -1,4 +1,4 @@
 /server/node_modules/
 /client/node_modules/
 /server/setup.env
-OATH2/test.env
+OATH/

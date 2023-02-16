@@ -6,7 +6,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "serverStart": "node server.js",
+    "serverStart": "node server.js"
   },
   "proxy": "https://localhost:3000",
   "repository": {
@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/JaviTrek/AW-Competitive/issues"
   },
-  "homepage": "https://github.com/JaviTrek/AW-Competitive#readme"
+  "homepage": "https://github.com/JaviTrek/AW-Competitive#readme",
+  "dependencies": {
+    "yarn": "^1.22.19"
+  }
 }
