@@ -4,7 +4,7 @@ const app = express();
 const cors = require("cors");
 const bodyParser = require("body-parser");
 
-
+const createMap = require('./scripts/createMap')
 //This line gets us our .env file at setup.env, allowing us to use the process.env
 require("dotenv").config({path: "./setup.env"});
 
@@ -12,15 +12,23 @@ require("dotenv").config({path: "./setup.env"});
 //our database
 const database = require("./database/connection.js");
 
+
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cors());
 app.use(express.json());
 
+
+//This is our random map generator
+const {randomMap} = require("./scripts/createMap");
+
+//This is our random map function
+console.log("run createMap")
+console.log(createMap(18,18, "causticFinale"))
+
+
+
 const port = process.env.PORT || 4000;
-
-
-
 //get connected to the mongo database
 app.listen(port, () => {
     database.connectToServer()
