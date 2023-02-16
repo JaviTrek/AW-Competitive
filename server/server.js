@@ -7,7 +7,7 @@ const bodyParser = require("body-parser");
 
 //This line gets us our .env file at setup.env, allowing us to use the process.env
 require("dotenv").config({path: "./setup.env"});
-
+// im testing stuff!
 
 //our database
 const database = require("./database/connection.js");
