@@ -3,39 +3,43 @@ import awLogo from "../../images/awLogo.webp"
 import '../../App.sass'
 import axios from "axios";
 import {logPlugin} from "@babel/preset-env/lib/debug";
-import mapData from "./causticFinale.json"
 
 
 export function MapGrid() {
 
-    let [map, setMap] = useState('map')
-    useEffect( () => {
 
-        console.log(mapData)
-        setMap(
+    let [map, setMap] = useState([])
+    useEffect(() => {
+        axios.get('/map/randomMap')
+            .then(res => {
 
-            <div className={`gridSize${mapData.mapColumns}`}>
-                    <div>hello 1</div>
-                <div>hello 1</div>
-                <div>hello 1</div>
-                <div>hello 1</div>
+                let mapTiles = []
+                console.log(res.data.map[0])
+                res.data.map.forEach((tile, index) => {
+
+                    mapTiles.push(
+    <div key={index} className={`${tile[1].slice(0,2)} mapTile`}>
+    </div>
+
+                    )
+
+                })
+                console.log(mapTiles)
+                setMap(mapTiles)
+
+            }).catch(e => {
+            console.log(e)
+        });
+    }, [])
 
 
 
-            </div>
-        )
 
-        } , [])
-
-
-
-
-    return(
+    return (
 
         <div>
-            {map}
-            <div className="blue">
-                <h1>hello</h1>
+            <div className={`gridSize18 mapGrid` }>
+                {map}
             </div>
         </div>
     )
