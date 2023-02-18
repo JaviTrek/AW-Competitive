@@ -1,0 +1,60 @@
+// our main grid where we have our map tiles
+.mapGrid
+  display: grid
+  margin: 5vw 10vw
+  // our individual tiles
+  .mapTile
+    width: 100%
+    background-color: #bfdd33
+    aspect-ratio: 1
+    position: relative
+
+    //our background tiles/img
+    .fo, .mo, .pl, .ri, .ro, .sh, .ci, .fa, .br
+      height: 48px
+      width: 48px
+    .fo
+      background: url("images/mapTiles/forest.webp") no-repeat
+      background-size: contain
+    .pl
+      background: url("images/mapTiles/plains.webp") no-repeat
+      background-size: contain
+
+    .ri
+      background: url("images/mapTiles/river.webp") no-repeat
+      background-size: contain
+
+    .ro
+      background: url("images/mapTiles/road.webp") no-repeat
+      background-size: contain
+    .br
+      background: url("images/mapTiles/bridge.webp") no-repeat
+      background-size: contain
+
+    .sh
+      background: url("images/mapTiles/shoal.webp") no-repeat
+      background-size: contain
+    .fa
+      background: url("images/mapTiles/factory.webp") no-repeat
+      background-size: contain
+    // mountain and city overlap on top of the other tiles so they need to be absolute so they can go over other elements correctly.
+    .mo
+      background: url("images/mapTiles/mountain.webp") no-repeat
+      background-size: contain
+      position: absolute
+      bottom: 0px
+      height: 63px
+      width: 48px
+    .ci
+      background: url("images/mapTiles/city.webp") no-repeat
+      background-size: contain
+      position: absolute
+      bottom: 0px
+      height: 63px
+      width: 48px
+
+
+
+
+
+

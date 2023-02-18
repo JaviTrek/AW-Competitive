@@ -13,10 +13,11 @@ module.exports = {
         try {
             await client.connect();
             db = client.db(dbName)
-            console.log('connected correctly')
+            console.log('connected to mongoDB correctly')
 
         } catch (e) {
             console.error(e);
+            console.log('failed to connect to mongoDB')
         }
 
     },

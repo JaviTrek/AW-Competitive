@@ -25,7 +25,7 @@ module.exports = {
 
         proxy: [
             {
-                context: ['/home', '/createUser'],
+                context: ['/home', '/createUser', '/map/randomMap'],
                 target:  'http://localhost:4000'
             }
         ],
@@ -57,6 +57,7 @@ module.exports = {
             {
                 test: /\.(png|svg|jpg|jpeg|gif|webp)$/i,
                 type: 'asset/resource',
+
             },
 
         ]

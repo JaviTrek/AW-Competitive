@@ -6,7 +6,6 @@ import { Outlet } from "react-router-dom";
 import awLogo from "../images/awLogo.webp"
 export function App() {
 
-
     let userArray = [];
     const [data, setData] = useState()
     useEffect(() => {

@@ -12,13 +12,13 @@ require("dotenv").config({path: "./setup.env"});
 //our database
 const database = require("./database/connection.js");
 
+
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cors());
 app.use(express.json());
 
 const port = process.env.PORT || 4000;
-
 
 
 //get connected to the mongo database
@@ -43,12 +43,16 @@ app.get("/home", async (req, res) => {
         pushData
     })
 })
+const createMap = require('./scripts/randomMapGenerator')
+createMap(18, 18, "randomMap")
+//This is our random map generator
+const randomMap = require("./scripts/randomMap.json");
+//This is our random map function
 
 
-app.get("/about", async (req, res) => {
-    res.send("hello")
-})
-
+app.get('/map/randomMap', (req, res) => {
+    res.json(randomMap)
+});
 
 
 // ------------
@@ -58,7 +62,7 @@ app.post('/createUser', async (req, res) => {
     let dbConnect = database.getDatabase()
     //use the collection
     let collection = dbConnect.collection("users")
-    let myDoc = await collection.countDocuments({_id: {$gt: -1} })
+    let myDoc = await collection.countDocuments({_id: {$gt: -1}})
     console.log(myDoc)
     //Lets define a document
     const username = req.body.username

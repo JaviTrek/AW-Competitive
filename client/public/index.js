@@ -1,7 +1,7 @@
 import React from 'react';
 import {createBrowserRouter, RouterProvider,} from "react-router-dom"
 import {App} from "./components/App"
-
+import {Grid} from "./components/grid/Grid"
 import {About} from "./components/About"
 import {AppChildren} from "./components/AppChildren"
 import {createRoot} from 'react-dom/client';
@@ -22,6 +22,10 @@ const router = createBrowserRouter([
     {
         path: 'about',
         element: <About />
+    },
+    {
+        path: 'game',
+        element: <Grid />
     },
 
 ])
