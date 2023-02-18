@@ -21,8 +21,6 @@ app.use(express.json());
 const port = process.env.PORT || 4000;
 
 
-
-
 //get connected to the mongo database
 app.listen(port, () => {
     database.connectToServer()
@@ -45,20 +43,16 @@ app.get("/home", async (req, res) => {
         pushData
     })
 })
-const createMap = require('./scripts/createMap')
-createMap(18,18, "randomMap")
+const createMap = require('./scripts/randomMapGenerator')
+createMap(18, 18, "randomMap")
 //This is our random map generator
 const randomMap = require("./scripts/randomMap.json");
 //This is our random map function
 
 
-
-app.get('/map/randomMap', (req,res) => {
+app.get('/map/randomMap', (req, res) => {
     res.json(randomMap)
 });
-
-
-
 
 
 // ------------
@@ -68,7 +62,7 @@ app.post('/createUser', async (req, res) => {
     let dbConnect = database.getDatabase()
     //use the collection
     let collection = dbConnect.collection("users")
-    let myDoc = await collection.countDocuments({_id: {$gt: -1} })
+    let myDoc = await collection.countDocuments({_id: {$gt: -1}})
     console.log(myDoc)
     //Lets define a document
     const username = req.body.username
