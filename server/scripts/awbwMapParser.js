@@ -27,8 +27,7 @@ const awbwMap = [
     //pipe ending
     [110, "pe4"], [109, "pe3"],
 
-    //factory
-    [35, "fa0"], [39, "fa1"], [44, "fa2"],
+
 
     //port
     [37, "po0"],
@@ -39,13 +38,15 @@ const awbwMap = [
 
 
     //headquarters
-    [42, "hq1"], [47, "hq2"],
+    [42, "h00"], [47, "h10"],
+    //factory
+    [35, "fa0"], [39, "f00"], [44, "f10"],
 
 
 ]
 
-const causticFinale =
-    [34,3,1,5,1,1,34,3,2,2,3,7,9,2,34,26,28,111,
+const mapToParse =
+    [ 34,3,1,5,1,1,34,3,2,2,3,7,9,2,34,26,28,111,
     1,1,34,26,3,1,1,1,39,1,1,5,35,1,1,32,33,28,
     3,7,27,9,34,1,3,1,3,1,42,26,3,1,3,1,30,27,
     27,9,1,1,1,29,28,28,4,27,4,9,1,1,2,3,1,34,
@@ -62,7 +63,7 @@ const causticFinale =
     1,3,21,19,3,31,1,34,21,15,19,1,2,2,1,7,27,4,
     133,2,1,21,19,28,8,1,1,3,34,1,2,3,1,26,34,1,
     110,105,2,3,21,15,26,1,39,1,1,1,1,34,7,9,1,3,
-    111,109,133,1,34,2,5,3,2,1,3,35,15,15,26,3,1,34
+    111,109,133,1,34,2,5,3,2,1,3,35,15,15,26,3,1,34,
 ]
 
 
@@ -71,19 +72,23 @@ const causticFinale =
 module.exports = (columns, rows, name) => {
 
     // We transform our awbwMap into a new parsedMap
-    let parsedMap = []
-    for (let i = 0; i < causticFinale.length; i++) {
+    let missingTiles = [];
+    let missingNumber = ''
+    let parsedMap = [];
+    for (let i = 0; i < mapToParse.length; i++) {
 
         for (let j = 0; j < awbwMap.length; j++) {
-            if (causticFinale[i] === awbwMap[j][0]) {
+            if (mapToParse[i] === awbwMap[j][0]) {
                 parsedMap.push(`${awbwMap[j][1]}00000xx`)
                 break
             }
+            if (j >= awbwMap.length - 1) missingTiles.push(mapToParse[i])
+
         }
 
     }
 
-
+    console.log(missingTiles)
 
     let mapArray = [];
     for (let i = 1; i < columns + 1; i++) {

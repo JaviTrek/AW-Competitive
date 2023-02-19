@@ -11,17 +11,17 @@ async function terrainParameters(terrain, value) {
 }
 //These terrain parameters make it so a % of our tiles are this type. So below, every tile has a 50% of being pl/plains or 5% to be mo/mountains and so on for each one of these
 // 80%
-terrainParameters('pl', 50)
-terrainParameters('ro', 10)
-terrainParameters('ci', 10)
-terrainParameters('sh', 10)
+terrainParameters('pl0', 50)
+terrainParameters('ro1', 10)
+terrainParameters('ci0', 10)
+terrainParameters('sh1', 10)
 // 10%
-terrainParameters('fo', 7)
-terrainParameters('ri', 2)
-terrainParameters('fa', 1)
+terrainParameters('fo0', 7)
+terrainParameters('ri1', 2)
+terrainParameters('fa0', 1)
 //10%
-terrainParameters('br', 5)
-terrainParameters('mo', 5)
+terrainParameters('br1', 5)
+terrainParameters('mo0', 5)
 
 /*
 How to create a map randomizer

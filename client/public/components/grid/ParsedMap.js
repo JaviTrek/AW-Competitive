@@ -2,15 +2,6 @@ import React, {useEffect, useState} from "react";
 
 // Lets keep these imports here just in case for now
 
-import fo from '../../images/mapTiles/forest.webp'
-import ci from '../../images/mapTiles/city.webp'
-import fa from '../../images/mapTiles/factory.webp'
-import mo from '../../images/mapTiles/mountain.webp'
-import pl from '../../images/mapTiles/plains.webp'
-import ri from '../../images/mapTiles/river.webp'
-import ro from '../../images/mapTiles/road.webp'
-import sh from '../../images/mapTiles/shoal.webp'
-
 import '../../App.sass'
 import axios from "axios";
 
