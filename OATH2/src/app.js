@@ -5,9 +5,23 @@ const PORT = process.env.PORT || 3001;
 const session = require('express-session');
 const passport = require('passport');
 const DiscordStrategy = require('./strategies/discordStrategy');
-const db = require('./database/database');
+const cors = require("cors");
+const bodyParser = require("body-parser");
 
-db.then(() => console.log("Connected to MongoDb")).catch(err => console.log(err));
+//This line gets us our .env file at setup.env, allowing us to use the process.env
+require("dotenv").config({path: '.env'});
+
+
+const database = require('./database/database');
+//our database
+
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+app.use(cors());
+app.use(express.json());
+
+const port = process.env.PORT || 4000;
+
 
 
 // Routes
@@ -31,17 +45,9 @@ app.use(passport.session());
 //MiddleWare Routes
 app.use('/auth', authRoute);
 
-// app.get('/', (req,res) => {
-//     res.send("Hello");
-// });
 
-// app.get('/dashboard', (req, res) => {
-//     res.json({
-//         msg: 'Good',
-//         status: 200
-//     });
-// });
-
-app.listen(PORT, () => {
-    console.log(`Now listening to request on port ${PORT}`);
+//get connected to the mongo database
+app.listen(port, () => {
+    database.connectToServer()
+    console.log(`Server running on port ${port}`)
 });
