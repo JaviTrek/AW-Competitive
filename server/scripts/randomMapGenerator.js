@@ -49,12 +49,12 @@ x = unit waited or not waited (x because it doesnt have a status as it doesnt ex
 
  */
 
-let mapArray = [];
-let mirrorMap = [];
+
 
 // To be honest the function below is quite convoluted, its a bit "simple" but its simply creating a sequence of 2 initial numbers for columns and another 2 numbers for rows, so 0101 means first column first row (top corner).
 module.exports = (columns, rows, name) => {
-
+    let mapArray = [];
+    let mirrorMap = [];
     for (let i = 1; i < (columns / 2) + 1; i++) {
         for (let k = 1; k < rows + 1; k++) {
             // Lets select a random terrain for our terrain tile

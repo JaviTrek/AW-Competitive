@@ -15,7 +15,7 @@ import '../../App.sass'
 import axios from "axios";
 
 
-export function MapGrid() {
+export function RandomMap() {
 
 // this function will request our server for a json file, read it and create tiles depending on the json file information
     let [map, setMap] = useState([])

@@ -11,6 +11,7 @@
 
     //our background tiles/img
     .fo, .mo, .pl, .ri, .ro, .sh, .ci, .fa, .br
+      image-rendering: pixelated
       height: 48px
       width: 48px
     .fo
@@ -46,6 +47,54 @@
       height: 63px
       width: 48px
     .ci
+      background: url("images/mapTiles/city.webp") no-repeat
+      background-size: contain
+      position: absolute
+      bottom: 0px
+      height: 63px
+      width: 48px
+
+
+
+    // Okay I know this is a mess but just for now, we have two sets of styles for our tiles, the one above is outdated atm but I have to fix the random map generation before touching this
+    //our background tiles/img
+    .fo0, .mo0, .pl0, .ri0, .ro0, .sh0, .ci0, .fa0, .br0
+      image-rendering: pixelated
+      height: 48px
+      width: 48px
+    .fo0
+      background: url("images/mapTiles/forest.webp") no-repeat
+      background-size: contain
+    .pl0
+      background: url("images/mapTiles/plains.webp") no-repeat
+      background-size: contain
+
+    .ri0
+      background: url("images/mapTiles/river.webp") no-repeat
+      background-size: contain
+
+    .ro0
+      background: url("images/mapTiles/road.webp") no-repeat
+      background-size: contain
+    .br0
+      background: url("images/mapTiles/bridge.webp") no-repeat
+      background-size: contain
+
+    .sh0
+      background: url("images/mapTiles/shoal.webp") no-repeat
+      background-size: contain
+    .fa0
+      background: url("images/mapTiles/factory.webp") no-repeat
+      background-size: contain
+    // mountain and city overlap on top of the other tiles so they need to be absolute so they can go over other elements correctly.
+    .mo0
+      background: url("images/mapTiles/mountain.webp") no-repeat
+      background-size: contain
+      position: absolute
+      bottom: 0px
+      height: 63px
+      width: 48px
+    .ci0
       background: url("images/mapTiles/city.webp") no-repeat
       background-size: contain
       position: absolute
