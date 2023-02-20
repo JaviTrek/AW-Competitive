@@ -8,7 +8,7 @@ export function Grid() {
 
         <div>
             <ParsedMap/>
-            <RandomMap/>
+
         </div>
     )
 

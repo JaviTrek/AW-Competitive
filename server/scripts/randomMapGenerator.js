@@ -1,7 +1,7 @@
 const fs = require('fs')
 
 // ['plains', 'mountain', "forest", "road", "bridge", "factory", "city", "shoal", "river"];
-
+//TODO: Make the random map generator have better parameters such as the possibility of using templates or knowing that it should spam 2 bases 1 hq per player and other parameters that will make it generate better random maps.
 const terrainTypes = [];
 // our function used to hold our variables in the array.
 async function terrainParameters(terrain, value) {

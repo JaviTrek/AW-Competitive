@@ -48,6 +48,7 @@ app.get("/home", async (req, res) => {
 
 
 
+//TODO: Create our own folders for our account routes
 
 // ------------
 // POST REQUESTS
@@ -88,6 +89,7 @@ app.post('/createUser', async (req, res) => {
 
 
 
+//TODO: Move these scripts/get routes into its own file which we then get via app.use
 
 // MAP RENDERING
 

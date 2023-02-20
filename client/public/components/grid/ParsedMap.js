@@ -17,8 +17,9 @@ export function ParsedMap() {
                 res.data.forEach((tile, index) => {
                     mapTiles.push(
                         <div key={index} className={`mapTile ${tile[0]}`}>
-                            <div className={`${tile[1].slice(0, 3)}`}>
+                            <div className={`${tile[1].slice(0, 3)} `}>
                             </div>
+                            <div className="tileCursor"></div>
                         </div>
                     )
                 })
@@ -33,11 +34,15 @@ export function ParsedMap() {
     return (
 
         <div>
-            <div className={`gridSize18 mapGrid`}>
-                {map}
 
+            <div className="gameBox">
+                <h1>Caustic Finale</h1>
+
+                <div className={`gridSize18 mapGrid`}>
+                    {map}
+
+                </div>
             </div>
-
         </div>
     )
 
