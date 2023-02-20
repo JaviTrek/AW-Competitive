@@ -1,12 +1,14 @@
 import React from "react";
-import {MapGrid} from "./MapGrid";
+import {RandomMap} from "./RandomMap";
+import {ParsedMap} from "./ParsedMap";
 
 export function Grid() {
 
     return(
 
         <div>
-            <MapGrid/>
+            <ParsedMap/>
+
         </div>
     )
 
