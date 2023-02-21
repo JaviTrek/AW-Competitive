@@ -78,4 +78,37 @@ app.post('/createUser', async (req, res) => {
     //insert the document
     await collection.insertOne(userDocument);
     res.redirect('/');
-})
+});
+//------------------------------
+//Steve work on authorization
+//------------------------------
+const session = require('express-session');
+const DiscordStrategy = require('./Authentication_Strategies/discordStrategy');
+const passport = require('passport');
+
+
+
+app.use(session({
+    //secret needs work
+    secret: 'some secret',
+    cookie: {
+        maxAge: 60000 * 60 * 24,
+
+    },
+    saveUninitialized: false,
+    resave: true,
+}));
+
+//Passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+//auth routes
+app.get('/routes/auth', passport.authenticate('discord'));
+app.get('/routes/auth/redirect', passport.authenticate('discord', {
+    failureRedirect: '/forbidden'
+}), (req,res) => {
+    res.send(req.user);
+});
+
+
