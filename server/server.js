@@ -112,3 +112,58 @@ app.get('/routes/auth/redirect', passport.authenticate('discord', {
 });
 
 
+//-------
+//login
+//----
+const { hashPassword, comparePassword } = require('./Authentication_Strategies/hashing_password'); 
+
+//Login post request
+app.post('/login', async (req,res) => {
+    const { username, password } = req.body;
+    if(!username || !password){
+        return res.sendStatus(400);
+    }else{
+        let dbConnect = database.getDatabase();
+        let collection = dbConnect.collection("learn");
+        const userDB = await collection.findOne({$or : [{ username }]});
+        if(!userDB){return res.sendStatus(401);
+        }else{
+            console.log(typeof userDB.password);
+            console.log(typeof password);
+            const hashedPassword = userDB.password;
+            const isValid = comparePassword(password, hashedPassword);
+            // const isValid = comparePassword('123', '123');
+            if(isValid){
+                req.session.user = userDB;
+                console.log(req.session.user)
+                return res.sendStatus(200);
+            }else{
+                return res.sendStatus(401);
+            }
+        }
+    };
+});
+
+//Register post request
+app.post('/register', async (req,res) => {
+    let dbConnect = database.getDatabase()
+    //use the collection
+    let collection = dbConnect.collection("learn")
+    const { username, password } = req.body;
+    const userDB = await collection.findOne({$or : [{ username }]});
+    if(userDB){
+        console.log("user already exist!");
+        res.sendStatus(400);
+    } else{
+        const hashedPassword = hashPassword(password);
+        let myDoc = await collection.countDocuments({_id: {$gt: -1} });
+        let userDocument = {
+        _id: myDoc + 1,
+        username: username,
+        password: hashedPassword,
+    };
+    await collection.insertOne(userDocument);
+    console.log("User created");
+    res.sendStatus(201);
+    }
+});
