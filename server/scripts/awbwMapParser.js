@@ -97,16 +97,9 @@ module.exports = (columns, rows, name) => {
 
         for (let k = 1; k < rows + 1; k++) {
 
+                mapArray.push([i, k, parsedMap[ (k - 1) + (columns * (i - 1 ))]])
 
-            // k is less than 10 so we will use our 0s (0i0k columnsrows))
-            if (k < 10) {
-                mapArray.push([`0${i}0${k}`, parsedMap[ (k - 1) + (columns * (i - 1 ))]])
-            }
-            // k is more than 10 so we dont need the 0 for it (ik columnrows)
-            else {
-                mapArray.push([`0${i}${k}`, parsedMap[ (k - 1) + (columns * (i - 1 ))]])
 
-            }
         }
     }
 

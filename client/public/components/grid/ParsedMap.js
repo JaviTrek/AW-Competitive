@@ -16,8 +16,8 @@ export function ParsedMap() {
                 let mapTiles = []
                 res.data.forEach((tile, index) => {
                     mapTiles.push(
-                        <div key={index} className={`mapTile ${tile[0]}`}>
-                            <div className={`${tile[1].slice(0, 3)} `}>
+                        <div key={index} className={`mapTile c${tile[0]} r${tile[1]}`}>
+                            <div className={`${tile[2].slice(0, 3)} `}>
                             </div>
                             <div className="tileCursor"></div>
                         </div>
