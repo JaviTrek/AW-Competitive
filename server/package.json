@@ -16,6 +16,7 @@
     "mongodb": "^5.0.0",
     "nodemon": "^2.0.20",
     "passport": "^0.6.0",
-    "passport-discord": "^0.1.4"
+    "passport-discord": "^0.1.4",
+    "passport-local": "^1.0.0"
   }
 }
