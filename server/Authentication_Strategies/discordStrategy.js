@@ -17,7 +17,7 @@ passport.deserializeUser(async (user, done) => {
     let dbConnect = database.getDatabase()
     //use the collection
 
-    let collection = dbConnect.collection("users")
+    let collection = dbConnect.collection("learn")
    
     const userS = await collection.findOne({_id : {$eq: id}});
     if(userS) 
@@ -37,7 +37,7 @@ passport.use(new DiscordStrategy({
     try{
         let dbConnect = database.getDatabase()
         //use the collection of users
-        let collection = dbConnect.collection("users")
+        let collection = dbConnect.collection("learn")
         const userS = await collection.findOne({discordId : {$eq : profile.id} });
 
         if(userS){

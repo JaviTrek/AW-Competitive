@@ -113,97 +113,8 @@ app.get('/routes/auth/redirect', passport.authenticate('discord', {
 //login
 //----
 
-const { Strategy } = require('passport-local');
 const { hashPassword, comparePassword } = require('./Authentication_Strategies/hashing_password'); 
-
-//serializing 
-passport.serializeUser((user, done)=> {
-    console.log("Serializing user");
-    console.log(user)
-    console.log(user._id)
-    done(null, user._id)});
-
-passport.deserializeUser(async (id, done)=> {
-    console.log("Deserializing user");
-    console.log(id);
-    let dbConnect = database.getDatabase();
-    let collection = dbConnect.collection("learn");
-    try{
-        const userDB = await collection.findOne({$or : [{ _id: id }]});
-        console.log(userDB);
-        if(!userDB) throw new Error("User not found");
-        done(null, userDB);
-    } catch(err) {
-        console.log(err);
-        done(err, null);
-    }
-})
-
-//creating a local passport strategy 
-passport.use(
-    new Strategy({
-        usernameField: 'username',   
-    }, async (username, password, done) =>{
-        console.log(username);
-        console.log(password);
-        
-        try{
-            if(!username || !password){
-                done(new Error('Bad request. Missing credentials'), null);
-            }
-            let dbConnect = database.getDatabase();
-            let collection = dbConnect.collection("learn");
-            
-            const userDB = await collection.findOne({$or : [{ username }]});
-            if(!userDB){
-                throw new Error("User not found");
-            };
-            
-            const isValid = comparePassword(password, userDB.password);
-            if(isValid){
-                console.log("Authenticated Successfully!");
-                // req.session.user = userDB;
-                done(null, userDB);
-                // return res.sendStatus(200);
-            }else{
-                console.log("Failed to Authenticate");
-                // return res.sendStatus(401);
-                done(null, null)
-            }
-
-        }catch(err){
-            done(err, null);
-        }
-    })
-);
-
-
-//Login post request
-// app.post('/login', async (req,res) => {
-//     const { username, password } = req.body;
-//     if(!username || !password){
-//         return res.sendStatus(400);
-//     }else{
-//         let dbConnect = database.getDatabase();
-//         let collection = dbConnect.collection("learn");
-//         const userDB = await collection.findOne({$or : [{ username }]});
-//         if(!userDB){return res.sendStatus(401);
-//         }else{
-//             console.log(typeof userDB.password);
-//             console.log(typeof password);
-//             const hashedPassword = userDB.password;
-//             const isValid = comparePassword(password, hashedPassword);
-//             // const isValid = comparePassword('123', '123');
-//             if(isValid){
-//                 req.session.user = userDB;
-//                 console.log(req.session.user)
-//                 return res.sendStatus(200);
-//             }else{
-//                 return res.sendStatus(401);
-//             }
-//         }
-//     };
-// });
+const LocalStrategy = require('./Authentication_Strategies/localStrategy');
 
 //login post request using passport local
 app.post('/login', passport.authenticate('local'), (req,res)=> {
@@ -234,7 +145,9 @@ app.post('/register', async (req,res) => {
     res.sendStatus(201);
     }
 
-    //Passport
-    app.use(passport.initialize());
-    app.use(passport.session());
+   
 });
+
+ //Passport
+ app.use(passport.initialize());
+ app.use(passport.session());
