@@ -93,11 +93,11 @@ module.exports = (columns, rows, name) => {
     console.log(missingTiles)
 
     let mapArray = [];
-    for (let i = 1; i < columns + 1; i++) {
+    for (let i = 0; i < columns; i++) {
 
-        for (let k = 1; k < rows + 1; k++) {
+        for (let k = 0; k < rows; k++) {
 
-                mapArray.push([i, k, parsedMap[ (k - 1) + (columns * (i - 1 ))]])
+                mapArray.push([i, k, parsedMap[ (k) + (columns * (i))]])
 
 
         }
