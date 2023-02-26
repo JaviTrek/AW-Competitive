@@ -1,5 +1,5 @@
 import React from 'react';
-//import logo from './images/awLogo.webp';
+import logo from './images/awLogo.webp';
 
 export const Header = () => {
   return (
@@ -7,7 +7,7 @@ export const Header = () => {
       <div className='headerGrid'> 
 
         <div>
-          <img className='pictureElement' src = "/images/awLogo.webpg" alt=""/>
+          <img className='pictureElement' src = {logo} alt=""/>
         </div>
 
         <div className='menuElementGrid'>
