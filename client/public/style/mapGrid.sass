@@ -17,6 +17,7 @@
     margin: 0
     border: 1em solid #333b54
     // our individual tiles
+
     .mapTile
       width: 100%
       background-color: #bfdd33
@@ -31,7 +32,7 @@
         display: none
         position: absolute
         bottom: -8px
-        left: -12px
+        left: -10px
 
         text-align: center
         width: 50px
@@ -40,6 +41,16 @@
         background-size: contain
         z-index: 10
         image-rendering: pixelated
+      .moveTile
+        background: rgba(67, 217, 228, 0.5)
+        border: 2px solid rgb(22, 98, 184)
+        z-index: 10
+        position: absolute
+        top: 0
+        height: 30px
+        width: 30px
+
+
 
 
 
@@ -123,6 +134,7 @@ $countryArrays: $hq, $cities, $bases, $comtower
   background: url("images/mapTiles/mo0.webp") no-repeat
   background-size: contain
   position: absolute
+
   bottom: 0px
   height: 42px
   width: 32px
