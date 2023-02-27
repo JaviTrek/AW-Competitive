@@ -1,7 +1,7 @@
 import React from "react";
 import {useState, useEffect} from "react";
 import axios from "axios";
-import '../App.sass'
+import '../style/App.sass'
 import { Outlet } from "react-router-dom";
 import awLogo from "../images/awLogo.webp"
 export function App() {

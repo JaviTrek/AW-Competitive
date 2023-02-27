@@ -2,6 +2,7 @@ import React from 'react'
 import { Outlet } from "react-router-dom";
 import { Header } from './template/Header';
 import { Footer } from './template/Footer';
+import '../style/template.sass'
 
 // This component is the template for all other pages
 // Includes Background, Header, and Footer

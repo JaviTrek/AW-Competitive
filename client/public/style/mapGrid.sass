@@ -1,4 +1,4 @@
-
+@use "abstracts/mixins"
 
 .gameBox
   display: grid
@@ -36,7 +36,7 @@
         text-align: center
         width: 50px
         height: 50px
-        background: url("images/mapTiles/tileCursor.png") no-repeat
+        background: url("../images/mapTiles/tileCursor.png") no-repeat
         background-size: contain
         z-index: 10
         image-rendering: pixelated
@@ -62,19 +62,19 @@ $mapArrays: $mapTiles, $roadTiles, $seaTiles, $riverTiles, $shoalTiles, $pipeTil
       height: 32px
       width: 32px
       @if $array == $mapTiles
-        background: url("images/mapTiles/#{$variable}.webp") no-repeat
+        background: url("../images/mapTiles/#{$variable}.webp") no-repeat
       @else if $array == $roadTiles
-        background: url("images/mapTiles/roads/#{$variable}.webp") no-repeat
+        background: url("../images/mapTiles/roads/#{$variable}.webp") no-repeat
       @else if $array == $seaTiles
-        background: url("images/mapTiles/sea/#{$variable}.webp") no-repeat
+        background: url("../images/mapTiles/sea/#{$variable}.webp") no-repeat
       @else if $array == $riverTiles
-        background: url("images/mapTiles/river/#{$variable}.webp") no-repeat
+        background: url("../images/mapTiles/river/#{$variable}.webp") no-repeat
       @else if $array == $shoalTiles
-        background: url("images/mapTiles/shoal/#{$variable}.webp") no-repeat
+        background: url("../images/mapTiles/shoal/#{$variable}.webp") no-repeat
       @else if $array == $pipeTiles
-        background: url("images/mapTiles/pipes/#{$variable}.webp") no-repeat
+        background: url("../images/mapTiles/pipes/#{$variable}.webp") no-repeat
       @else if $array == $siloTiles
-        background: url("images/mapTiles/silo/#{$variable}.webp") no-repeat
+        background: url("../images/mapTiles/silo/#{$variable}.webp") no-repeat
         height: 48px
         width: 32px
         bottom: 0px
@@ -94,7 +94,7 @@ $countryArrays: $hq, $cities, $bases, $comtower
     .#{$variable}
       image-rendering: pixelated
       @if $array == $bases
-        background: url("images/mapTiles/countries/base/#{$variable}.webp") no-repeat
+        background: url("../images/mapTiles/countries/base/#{$variable}.webp") no-repeat
         //check if its a neutral base or not
         @if $variable == ne2
           height: 32px
@@ -103,15 +103,15 @@ $countryArrays: $hq, $cities, $bases, $comtower
           height: 50px
           width: 32px
       @else if $array == $cities
-        background: url("images/mapTiles/countries/city/#{$variable}.webp") no-repeat
+        background: url("../images/mapTiles/countries/city/#{$variable}.webp") no-repeat
         height: 42px
         width: 32px
       @else if $array == $hq
-        background: url("images/mapTiles/countries/hq/#{$variable}.webp") no-repeat
+        background: url("../images/mapTiles/countries/hq/#{$variable}.webp") no-repeat
         height: 62px
         width: 32px
       @else if $array == $comtower
-        background: url("images/mapTiles/countries/comtower/#{$variable}.webp") no-repeat
+        background: url("../images/mapTiles/countries/comtower/#{$variable}.webp") no-repeat
         height: 50px
         width: 32px
       bottom: 0px
@@ -120,7 +120,7 @@ $countryArrays: $hq, $cities, $bases, $comtower
 
 // mountain and city overlap on top of the other tiles so they need to be absolute so they can go over other elements correctly.
 .mo0
-  background: url("images/mapTiles/mo0.webp") no-repeat
+  background: url("../images/mapTiles/mo0.webp") no-repeat
   background-size: contain
   position: absolute
   bottom: 0px
