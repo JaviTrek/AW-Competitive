@@ -5,6 +5,7 @@ import {App} from "./components/App"
 import {Grid} from "./components/grid/Grid"
 import {About} from "./components/About"
 import {AppChildren} from "./components/AppChildren"
+import {CurrentGames} from "./components/CurrentGames"
 import {createRoot} from 'react-dom/client';
 
 const container = document.getElementById('app');
@@ -32,6 +33,11 @@ const router = createBrowserRouter([
                 name: 'game',
                 path: 'game',
                 element: <Grid />
+            },
+            {
+                name: 'currentgames',
+                path: 'currentgames',
+                element: <CurrentGames />
             },
         ],
     },
