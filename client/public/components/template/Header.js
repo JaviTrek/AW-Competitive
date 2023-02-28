@@ -1,5 +1,6 @@
 import React from 'react';
 import logo from '../../images/awLogo.webp';
+import '../../style/template/header.sass'
 
 export const Header = () => {
   return (

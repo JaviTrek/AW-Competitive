@@ -1,26 +1,8 @@
+@use '../abstracts/variables' as variables
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=VT323&display=swap')
-  
-@import 'template/header'
-@import 'template/footer'
 
 // You will find the general styles of the website here.
-
-/* ==================== Variables ==================== */
-// Website Color Palette as per Figma 
-$color-primary: #E47220
-$color-primary-variant: #9EBC9F
-$color-bg: #18223E
-$color-bg-variant: #304478
-$blue-gradient: linear-gradient(180deg, #304478 43.23%, #152B62 63.54%, #162754 84.9%)
-
-$transition: all 400ms ease
-
-$container-width-lg: 1239px
-$container-height-lg: 600px
-
-// for responsiveness in the future
-// $container-width-md: 86%
-// $container-width-sm: 90%
   
 * 
   margin: 0
@@ -39,7 +21,7 @@ html
   display: none
 
 body
-  background: url("../images/template/Background.png"), #000
+  background: url("../../images/template/Background.png"), #000
   color: white
   font-family: 'Poppins', sans-serif
   font-weight: 400
@@ -61,18 +43,21 @@ h1
   font-size: 2.5rem
 
 .container 
-  width: $container-width-lg
-  height: $container-height-lg
+  width: variables.$container-width-lg
+  height: variables.$container-height-lg
 
 section 
   margin-top: 8rem
 
 section > h3 
-  color: $color-primary-variant
+  color: variables.$color-primary-variant
 
 section > h2 
   font-size: 3rem
-  color: $color-primary
+  color: variables.$color-primary
+
+.template
+  padding: 40px 0
 
 // possible hover effect we could use
 // a 
@@ -87,21 +72,21 @@ section > h2
 .btn 
   width: max-content
   display: inline-block
-  color: $color-primary
+  color: variables.$color-primary
   padding: 0.75rem 1.2rem
   border-radius: 0.4rem
   cursor: pointer
-  border: 1px solid $color-primary
-  transition: $transition
+  border: 1px solid variables.$color-primary
+  transition: variables.$transition
 
 .btn:hover 
   background: white
-  color: $color-bg
+  color: variables.$color-bg
   border-color: transparent
 
 .btn-primary 
-  background: $color-primary
-  color: $color-bg
+  background: variables.$color-primary
+  color: variables.$color-bg
 
 /* ==================== IMG STYLES ==================== */
 

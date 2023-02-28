@@ -1,6 +1,6 @@
 import React from 'react';
 import {createBrowserRouter, RouterProvider,} from "react-router-dom"
-import {Template} from "./components/Template"
+import {Template} from "./components/template/Template"
 import {App} from "./components/App"
 import {Grid} from "./components/grid/Grid"
 import {About} from "./components/About"
