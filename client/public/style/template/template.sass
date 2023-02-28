@@ -43,8 +43,9 @@ h1
   font-size: 2.5rem
 
 .container 
-  width: variables.$container-width-lg
-  height: variables.$container-height-lg
+  // this should change when design for a more responsive website
+  max-width: variables.$container-width-lg
+  min-height: variables.$container-height-lg
 
 section 
   margin-top: 8rem
@@ -57,7 +58,7 @@ section > h2
   color: variables.$color-primary
 
 .template
-  padding: 40px 0
+  padding: 40px 50px
 
 // possible hover effect we could use
 // a 

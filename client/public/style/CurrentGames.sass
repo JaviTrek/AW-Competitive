@@ -1,3 +1,5 @@
+@use 'abstracts/variables' as variables
+  
 .container
   margin: 0 auto
   background-color: #2C2C2C
@@ -9,3 +11,51 @@
     line-height: 60px
     text-align: center
     background-color: #1F1F1F
+  .containerContent
+    margin: 0 auto
+
+.currentGame
+  position: relative
+  height: 400px
+  margin: 25px
+  background-image: url('../images/map.png')
+  background-size: cover
+  box-shadow: inset 0px 250px 170px rgba(0, 0, 0, 0.8)
+  display: flex
+  
+  .CGInfo
+    display: flex
+    flex-direction: column
+    width: 100%
+    .CGTitle, .CGSubtitle, .CGMapName
+      font-weight: 400
+      font-size: 32px
+      line-height: 48px
+      text-align: center
+    .CGTitle
+      color: variables.$color-primary-variant
+    .CGMapName
+      color: variables.$color-primary
+
+  .CGUsers
+    position: absolute
+    left: 0 
+    right: 0
+    margin-left: auto 
+    margin-right: auto 
+    width: 50%
+    bottom: 30px
+    display: flex
+    flex-direction: row
+    justify-content: space-around
+    .VSImage
+      width: 79px
+
+  .CGCharacter
+    width: 250px
+    img
+      height: 100%
+      // width: 100%
+      filter: drop-shadow(8px 8px 1px rgba(0, 0, 0, 0.5))
+  .CGCharacter1
+    @include variables.img-hor-flip()
