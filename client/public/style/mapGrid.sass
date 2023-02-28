@@ -39,12 +39,12 @@
         height: 50px
         background: url("images/mapTiles/tileCursor.png") no-repeat
         background-size: contain
-        z-index: 10
+        z-index: 100
         image-rendering: pixelated
       .moveTile
         background: rgba(67, 217, 228, 0.5)
         border: 2px solid rgb(22, 98, 184)
-        z-index: 10
+        z-index: 5
         position: absolute
         top: 0
         height: 30px
@@ -134,7 +134,7 @@ $countryArrays: $hq, $cities, $bases, $comtower
   background: url("images/mapTiles/mo0.webp") no-repeat
   background-size: contain
   position: absolute
-
+  z-index: 6
   bottom: 0px
   height: 42px
   width: 32px

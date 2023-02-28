@@ -74,17 +74,7 @@ module.exports = (columns, rows, name) => {
     // We transform our awbwMap into a new parsedMap
     let missingTiles = [];
     let parsedMap = [];
-    parsedMap.push({
-        mapName: "Caustic Finale",
-        columns: 18,
-        rows: 18,
-        players: 2,
-        author: "Hellraider",
-        published: "05/11/2008",
 
-
-
-    })
     for (let i = 0; i < mapToParse.length; i++) {
 
         for (let j = 0; j < awbwMap.length; j++) {
@@ -126,7 +116,10 @@ module.exports = (columns, rows, name) => {
                 parsedMap.push({
                     image: awbwMap[j][1],
                     terrainType: terrainType,
-                    hasUnit: false,
+                    hasUnit: {
+                        id: 5,
+                        name: "tank"
+                    },
 
             })
                 break
@@ -145,9 +138,15 @@ module.exports = (columns, rows, name) => {
     // its the remainder that tells the story!
     // 19 / 18 = 1 R 1
 
+    parsedMap.push({
+        mapName: "Caustic Finale",
+        columns: 18,
+        rows: 18,
+        players: 2,
+        author: "Hellraider",
+        published: "05/11/2008",
+    })
 
-    //we just need to be able to store map size somewhere
-    let maxTile = mapToParse.length
 
     //we write our function
     fs.writeFileSync(`./scripts/${name}.json`, JSON.stringify(parsedMap), 'utf-8');

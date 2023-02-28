@@ -33,7 +33,7 @@ function unitType(unitIndex) {
         {name: "carrier",    menuName: "Carrier",    cost: 30000, move: 5, moveType: "S", range: [3, 8], facility: "port"},
 
     ];
-
+return unitData[unitIndex]
 
 }
 export {unitType};

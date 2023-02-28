@@ -1,8 +1,19 @@
 import TinyQueue from "tinyqueue";
 import React from "react";
+import {unitType} from "./unitType";
+import {checkTerrain} from "./checkTerrain";
 
-function pathFinding(maxX, maxY, movement, start, mapData, mapModify) {
 
+function pathFinding(maxX, maxY, unit, startIndex, mapData, mapModify) {
+
+    //Our function goes and check what ID is the unit we have
+    const unitData = unitType(unit.hasUnit.id)
+    const unitMove = unitData.move
+    const unitMoveType = unitData.moveType
+
+
+    const startY = Math.trunc(startIndex / 18)
+    const startX = (startIndex) % 18
 
     //maxX maxY = rows columns, multiply together and get all tiles in grid
     const nodeAmount = maxX * maxY
@@ -32,7 +43,7 @@ function pathFinding(maxX, maxY, movement, start, mapData, mapModify) {
         movementCost.push(null);
     }
     // where our unit currentNodely is, where it starts
-    let startTile = start.x + start.y * maxX
+    let startTile = startX + startY * maxX
     // there is 0 distance to transverse the tile we are already in.
     distance[startTile] = 0
 
@@ -44,12 +55,13 @@ function pathFinding(maxX, maxY, movement, start, mapData, mapModify) {
     // we verify tiles to not include them twice
     let verifyTile = {}
 
+
     // our initial tile
     let initial = {
         index: startTile,
         distance: 0,
-        x: start.x,
-        y: start.y
+        x: startX,
+        y: startY
     }
 
     queue.push(initial)
@@ -90,14 +102,18 @@ function pathFinding(maxX, maxY, movement, start, mapData, mapModify) {
             let addX = x + xMove[i]
             let addY = y + yMove[i]
 
-            //For now lets say the terrain always has a cost of 1 movement.
-            let terrainCost = 1
+
+
 
             // if we hit an edge, we stop (being -1 or being our max value +1, we enter a tile that doesnt exist (such as a 3x3 having a tile -1 or tile 4)
             if (addY < 0 || addX < 0 || addX >= maxX || addY >= maxY) continue;
 
             //The next tile is either -1 or +1 on row or column, so either addX or AddY will be 0, 1 or -1, moving us exactly one tile.
             let nextNodeIndex = addX + addY * maxX
+            console.log(nextNodeIndex)
+            //lets check the terrain cost of our next index
+            //
+            let terrainCost = checkTerrain(unitMoveType, mapData[nextNodeIndex])
             //If we have already visited this node, we go to the next ones
             if (visitedNodes[nextNodeIndex]) continue;
 
@@ -106,12 +122,12 @@ function pathFinding(maxX, maxY, movement, start, mapData, mapModify) {
 
             //The new distance from our initial tile to the new tile
             let newDistance = minValue + terrainCost
-            console.log(newDistance)
+
 
 
             //if new distance is less than the distance of the next node
             // AND less than movement
-            if (newDistance < distance[nextNodeIndex] && newDistance <= movement) {
+            if (newDistance < distance[nextNodeIndex] && newDistance <= unitMove) {
                 previous[nextNodeIndex] = index
                 distance[nextNodeIndex] = newDistance
                 // if we havent verified this tile
@@ -144,13 +160,15 @@ function pathFinding(maxX, maxY, movement, start, mapData, mapModify) {
 
     console.log(tilesToDraw)
     tilesToDraw.forEach((tile, index) => {
-        mapModify[tile.index] = <div key={tile.index} className={`mapTile`} id={`c${tile.x}r${tile.y}`}>
+
+        mapModify[tile.index] = <div key={tile.index} className={`mapTile`} id={tile.index}>
             <div className={mapData[tile.index].image}>
             </div>
             <div className="tileCursor"></div>
             <div className="moveTile"></div>
 
         </div>
+
     })
 
 
