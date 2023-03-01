@@ -1,7 +1,7 @@
 const fs = require('fs')
 
 // ['plains', 'mountain', "forest", "road", "bridge", "factory", "city", "shoal", "river"];
-
+//TODO: Make the random map generator have better parameters such as the possibility of using templates or knowing that it should spam 2 bases 1 hq per player and other parameters that will make it generate better random maps.
 const terrainTypes = [];
 // our function used to hold our variables in the array.
 async function terrainParameters(terrain, value) {
@@ -11,17 +11,17 @@ async function terrainParameters(terrain, value) {
 }
 //These terrain parameters make it so a % of our tiles are this type. So below, every tile has a 50% of being pl/plains or 5% to be mo/mountains and so on for each one of these
 // 80%
-terrainParameters('pl', 50)
-terrainParameters('ro', 10)
-terrainParameters('ci', 10)
-terrainParameters('sh', 10)
+terrainParameters('pl0', 50)
+terrainParameters('ro1', 10)
+terrainParameters('ci0', 10)
+terrainParameters('sh1', 10)
 // 10%
-terrainParameters('fo', 7)
-terrainParameters('ri', 2)
-terrainParameters('fa', 1)
+terrainParameters('fo0', 7)
+terrainParameters('ri1', 2)
+terrainParameters('fa0', 1)
 //10%
-terrainParameters('br', 5)
-terrainParameters('mo', 5)
+terrainParameters('br1', 5)
+terrainParameters('mo0', 5)
 
 /*
 How to create a map randomizer
@@ -49,12 +49,12 @@ x = unit waited or not waited (x because it doesnt have a status as it doesnt ex
 
  */
 
-let mapArray = [];
-let mirrorMap = [];
+
 
 // To be honest the function below is quite convoluted, its a bit "simple" but its simply creating a sequence of 2 initial numbers for columns and another 2 numbers for rows, so 0101 means first column first row (top corner).
 module.exports = (columns, rows, name) => {
-
+    let mapArray = [];
+    let mirrorMap = [];
     for (let i = 1; i < (columns / 2) + 1; i++) {
         for (let k = 1; k < rows + 1; k++) {
             // Lets select a random terrain for our terrain tile

@@ -43,17 +43,12 @@ app.get("/home", async (req, res) => {
         pushData
     })
 })
-const createMap = require('./scripts/randomMapGenerator')
-createMap(18, 18, "randomMap")
-//This is our random map generator
-const randomMap = require("./scripts/randomMap.json");
-//This is our random map function
 
 
-app.get('/map/randomMap', (req, res) => {
-    res.json(randomMap)
-});
 
+
+
+//TODO: Create our own folders for our account routes
 
 // ------------
 // POST REQUESTS
@@ -78,6 +73,7 @@ app.post('/createUser', async (req, res) => {
     //insert the document
     await collection.insertOne(userDocument);
     res.redirect('/');
+
 });
 //------------------------------
 //Steve work on authorization
@@ -151,3 +147,44 @@ app.post('/register', async (req,res) => {
  //Passport
  app.use(passport.initialize());
  app.use(passport.session());
+
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//TODO: Move these scripts/get routes into its own file which we then get via app.use
+
+// MAP RENDERING
+
+// Random Map Generator
+
+const createMap = require('./scripts/randomMapGenerator')
+createMap(18, 18, "randomMap")
+const randomMap = require("./scripts/randomMap.json");
+app.get('/map/randomMap', (req, res) => {
+    res.json(randomMap)
+});
+
+
+// Map Parser
+const mapParser = require('./scripts/awbwMapParser')
+mapParser(18, 18, "parsedMap")
+const parsedMap = require("./scripts/parsedMap.json");
+
+app.get('/map/parsedMap', (req, res) => {
+    res.json(parsedMap)
+});
+
+

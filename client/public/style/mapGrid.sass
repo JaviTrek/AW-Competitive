@@ -1,57 +1,132 @@
-// our main grid where we have our map tiles
-.mapGrid
+
+
+.gameBox
   display: grid
-  margin: 5vw 10vw
-  // our individual tiles
-  .mapTile
-    width: 100%
-    background-color: #bfdd33
-    aspect-ratio: 1
-    position: relative
+  grid-template-columns: min-content
+  text-align: center
+  padding: 2vw
+  margin: 5vw
+  align-items: center
+  align-content: center
+  justify-items: center
+  justify-content: center
 
-    //our background tiles/img
-    .fo, .mo, .pl, .ri, .ro, .sh, .ci, .fa, .br
-      height: 48px
-      width: 48px
-    .fo
-      background: url("images/mapTiles/forest.webp") no-repeat
-      background-size: contain
-    .pl
-      background: url("images/mapTiles/plains.webp") no-repeat
+  // our main grid where we have our map tiles
+  .mapGrid
+    display: grid
+    margin: 0
+    border: 1em solid #333b54
+    // our individual tiles
+    .mapTile
+      width: 100%
+      background-color: #bfdd33
+      aspect-ratio: 1
+      position: relative
+      &:hover
+        .tileCursor
+          display: block
+
+      //TODO: Fix the tile cursor, currently it looks centered but it really isn't centered
+      .tileCursor
+        display: none
+        position: absolute
+        bottom: -8px
+        left: -12px
+
+        text-align: center
+        width: 50px
+        height: 50px
+        background: url("images/mapTiles/tileCursor.png") no-repeat
+        background-size: contain
+        z-index: 10
+        image-rendering: pixelated
+
+
+
+//Here we have our array of maptiles
+$mapTiles: fo0, mo0, pl0, oc0, re0
+$roadTiles: ro1, ro2, ro3, ro4, ro6, ro8, br1, br3
+$seaTiles: se0
+$pipeTiles: pi1, pi3, pi4
+$riverTiles: ri1, ri2, ri3, ri4, ri6, ri8
+$shoalTiles: sh1, sh3, sh5, sh7,
+$siloTiles: si0, si1
+
+
+$mapArrays: $mapTiles, $roadTiles, $seaTiles, $riverTiles, $shoalTiles, $pipeTiles, $siloTiles
+
+@each $array in $mapArrays
+  @each $variable in $array
+    .#{$variable}
+      image-rendering: pixelated
+      height: 32px
+      width: 32px
+      @if $array == $mapTiles
+        background: url("images/mapTiles/#{$variable}.webp") no-repeat
+      @else if $array == $roadTiles
+        background: url("images/mapTiles/roads/#{$variable}.webp") no-repeat
+      @else if $array == $seaTiles
+        background: url("images/mapTiles/sea/#{$variable}.webp") no-repeat
+      @else if $array == $riverTiles
+        background: url("images/mapTiles/river/#{$variable}.webp") no-repeat
+      @else if $array == $shoalTiles
+        background: url("images/mapTiles/shoal/#{$variable}.webp") no-repeat
+      @else if $array == $pipeTiles
+        background: url("images/mapTiles/pipes/#{$variable}.webp") no-repeat
+      @else if $array == $siloTiles
+        background: url("images/mapTiles/silo/#{$variable}.webp") no-repeat
+        height: 48px
+        width: 32px
+        bottom: 0px
+        position: absolute
       background-size: contain
 
-    .ri
-      background: url("images/mapTiles/river.webp") no-repeat
-      background-size: contain
 
-    .ro
-      background: url("images/mapTiles/road.webp") no-repeat
-      background-size: contain
-    .br
-      background: url("images/mapTiles/bridge.webp") no-repeat
-      background-size: contain
+// here we have our array of map tiles that are not 16x16
+$bases: ne2, os2, bm2
+$cities: ne1, os1, bm1
+$hq: os0, bm0
+$comtower: os5, bm5, ne5
 
-    .sh
-      background: url("images/mapTiles/shoal.webp") no-repeat
-      background-size: contain
-    .fa
-      background: url("images/mapTiles/factory.webp") no-repeat
-      background-size: contain
-    // mountain and city overlap on top of the other tiles so they need to be absolute so they can go over other elements correctly.
-    .mo
-      background: url("images/mapTiles/mountain.webp") no-repeat
-      background-size: contain
-      position: absolute
+$countryArrays: $hq, $cities, $bases, $comtower
+@each $array in $countryArrays
+  @each $variable in $array
+    .#{$variable}
+      image-rendering: pixelated
+      @if $array == $bases
+        background: url("images/mapTiles/countries/base/#{$variable}.webp") no-repeat
+        //check if its a neutral base or not
+        @if $variable == ne2
+          height: 32px
+          width: 32px
+        @else
+          height: 50px
+          width: 32px
+      @else if $array == $cities
+        background: url("images/mapTiles/countries/city/#{$variable}.webp") no-repeat
+        height: 42px
+        width: 32px
+      @else if $array == $hq
+        background: url("images/mapTiles/countries/hq/#{$variable}.webp") no-repeat
+        height: 62px
+        width: 32px
+      @else if $array == $comtower
+        background: url("images/mapTiles/countries/comtower/#{$variable}.webp") no-repeat
+        height: 50px
+        width: 32px
       bottom: 0px
-      height: 63px
-      width: 48px
-    .ci
-      background: url("images/mapTiles/city.webp") no-repeat
-      background-size: contain
       position: absolute
-      bottom: 0px
-      height: 63px
-      width: 48px
+      background-size: contain
+
+// mountain and city overlap on top of the other tiles so they need to be absolute so they can go over other elements correctly.
+.mo0
+  background: url("images/mapTiles/mo0.webp") no-repeat
+  background-size: contain
+  position: absolute
+  bottom: 0px
+  height: 42px
+  width: 32px
+
 
 
 
