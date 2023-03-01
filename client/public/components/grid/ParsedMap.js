@@ -14,58 +14,69 @@ export function ParsedMap() {
     useEffect(() => {
         axios.get('/map/parsedMap')
             .then(res => {
-
                 mapData = res.data
                 res.data.forEach((tile, index) => {
-
-                    //Ignore first one since that one has mapInformation and is not a mapTile
-                    // we have -1 because we ignore the first element since its not a tile and we want our tile to have a key/id of 0 because its the first tile, not the second one.
-                    if(index !== res.data.length - 1) {
+                    //Ignore last one since that one has mapInformation and is not a mapTile
+                    if (index !== res.data.length - 1) {
                         mapTiles.push(
-                            <div onClick={() => {checkPath(index)}} key={index} className={`mapTile`} id={(index)}>
-                                <div  className={tile.image}>
+                            <div onClick={() => {
+                                checkPath(index)
+                            }} key={index} className={`mapTile`} id={(index)}>
+                                <div className={tile.image}>
                                 </div>
-                                <div  className="tileCursor"></div>
+                                <div className="tileCursor"></div>
                             </div>
-
                         )
                     }
                 })
                 setMap(mapTiles)
-
-
-
-            }).then(() => {
-
-
-
-        }).catch(e => {
+            }).catch(e => {
             console.log(e)
         });
-
     }, [])
 
-
     function checkPath(index) {
+
+        // lets call our function that can calculate the possible tiles we can take
         let findPath = pathFinding(18, 18, mapData[index], mapTiles[index].props.id, mapData, mapTiles)
-        setMap(findPath)
+
+        // lets reset the map, to make sure we don't grab any other MoveTile divs with us
+        mapTiles.forEach((tile, index) => {
+            mapTiles[index] = <div key={index}  onClick={() => {checkPath(index)}} className={`mapTile`} id={index}>
+                <div className={tile.props.children[0].props.className}></div>
+                <div className="tileCursor"></div>
+            </div>
+        })
+
+        // lets use the return value from our pathFinding function (findPath), which is an array with the index of the tiles that we can move to
+        findPath.forEach((tile) => {
+            mapTiles[tile.index] = <div key={tile.index} onClick={() => {checkPath(tile.index)}} className={`mapTile`} id={tile.index}>
+                <div className={mapData[tile.index].image}></div>
+                <div className="moveTile"></div>
+                <div className="tileCursor"></div>
+            </div>
+        })
+
+        //TODO: Can we take out this little .slice() trick and make react just re-render normally?
+
+        // react needs to be tricked in order to re-render for some reason?
+        let newMap = mapTiles.slice()
+        setMap(newMap)
+
+
+
     }
 
-
-
     return (
-
         <div>
-
             <div className="gameBox">
                 <h1>Caustic Finale</h1>
-
                 <div className={`gridSize18 mapGrid`}>
                     {map}
-
                 </div>
             </div>
         </div>
     )
 
 }
+

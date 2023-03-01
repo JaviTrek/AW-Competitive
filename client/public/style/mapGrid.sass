@@ -39,7 +39,7 @@
         height: 50px
         background: url("images/mapTiles/tileCursor.png") no-repeat
         background-size: contain
-        z-index: 100
+        z-index: 10
         image-rendering: pixelated
       .moveTile
         background: rgba(67, 217, 228, 0.5)
@@ -51,7 +51,7 @@
         width: 30px
 
 
-
+//TODO: Cities, airport, base, comtower and mountains all need to have the same z index
 
 
 //Here we have our array of maptiles
@@ -88,7 +88,7 @@ $mapArrays: $mapTiles, $roadTiles, $seaTiles, $riverTiles, $shoalTiles, $pipeTil
         background: url("images/mapTiles/silo/#{$variable}.webp") no-repeat
         height: 48px
         width: 32px
-        bottom: 0px
+        bottom: 0
         position: absolute
       background-size: contain
 
@@ -125,7 +125,8 @@ $countryArrays: $hq, $cities, $bases, $comtower
         background: url("images/mapTiles/countries/comtower/#{$variable}.webp") no-repeat
         height: 50px
         width: 32px
-      bottom: 0px
+      bottom: 0
+      z-index: 2
       position: absolute
       background-size: contain
 
@@ -134,8 +135,8 @@ $countryArrays: $hq, $cities, $bases, $comtower
   background: url("images/mapTiles/mo0.webp") no-repeat
   background-size: contain
   position: absolute
-  z-index: 6
-  bottom: 0px
+  z-index: 2
+  bottom: 0
   height: 42px
   width: 32px
 

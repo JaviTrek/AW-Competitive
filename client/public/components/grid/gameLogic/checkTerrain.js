@@ -18,18 +18,11 @@ function checkTerrain(moveType, tileData) {
         "property": {F: 1, B: 1, T: 1, W: 1, A: 1, P: 9, S: 9, L: 9},
     };
 
-
-    const unitMoveType = moveType
-    const terrain = tileData.terrainType
-
     function getCost (moveType, terrain) {
-        console.log(terrain)
-        const move = movementCostClear[terrain][unitMoveType]
-        return move
-
+        return movementCostClear[terrain][moveType]
     }
 
-    return  getCost(unitMoveType, terrain)
+    return getCost(moveType, tileData.terrainType)
 
 
 }
