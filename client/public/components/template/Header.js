@@ -4,28 +4,22 @@ import '../../style/template/header.sass'
 
 export const Header = () => {
   return (
-    <header className='header'>
-      <div className='headerGrid'> 
+    <header className='header'> 
 
-        <div>
-          <img className='pictureElement' src = {logo} alt=""/>
-        </div>
+        <a href="/">
+          <img className='headerLogo' src={logo} alt="header logo"/>
+        </a>
 
-        <div className='menuElementGrid'>
-          <div className='menuElementGridButton'> Competition</div>
-          <div className='menuElementGridButton'> How to play</div>
-          <div className='menuElementGridButton'> Community</div>
-          <div className='menuElementGridButton'> Tools</div>
-        </div>
+        <nav className='headerMenu'>
+          <a className='headerNav headerMenuButton'> Competition</a>
+          <a className='headerNav headerMenuButton'> How to play</a>
+          <a className='headerNav headerMenuButton'> Community</a>
+          <a className='headerNav headerMenuButton'> Tools</a>
+        </nav>
 
-        <div className = 'loginContainer'>
-          <div className='menuElementGridLogin'> Login</div>
-        </div>
-
-      </div>
+        <div className='headerNav loginButton'> Login</div>
 
     </header>
-
     
   )
 }
