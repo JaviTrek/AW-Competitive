@@ -148,7 +148,7 @@ app.post('/register', async (req,res) => {
  app.use(passport.initialize());
  app.use(passport.session());
 
-})
+
 
 
 
