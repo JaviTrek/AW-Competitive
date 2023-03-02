@@ -1,7 +1,9 @@
 import React, {useEffect, useState} from "react";
 
+// Lets keep these imports here just in case for now
+
+import '../../style/App.sass'
 import {pathFinding} from "./gameLogic/pathfinding"
-import '../../App.sass'
 import axios from "axios";
 
 
