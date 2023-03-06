@@ -6,7 +6,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "serverStart": "node server.js",
+    "serverStart": "node server.js"
   },
   "proxy": "https://localhost:3000",
   "repository": {

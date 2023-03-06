@@ -2,6 +2,7 @@
   
 .container
   margin: 0 auto
+  max-width: 1000px
   background-color: #2C2C2C
   filter: drop-shadow(20px 20px 10px rgba(0, 0, 0, 0.5))
   .containerName
@@ -15,51 +16,81 @@
     margin: 0 auto
 
 .currentGame
-  position: relative
-  height: 400px
-  margin: 25px
-  background-image: url('../images/map.png')
-  background-size: cover
-  box-shadow: inset 0px 250px 170px rgba(0, 0, 0, 0.8)
-  display: flex
-  
-  .CGInfo
+  height: 225px
+  margin: 20px 25px
+  // box-shadow: inset 0px 250px 170px rgba(0, 0, 0, 0.8)
+  background: #1F1F1F
+  border: 5px solid #000000
+  display: grid
+  grid-template-rows: [top] 32px [title-bottom] auto [bottom]
+  grid-template-columns: [left] 44.5% [map-left] 16.5% [map-right] auto [right]
+
+  .CGTopBar
+    grid-row-start: top
+    grid-row-end: title-bottom
+    grid-column-start: left
+    grid-column-end: right
     display: flex
-    flex-direction: column
-    width: 100%
-    .CGTitle, .CGSubtitle, .CGMapName
+    justify-content: space-between
+    padding: 5px 10px
+    color: variables.$color-primary-variant
+    background-color: #131313
+    .CGTitle, .CGDay
+      font-size: 16px
+      line-height: 24px
       font-weight: 400
-      font-size: 32px
-      line-height: 48px
-      text-align: center
-    .CGTitle
-      color: variables.$color-primary-variant
-    .CGSubtitleDay
-      color: variables.$color-primary-variant
-    .CGMapName
+    .CGDay
+      color: variables.$color-primary
+    span
       color: variables.$color-primary
 
   .CGUsers
-    position: absolute
-    left: 0 
-    right: 0
-    margin-left: auto 
-    margin-right: auto 
-    width: 60%
-    bottom: 30px
+    position: relative
+    grid-row-start: title-bottom
+    grid-row-end: bottom
+    grid-column-start: left
+    grid-column-end: map-left
+    padding: 5px 10px
     display: flex
     flex-direction: row
     justify-content: space-between
-    align-items: end
+    align-items: flex-end
     .VSImage
-      width: 79px
+      position: absolute 
+      left: 0 
+      right: 0
+      top: 0
+      bottom: 0
+      margin: auto
+      width: 75px
+      height: auto
       filter: drop-shadow(8px 8px 1px rgba(0, 0, 0, 0.5))
 
-  .CGCharacter
-    width: 250px
-    img
-      height: 100%
-      // width: 100%
-      filter: drop-shadow(8px 8px 1px rgba(0, 0, 0, 0.5))
-  .CGCharacter1
-    @include variables.img-hor-flip()
+  .CGMap
+    grid-row-start: title-bottom
+    grid-row-end: bottom
+    grid-column-start: map-left
+    grid-column-end: map-right
+    background-color: #131313
+    display: flex
+    flex-direction: column
+    align-items: center
+    .CGMapName
+      text-align: center
+      font-weight: 400
+      color: variables.$color-primary
+
+  .CGInfo
+    grid-row-start: title-bottom
+    grid-row-end: bottom
+    grid-column-start: map-right
+    grid-column-end: right
+    padding: 10px
+    display: flex
+    flex-direction: column
+    width: 100%
+    font-weight: 400
+    font-size: 14px
+    line-height: 28px
+    .CGSpan
+      color: variables.$color-primary-variant
