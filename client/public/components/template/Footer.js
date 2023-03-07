@@ -3,10 +3,10 @@ import awLogo from '../../images/awLogo.webp'
 import ghLogo from '../../images/footerImages/GitHub.png'
 import rLogo from '../../images/footerImages/Reddit.png'
 import dLogo from '../../images/footerImages/Discord.png'
+import '../../style/template/footer.sass'
 
 export const Footer = () => {
   return (
-
     <div className='footer'>
       <div className = 'footerGrid'>
 
@@ -33,7 +33,6 @@ export const Footer = () => {
       </div>
       
     </div>
-
   )
 }
 
