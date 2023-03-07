@@ -6,6 +6,7 @@ import dLogo from '../../images/footerImages/Discord.png'
 
 export const Footer = () => {
   return (
+
     <div className='footer'>
       <div className = 'footerGrid'>
 
@@ -32,6 +33,7 @@ export const Footer = () => {
       </div>
       
     </div>
+
   )
 }
 

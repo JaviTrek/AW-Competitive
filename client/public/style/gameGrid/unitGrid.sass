@@ -1,0 +1,46 @@
+
+
+.gameBox
+  display: grid
+  grid-template-columns: min-content
+  text-align: center
+  padding: 2vw
+  margin: 5vw
+  align-items: center
+  align-content: center
+  justify-items: center
+  justify-content: center
+
+  // our main grid where we have our map tiles
+  .mapGrid
+    display: grid
+    margin: 0
+    border: 1em solid #333b54
+    // our individual tiles
+
+    .mapTile
+      width: 100%
+      background-color: #bfdd33
+      aspect-ratio: 1
+      position: relative
+      &:hover
+        .tileCursor
+          display: block
+
+
+      .tank
+        background: url("images/units/OrangeStar/Tank-0.png") no-repeat
+        background-size: contain
+        position: absolute
+        z-index: 100
+        bottom: 0
+        height: 32px
+        width: 32px
+        image-rendering: pixelated
+
+
+
+
+
+
+

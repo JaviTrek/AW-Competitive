@@ -4,7 +4,7 @@ import React, {useEffect, useState} from "react";
 
 
 
-import '../../App.sass'
+import '../../style/App.sass'
 import axios from "axios";
 
 
