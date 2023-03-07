@@ -1,44 +1,43 @@
-.headerGrid
-  color: orange
-  background: #18223E
+@use '../abstracts/variables' as variables
+  
+.header
+  padding: 11px 40px 11px 13px
+  display: flex
+  justify-content: space-between
+  align-items: center
+  height: 85px
+  background: rgba(0, 0, 0, 0.5)
   color: white
-  max-width: 107%
+  width: 100vw
   margin: 0 auto
+
   display: grid
   grid-template-columns: 28% 60% 12% 
   font-size: 1.6vw
   max-height: 7%
+
   font-weight: 500px
-  align-items: center
+  // max-width: 107%
+  // display: grid
+  // grid-template-columns: 28% 60% 12% 
+  // max-height: 7%
 
-
-.pictureElement
-  padding-top: 3%
-  max-height: 50%
-  max-width: 60%
-  grid-template-columns: min-content auto min-content
+.headerLogo
+  max-width: 216px
   cursor: pointer
+  // grid-template-columns: min-content auto min-content
+  // padding-top: 3%
+  // max-height: 50%
+  // max-width: 60%
 
-
-
-.menuElementGrid
+.headerMenu
   display: grid
-  grid-template-columns:  14% 14% 14% 14%
-  grid-column-gap: 7%
-
-.menuElementGridButton:hover
-  color: orange  
-  cursor: pointer
+  grid-template-columns: 1fr 1fr 1fr 1fr
+  grid-gap: 50px
 
 
-
-.loginContainer
-  display: grid
-  justify-content: right
-  padding-right: 20%
-
-.menuElementGridLogin:hover
-  color: orange
+.headerNav:hover
+  color: variables.$color-primary  
   cursor: pointer
   
 

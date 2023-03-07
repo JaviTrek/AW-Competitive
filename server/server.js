@@ -73,7 +73,82 @@ app.post('/createUser', async (req, res) => {
     //insert the document
     await collection.insertOne(userDocument);
     res.redirect('/');
+
+});
+//------------------------------
+//Steve work on authorization
+//------------------------------
+const session = require('express-session');
+const DiscordStrategy = require('./Authentication_Strategies/discordStrategy');
+const passport = require('passport');
+
+
+
+app.use(session({
+    //secret needs work
+    secret: 'some secret',
+    cookie: {
+        maxAge: 60000 * 60 * 24,
+
+    },
+    saveUninitialized: false,
+    resave: true,
+}));
+
+
+//auth routes
+app.get('/routes/auth', passport.authenticate('discord'));
+app.get('/routes/auth/redirect', passport.authenticate('discord', {
+    failureRedirect: '/forbidden'
+}), (req,res) => {
+    res.send(req.user);
+});
+
+
+//-------
+//login
+//----
+
+const { hashPassword, comparePassword } = require('./Authentication_Strategies/hashing_password'); 
+const LocalStrategy = require('./Authentication_Strategies/localStrategy');
+
+//login post request using passport local
+app.post('/login', passport.authenticate('local'), (req,res)=> {
+    console.log('logged in');
+    res.sendStatus(200);
 })
+
+//Register post request
+app.post('/register', async (req,res) => {
+    let dbConnect = database.getDatabase()
+    //use the collection
+    let collection = dbConnect.collection("learn")
+    const { username, password } = req.body;
+    const userDB = await collection.findOne({$or : [{ username }]});
+    if(userDB){
+        console.log("user already exist!");
+        res.sendStatus(400);
+    } else{
+        const hashedPassword = hashPassword(password);
+        let myDoc = await collection.countDocuments({_id: {$gt: -1} });
+        let userDocument = {
+        _id: myDoc + 1,
+        username: username,
+        password: hashedPassword,
+    };
+    await collection.insertOne(userDocument);
+    console.log("User created");
+    res.sendStatus(201);
+    }
+
+   
+});
+
+ //Passport
+ app.use(passport.initialize());
+ app.use(passport.session());
+
+
 
 
 
@@ -111,4 +186,5 @@ const parsedMap = require("./scripts/parsedMap.json");
 app.get('/map/parsedMap', (req, res) => {
     res.json(parsedMap)
 });
+
 
