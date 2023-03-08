@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {StrictMode} from 'react';
 import {createBrowserRouter, RouterProvider,} from "react-router-dom"
 import {Template} from "./components/template/Template"
 import {App} from "./components/App"
@@ -48,7 +48,7 @@ const router = createBrowserRouter([
 
 const root = createRoot(container);
 root.render(
-
+<StrictMode>
         <RouterProvider router={router}/>
-
+</StrictMode>
 );

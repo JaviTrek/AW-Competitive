@@ -2,32 +2,36 @@ import React, {useEffect, useState} from "react";
 
 import {pathFinding} from "./gameLogic/pathfinding"
 import {moveUnit} from "./gameLogic/moveUnit"
+import {socketFunction} from "./gameLogic/websocket"
 import '../../App.sass'
 import axios from "axios";
-
+import io from "socket.io-client"
+const socket = io.connect("http://localhost:4000")
 
 export function ParsedMap() {
+
 
 // this function will request our server for a json file, read it and create tiles depending on the json file information
     let mapTiles = []
     let mapData = []
     let [map, setMap] = useState([])
     useEffect(() => {
-        axios.get('/map/parsedMap')
+        axios.get('/getGameState')
             .then(res => {
-                mapData = res.data
-                res.data.forEach((tile, index) => {
-                    //Ignore last one since that one has mapInformation and is not a mapTile
+                console.log(res.data.gameState)
+                mapData = res.data.gameState
+                res.data.gameState.forEach((tile, index) => {
 
-                    //TODO: Find a way to add a key value to unit and check if its true
-                    if (index !== res.data.length - 1) {
+                    //TODO: Find a way to add a key value to unit and check if its true. (We might not need this thou, maybe we can just keep checking the object).
+
+
+                    //Ignore last one since that one has mapInformation and is not a mapTile
+                    if (index !== res.data.gameState.length - 1) {
                         mapTiles.push(
                             <div onClick={() => {
                                 checkPath(index)
                             }} key={index} className={`mapTile`} id={(index)}>
                                 <div className={tile.terrainImage}></div>
-
-
                                 <div className={tile.hasUnit.name}></div>
                                 <div className="tileCursor"></div>
                             </div>
@@ -69,20 +73,16 @@ export function ParsedMap() {
            newMap = mapTiles.slice()
 
        }
+       //lets re render our new map
         setMap(newMap)
-
-
     }
 
     //used to calculate the new position of the unit
     function newPosition(movementArray, targetTile) {
-
         //lets see what the shortest path is
         let findPath = moveUnit(movementArray, targetTile);
-
         //lets reverse it so we don't start at the end
         let path = findPath.reverse()
-
         //where we start
         let initialTile = path[0];
         //where we end
@@ -99,7 +99,6 @@ export function ParsedMap() {
                 <div className="tileCursor"></div>
             </div>
 
-
             mapTiles[lastTile] = <div key={lastTile} onClick={() => {
                 checkPath(lastTile)
             }} className={`mapTile`} id={lastTile}>
@@ -109,11 +108,7 @@ export function ParsedMap() {
             </div>
             setMap(mapTiles)
         },0)
-
-
-
     }
-
 
     //function used to resetGrid to original state
     function resetGrid() {
@@ -129,10 +124,29 @@ export function ParsedMap() {
         })
     }
 
+    /*
+    FRONTEND TO DO:
+
+        get in match =>
+            ask express for data regarding game state
+            render gamestate
+
+
+        Do action (Move tank) =>
+            send post request to express
+            express send data to database, patch request(?) just modify the one tile
+            check if it got to db correctly
+            express emit socket.io so now react runs code to render tank moving
+
+
+     */
+
+
     return (
         <div>
             <div className="gameBox">
                 <h1>Caustic Finale</h1>
+                <button onClick={socketFunction}> touchme</button>
                 <div className={`gridSize18 mapGrid`}>
                     {map}
                 </div>

@@ -29,7 +29,7 @@ const io = new Server(server, {
 
 // websocket event, when someone connects
 io.on('connection', (socket) => {
-    console.log(`user connected: ${socket.id}`)
+
     socket.on("send_message", (data) => {
         socket.broadcast.emit("receive_message", data)
     })
@@ -40,7 +40,7 @@ io.on('connection', (socket) => {
 
 //get connected to the mongo database and websocket at the same time?
 server.listen(port, () => {
-    database.connectToServer()
+    database.connectToServer("users")
     console.log(`Server running on port ${port}`)
 
 });
@@ -94,10 +94,19 @@ app.post('/createUser', async (req, res) => {
     await collection.insertOne(userDocument);
     res.redirect('/');
 
-
-
-
 });
+
+const createGame = require("./database/createGame")
+app.use(createGame)
+
+
+
+
+
+
+
+
+
 //------------------------------
 //Steve work on authorization
 //------------------------------
@@ -170,44 +179,5 @@ app.post('/register', async (req,res) => {
  //Passport
  app.use(passport.initialize());
  app.use(passport.session());
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//TODO: Move these scripts/get routes into its own file which we then get via app.use
-
-// MAP RENDERING
-
-// Random Map Generator
-
-const createMap = require('./scripts/randomMapGenerator')
-createMap(18, 18, "randomMap")
-const randomMap = require("./scripts/randomMap.json");
-app.get('/map/randomMap', (req, res) => {
-    res.json(randomMap)
-});
-
-
-// Map Parser
-const mapParser = require('./scripts/awbwMapParser')
-mapParser(18, 18, "parsedMap")
-const parsedMap = require("./scripts/parsedMap.json");
-
-app.get('/map/parsedMap', (req, res) => {
-    res.json(parsedMap)
-});
 
 

@@ -1,5 +1,26 @@
 const fs = require('fs')
 
+
+/*
+
+
+EXPRESS STUFF
+
+this script isnt being used or called from anywhere right now but it basically parses an AWBW map and creates a json file from it
+
+// Map Parser
+const mapParser = require('./scripts/awbwMapParser')
+mapParser(18, 18, "parsedMap")
+const parsedMap = require("./scripts/parsedMap.json");
+
+app.get('/map/parsedMap', (req, res) => {
+    res.json(parsedMap)
+});
+
+
+
+ */
+
 // ['plains', 'mountain', "forest", "road", "bridge", "factory", "city", "shoal", "river"];
 
 // These numbers are what AWBW uses for its tiles, so we can grab an array by AWBW with these numbers and know what they mean for our notation
