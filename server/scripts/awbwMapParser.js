@@ -113,15 +113,23 @@ module.exports = (columns, rows, name) => {
                         terrainType = "property"
                 }
 
-                parsedMap.push({
-                    image: awbwMap[j][1],
-                    terrainType: terrainType,
-                    hasUnit: {
-                        id: 5,
-                        name: "tank"
-                    },
 
-            })
+                if (j % 7 === 4)
+                    parsedMap.push({
+                        terrainImage: awbwMap[j][1],
+                        terrainType: terrainType,
+                        hasUnit: {
+                            id: 5,
+                            name: "tank"
+                        }
+                    })
+                else
+                    parsedMap.push({
+                    terrainImage: awbwMap[j][1],
+                    terrainType: terrainType,
+                    hasUnit: false
+                })
+
                 break
             }
             if (j >= awbwMap.length - 1) missingTiles.push(mapToParse[i])

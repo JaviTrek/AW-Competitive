@@ -1,0 +1,19 @@
+@use '../abstracts/variables' as variables
+  
+.NameCO
+  display: flex
+  flex-direction: column
+
+.NameCOImage
+  width: 136px
+  height: 136px
+  object-position: 100% 0
+  filter: drop-shadow(8px 0 1px rgba(0, 0, 0, 0.5))
+
+.playerNumber1
+  img
+    @include variables.img-hor-flip()
+
+.playerNumber2
+  align-items: flex-end
+
