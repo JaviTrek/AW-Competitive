@@ -4,6 +4,8 @@ import axios from "axios";
 import '../App.sass'
 import { Outlet } from "react-router-dom";
 import awLogo from "../images/awLogo.webp"
+import postForm from "./RegisterForm";
+
 export function App() {
 
     let userArray = [];
@@ -36,7 +38,7 @@ export function App() {
         <div>
 
             <img src={awLogo} alt=""/>
-
+          
 
             <h1>Welcome to AW-Competitive</h1>
             <p>This application depends on us running our server and client at the same time in order for React (our frontend) talks with Express (our middleman backend) to communicate with MongoDB (our database) for everything to work correctly</p>
@@ -61,8 +63,7 @@ export function App() {
             <br/>
             <Outlet />
             <br/>
-
-
         </div>
+        
     )
 }

@@ -123,7 +123,7 @@ app.post('/login', passport.authenticate('local'), (req,res)=> {
 })
 
 //Register post request
-app.post('/register', async (req,res) => {
+app.post('/registerUser', async (req,res) => {
     let dbConnect = database.getDatabase()
     //use the collection
     let collection = dbConnect.collection("learn")
@@ -140,9 +140,13 @@ app.post('/register', async (req,res) => {
         username: username,
         password: hashedPassword,
     };
-    await collection.insertOne(userDocument);
-    console.log("User created");
-    res.sendStatus(201);
+    try{
+        await collection.insertOne(userDocument);
+        console.log("User created");
+        res.redirect('/game?flash=correct');
+    } catch(e){
+        console.log(e);
+    }
     }
 
    

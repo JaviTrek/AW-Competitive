@@ -5,6 +5,8 @@ import {Grid} from "./components/grid/Grid"
 import {About} from "./components/About"
 import {AppChildren} from "./components/AppChildren"
 import {createRoot} from 'react-dom/client';
+import {Register} from './components/RegisterForm';
+
 
 const container = document.getElementById('app');
 const router = createBrowserRouter([
@@ -27,6 +29,11 @@ const router = createBrowserRouter([
         path: 'game',
         element: <Grid />
     },
+    {
+        path: 'register',
+        element: <Register />
+    },
+
 
 ])
 
