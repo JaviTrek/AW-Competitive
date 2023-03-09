@@ -98,7 +98,8 @@ app.post('/createUser', async (req, res) => {
 
 const createGame = require("./database/createGame")
 app.use(createGame)
-
+const gameActions = require("./database/gameActions")
+app.use(gameActions)
 
 
 
