@@ -117,7 +117,7 @@ const { hashPassword, comparePassword } = require('./Authentication_Strategies/h
 const LocalStrategy = require('./Authentication_Strategies/localStrategy');
 
 //login post request using passport local
-app.post('/login', passport.authenticate('local'), (req,res)=> {
+app.post('/loginUser', passport.authenticate('local'), (req,res)=> {
     console.log('logged in');
     res.sendStatus(200);
 })

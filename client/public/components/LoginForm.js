@@ -1,18 +1,17 @@
 import React from 'react';
 
-export function Register() {
 
-    
+export function Login() {    
     return (
         <div>
-            <form method='post' action="/registerUser">
+            <form method='post' action="/loginUser">
                 <label htmlFor="username"> Username:</label>
                 <input type="text" name="username"/>
 
                 <label htmlFor="password]"> Password:</label>
                 <input type="text" name="password"/>
 
-                <button type="submit"> Add new user</button>
+                <button type="submit"> Login</button>
                 <br/>
 
             </form>
@@ -23,5 +22,3 @@ export function Register() {
         </div>
     )
 }
-
-
