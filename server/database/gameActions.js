@@ -6,7 +6,7 @@ const router = Router();
 
 //this request is sent from our game,
 router.post("/moveUnit", async (req,res)=>{
-    console.log(req.body);
+    //console.log(req.body);
 
 
     let dbConnect = database.getDatabase()
@@ -19,10 +19,19 @@ router.post("/moveUnit", async (req,res)=>{
     //TODO: Make sure to check this is the actual user that belongs in this game, dont want random people sending updates to games they dont belong to
     const initialIndex = req.body.initialIndex
     const initialUnit = req.body.initialUnit
-    const query = {_id: 0, gameState: initialIndex}
+    const query = {_id: 0}
+
+
+
     const updateDocument = {$set: {"gameState.$.hasUnit": initialUnit}};
-    const result = await collection.updateOne(query, updateDocument)
+
+    const result = await collection.updateOne(query, updateDocument);
+
     console.log(result)
+
+    const findOne = await collection.findOne();
+
+    console.log(findOne.gameState[0])
 
 })
 
