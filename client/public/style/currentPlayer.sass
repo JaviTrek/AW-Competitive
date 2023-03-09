@@ -2,26 +2,56 @@
 $player1-color: linear-gradient(270.04deg, rgba(0, 0, 0, 0) 0.08%, #2342BA 72.38%, #0E1A47 95.82%)
 $player2-color: linear-gradient(90.04deg, rgba(0, 0, 0, 0) 0.08%, #E61F1F 79.61%, #470E0E 99.23%)
 
+div
+    border: 1px solid black    
+
 
 .current-player
-    background: #eee
-    max-width: 20%
+    // background: #eee
+    max-width: 30%
+    height: auto
+    max-height: 18em
     color: #000000
-    grid-template-columns: 1
+    display: grid
+    grid-template-columns: 1fr
+    
 
-    .header
-        background: #ccc
-        width: 400px
+    .current-player-header
+        padding: 0
+        width: 100%
+        height: 8em
+        max-height: 8em
+        position: relative
+        
+        // display: grid
+        // grid-template-columns: 1fr 1fr
 
-
-         
-    .header-image
-        max-width: 70px
-
-
-.current-player > div
-     border: 1px solid black
-
-.header > div
-     border: 1px solid black    
+        .character-image
+            min-width: 25%
+            width: 25%
+            max-width: 25%
+            object-position: 100% 0%
+            height: 100%
+            max-height: 100%
+            position: absolute
+            z-index: 1
+            margin-left: 15%
+            transform: scaleX(-1)
+            
+        .character-background
+            background:$player1-color
+            
+            width: 100%
+            max-width: 100%
+            height: 60%
+            max-height: 60%
+            position: absolute
+            margin-top: 10%
+        
+            
+           
+            
+            
+        
+   
 
