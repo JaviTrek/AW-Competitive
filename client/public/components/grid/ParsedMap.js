@@ -6,6 +6,7 @@ import {socketFunction} from "./gameLogic/websocket"
 import '../../App.sass'
 import axios from "axios";
 import io from "socket.io-client"
+
 const socket = io.connect("http://localhost:4000")
 
 export function ParsedMap() {
@@ -22,8 +23,7 @@ export function ParsedMap() {
                 mapData = res.data.gameState
                 res.data.gameState.forEach((tile, index) => {
 
-                    //TODO: Find a way to add a key value to unit and check if its true. (We might not need this thou, maybe we can just keep checking the object).
-
+                    //TODO: Find a way to add a custom HTML attribute to element and check its value. (We might not need this thou, maybe we can just keep checking the element).
 
                     //Ignore last one since that one has mapInformation and is not a mapTile
                     if (index !== res.data.gameState.length - 1) {
@@ -44,6 +44,8 @@ export function ParsedMap() {
         });
     }, [])
 
+
+    //function used to render our blue squares and see what our available movements are
     function checkPath(index) {
         resetGrid()
         let newMap = mapTiles
@@ -78,6 +80,8 @@ export function ParsedMap() {
         setMap(newMap)
     }
 
+    //TODO: Move newPosition function to its own file
+
     //used to calculate the new position of the unit
     function newPosition(movementArray, targetTile) {
         //lets see what the shortest path is
@@ -89,42 +93,49 @@ export function ParsedMap() {
         //where we end
         let newTile = path[path.length - 1];
         resetGrid()
-        //now we need to slowly move this unit to its new tile
-        // TODO: these movements should go from path[0] (initial tile) to path[path.length -1] (newTile) by moving a tile at a time instead of jumping from start to end (so 0,1,2,3...) because the unit moves through the terrain, it doesnt just teleport to its target location.
 
-
-        // what is needed?
-        // send post/patch request to tile in database
-        // lets start by just trying to change the unit to false
+        //lets send the move to the database so its saved
         axios.post('/moveUnit', {
             initialIndex: initialTile,
-            initialUnit: false,
             newIndex: newTile,
-            newUnit: mapData[initialTile].hasUnit
+            unit: mapData[initialTile].hasUnit
+        }).then((response) => {
+            console.log(response);
+        }).catch(error => console.log(error));
+
+        //if the unit moves to the same tile it was already in, we don't need to do anything
+        if (newTile !== initialTile) {
+
+            //now we need to slowly move this unit to its new tile
+            // TODO: these movements should go from path[0] (initial tile) to path[path.length -1] (newTile) by moving a tile at a time instead of jumping from start to end (so 0,1,2,3...) because the unit moves through the terrain, it doesnt just teleport to its target location.
+
+            //lets delete/set the unit in the old tile as undefined
+            mapTiles[initialTile] = <div key={initialTile} onClick={() => {
+                checkPath(initialTile)
+            }} className={`mapTile`} id={initialTile}>
+                <div className={mapData[initialTile].terrainImage}></div>
+                <div className={"undefined"}></div>
+                <div className="tileCursor"></div>
+            </div>
+
+            //lets move our old tile unit to its new tile
+            mapTiles[newTile] = <div key={newTile} onClick={() => {
+                checkPath(newTile)
+            }} className={`mapTile`} id={newTile}>
+                <div className={mapData[newTile].terrainImage}></div>
+                <div className={mapData[initialTile].hasUnit.name}></div>
+                <div className="tileCursor"></div>
+            </div>
 
 
-        })
-            .then((response) => {
-                console.log(response);
-            })
-            .catch(error => console.log(error));
+            //lets update our local copy of mapdata (instead of issuing a new get request everytime we move, we just update the local variable)
+            mapData[newTile].hasUnit = mapData[initialTile].hasUnit
+            mapData[initialTile].hasUnit = false
+        }
 
 
-        mapTiles[initialTile] = <div key={initialTile} onClick={() => {
-            checkPath(initialTile)
-        }} className={`mapTile`} id={initialTile}>
-            <div className={mapData[initialTile].terrainImage}></div>
-            <div className={"undefined"}></div>
-            <div className="tileCursor"></div>
-        </div>
-
-        mapTiles[newTile] = <div key={newTile} onClick={() => {
-            checkPath(newTile)
-        }} className={`mapTile`} id={newTile}>
-            <div className={mapData[newTile].terrainImage}></div>
-            <div className={mapData[initialTile].hasUnit.name}></div>
-            <div className="tileCursor"></div>
-        </div>
+        console.log(newTile)
+        console.log(mapData[newTile].hasUnit)
         setMap(mapTiles)
 
     }

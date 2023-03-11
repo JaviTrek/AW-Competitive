@@ -27,13 +27,14 @@
         .tileCursor
           display: block
 
-
+      //TODO: repeat the whole process in mapGrid.sass to create the background images of all units for Orange Star and Blue Moon
       .tank
         background: url("images/units/OrangeStar/Tank-0.png") no-repeat
         background-size: contain
         position: absolute
         z-index: 100
-        bottom: 0
+        //currently adding 3px from the bottom to make them not step so much on the border of moveTile
+        bottom: 3px
         height: 32px
         width: 32px
         image-rendering: pixelated
