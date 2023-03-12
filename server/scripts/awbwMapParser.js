@@ -139,10 +139,14 @@ module.exports = (columns, rows, name) => {
                     parsedMap.push({
                         terrainImage: awbwMap[j][1],
                         terrainType: terrainType,
+                        terrainOwner: false,
                         hasUnit: {
                             id: 5,
-                            name: "tank"
+                            name: "tank",
+                            hp: 100,
+                            team: 0,
                         }
+
                     })
                 else
                     parsedMap.push({
@@ -161,20 +165,16 @@ module.exports = (columns, rows, name) => {
     //logs any tiles that we havent added
     //console.log(missingTiles)
 
-    // how to calculate the tile's position just being given its index in the array
-    // first line is column  = 0 * 18 row = variable++
-    // so 0 1 0 2 0 3... then 1* 18 = 18 and then second row can be index 19 = 1,1
-    // its the remainder that tells the story!
-    // 19 / 18 = 1 R 1
 
-    parsedMap.push({
+    //TODO:this needs to be sent to database when creating a game
+    let mapData = {
         mapName: "Caustic Finale",
         columns: 18,
         rows: 18,
         players: 2,
         author: "Hellraider",
         published: "05/11/2008",
-    })
+    }
 
 
     //we write our function
