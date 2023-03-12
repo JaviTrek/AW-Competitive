@@ -3,14 +3,18 @@ import io from "socket.io-client"
 const socket = io.connect("http://localhost:4000")
 
 
-function socketFunction () {
+function socketFunction (initialTile, newTile, unit) {
 
-    console.log('hey')
+    console.log('socket running')
 
-        socket.emit("send_message", {message: "hello"})
-        socket.on("receive_message", data => {
-            alert(data.message)
+        socket.emit("sendAction", {
+            initialTile: initialTile,
+            newTile: newTile,
+            unit: unit
         })
+
+
+
 
 }
 

@@ -6,6 +6,7 @@ import {socketFunction} from "./gameLogic/websocket"
 import '../../App.sass'
 import axios from "axios";
 import io from "socket.io-client"
+import {unitType} from "./gameLogic/unitType";
 
 const socket = io.connect("http://localhost:4000")
 
@@ -19,7 +20,7 @@ export function ParsedMap() {
     useEffect(() => {
         axios.get('/getGameState')
             .then(res => {
-                console.log(res.data.gameState)
+
                 mapData = res.data.gameState
                 res.data.gameState.forEach((tile, index) => {
 
@@ -44,7 +45,53 @@ export function ParsedMap() {
         });
     }, [])
 
+    //we listen for actions being sent
+    socket.on("receiveAction", data => {
+        console.log(data.initialTile)
+        console.log(data.newTile)
+        console.log(data.unit)
+    })
 
+
+    /*
+    STANDARIZING ACTIONS
+
+    0 - Reset board to current State
+        Stop showing pathfinding or menus
+    1 - Click an unit or building
+
+        check mapData for hasUnit or isBuild
+            If unit
+
+
+        1.1 - If unit
+            Show available pathfinding options
+
+    2 - Show menu
+        After clicking, a menu should render according to the unit
+        2.1 - If Unit
+            Show options
+                Wait
+                Do checks
+                    Attack (if next to enemy)
+                    Capture (if infantry && if on property)
+        2.2 - If base
+            Show available buying options and grey out unavailable ones
+    3 - Confirm action
+        Player must click on a menu option
+
+        Check if its the turn of the current player
+            If yes, continue, else dont do anything
+        3.1 - If building
+            Just click on action, spawn unit on frontend and send update to mongoDB
+        3.2 - If Unit
+            If wait: just re-render frontend and send data to mongo
+            If attack: Run attack function and calculate damage, update 3 tiles (initial tile, new tile (with its unit), and enemy tile/unit )
+
+
+
+
+     */
     //function used to render our blue squares and see what our available movements are
     function checkPath(index) {
         resetGrid()
@@ -100,7 +147,7 @@ export function ParsedMap() {
             newIndex: newTile,
             unit: mapData[initialTile].hasUnit
         }).then((response) => {
-            console.log(response);
+
         }).catch(error => console.log(error));
 
         //if the unit moves to the same tile it was already in, we don't need to do anything
@@ -132,11 +179,8 @@ export function ParsedMap() {
             mapData[newTile].hasUnit = mapData[initialTile].hasUnit
             mapData[initialTile].hasUnit = false
         }
-
-
-        console.log(newTile)
-        console.log(mapData[newTile].hasUnit)
         setMap(mapTiles)
+        socketFunction(initialTile, newTile, mapData[initialTile].hasUnit )
 
     }
 

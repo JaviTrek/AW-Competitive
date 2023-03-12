@@ -29,9 +29,10 @@ const io = new Server(server, {
 
 // websocket event, when someone connects
 io.on('connection', (socket) => {
-
-    socket.on("send_message", (data) => {
-        socket.broadcast.emit("receive_message", data)
+    console.log(socket.id)
+    //when we receive the sendAction
+    socket.on("sendAction", (data) => {
+        socket.broadcast.emit("receiveAction", data)
     })
 });
 
