@@ -42,6 +42,12 @@ h1, h2, h3, h4, h5
 h1 
   font-size: 2.5rem
 
+h2
+  font-size: 1.5rem
+
+h3
+  font-size: 1.25rem
+
 .container 
   // this should change when design for a more responsive website
   max-width: variables.$container-width-lg
@@ -79,15 +85,20 @@ section > h2
   cursor: pointer
   border: 1px solid variables.$color-primary
   transition: variables.$transition
+  text-align: center
 
 .btn:hover 
-  background: white
+  background: variables.$color-primary
   color: variables.$color-bg
   border-color: transparent
 
 .btn-primary 
   background: variables.$color-primary
-  color: variables.$color-bg
+  color: white
+
+.btn-primary:hover 
+  background: darken(variables.$color-primary, 15%)
+  color: darken(white, 15%)
 
 /* ==================== IMG STYLES ==================== */
 
