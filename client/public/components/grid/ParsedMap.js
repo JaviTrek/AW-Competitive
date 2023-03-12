@@ -82,6 +82,23 @@ export function ParsedMap() {
             If attack: Run attack function and calculate damage, update 3 tiles (initial tile, new tile (with its unit), and enemy tile/unit )
      */
 
+//function used to resetGrid to original state
+    function resetGrid() {
+        let resetMap = []
+        // lets reset the map, to make sure we don't grab any other MoveTile divs with us
+        gameState.forEach((tile, index) => {
+            mapTiles[index] = <div onClick={() => {
+                checkActions(index)
+            }} key={index} className={`mapTile`}>
+                <div className={tile.terrainImage}></div>
+                <div className={gameState[index].hasUnit ? gameState[index].hasUnit.name : "undefined"}></div>
+                <div className="tileCursor"></div>
+                <div className={"undefined"}></div>
+            </div>
+        })
+        resetMap = mapTiles.slice()
+        setMap(resetMap)
+    }
 
     //Step 1
     function checkActions(index) {
@@ -91,6 +108,7 @@ export function ParsedMap() {
             //show pathfinding options
             checkPath(index)
         } else if (gameState[index].terrainType === "property") {
+            showMenu(index, index, false)
             //move to building menu actions function
             console.log('property')
         }
@@ -123,7 +141,6 @@ export function ParsedMap() {
 
     //used to calculate the new position of the unit
     function newPosition(movementArray, targetTile) {
-
         //lets make sure user doesnt put unit on top of another unit
         if (gameState[targetTile].hasUnit !== false) {
             checkPath(checkActions(targetTile))
@@ -159,16 +176,14 @@ export function ParsedMap() {
                     <div className="tileCursor"></div>
                 </div>
             }
-
-
             //resetGrid()
             //socketFunction(initialTile, newTile, gameState[initialTile].hasUnit )
-            showMenu(initialTile, newTile)
+            showMenu(initialTile, newTile, true)
         }
 
     }
 
-    function showMenu(initialTile, newTile) {
+    async function showMenu(initialTile, newTile, isUnit) {
 
         /*
         TODO:
@@ -178,17 +193,43 @@ export function ParsedMap() {
             need to check units in the four corners around it
                 if unit && notSameTeam
                     show attack option
-
          */
+        //lets initialize
+        let tileMenu = [];
+        let showBlueTile;
+
+        if (await isUnit !== false) {
+            showBlueTile = <div className="tileMove"></div>
+            tileMenu =
+                <div className="tileMenu">
+                    <div className="menuName" onClick={() => confirmAction(initialTile, newTile, "wait")}>Wait</div>
+                </div>
+
+        } else if (await gameState[initialTile].terrainImage.slice(2, 3) === "2") {
+            const unitsToBuild = unitType(0, true)
+            unitsToBuild.forEach(element => {
+                tileMenu.push(
+                    <div className="menuOptions" onClick={() => confirmAction(initialTile, newTile, element.name)}>
+                        <div className={`menuTank`}></div>
+                        <div className={`menuName`}> {element.menuName}</div>
+                        <div className={`menuCost`}> {element.cost}</div>
+                    </div>
+                )
+            })
+            tileMenu = <div className="tileMenu" >
+                {tileMenu}
+            </div>
+
+        }
+        console.log(tileMenu)
+
         mapTiles[newTile] = <div key={newTile} className={`mapTile`} id={newTile}>
             <div className={gameState[newTile].terrainImage}></div>
             <div className={gameState[initialTile].hasUnit.name}></div>
-            <div className="tileMove"></div>
             <div className="tileCursor"></div>
-            <div className="tileMenu">
-                <div className="menuOption" onClick={() => confirmAction(initialTile, newTile, "wait")}>Wait</div>
+            {showBlueTile}
+            {tileMenu}
 
-            </div>
         </div>
         setMap(mapTiles)
 
@@ -202,6 +243,7 @@ export function ParsedMap() {
         resetGrid()
     }
 
+
     function sendToDatabase(initialTile, newTile) {
         //lets send the move to the database so its saved
         axios.post('/moveUnit', {
@@ -214,23 +256,6 @@ export function ParsedMap() {
 
     }
 
-    //function used to resetGrid to original state
-    function resetGrid() {
-        let resetMap = []
-        // lets reset the map, to make sure we don't grab any other MoveTile divs with us
-        gameState.forEach((tile, index) => {
-            mapTiles[index] = <div onClick={() => {
-                checkActions(index)
-            }} key={index} className={`mapTile`}>
-                <div className={tile.terrainImage}></div>
-                <div className={gameState[index].hasUnit ? gameState[index].hasUnit.name : "undefined"}></div>
-                <div className="tileCursor"></div>
-                <div className={"undefined"}></div>
-            </div>
-        })
-        resetMap = mapTiles.slice()
-        setMap(resetMap)
-    }
 
     return (
         <div>

@@ -22,7 +22,6 @@
     margin: 0
     border: 1em solid #333b54
     // our individual tiles
-
     .mapTile
       width: 100%
       background-color: #bfdd33
@@ -32,6 +31,7 @@
         .tileCursor
           display: block
 
+      //the cursor we see over tiles
       //TODO: Fix the tile cursor, currently it looks centered but it really isn't centered
       .tileCursor
         display: none
@@ -46,6 +46,8 @@
         background-size: contain
         z-index: 10
         image-rendering: pixelated
+
+        //the blue square used by units to move
       .tileMove
         background: rgba(67, 217, 228, 0.5)
         border: 2px solid rgb(22, 98, 184)
@@ -54,9 +56,10 @@
         top: 0
         height: 31px
         width: 31px
+      //the menu we see when an unit moves or a factory is cliecked
       .tileMenu
         display: grid
-        grid-template-columns: 64px
+        grid-template-columns: 1fr
         gap: 4px
         background: rgba(116, 116, 116, 0.8)
         border: 2px solid rgba(59, 59, 59, 0.8)
@@ -64,11 +67,30 @@
         position: absolute
         top: 0
         left: 100%
-
-        .menuOption
+        .menuName
           background-color: #eaeaea
           cursor: pointer
           font-size: 14px
+
+          display: inline-block
+        .menuOptions
+          padding: 0 6px
+          background-color: #eaeaea
+          display: grid
+          grid-template-columns: auto auto auto
+          justify-items: left
+          align-items: center
+
+          .menuTank
+            background: url("images/units/OrangeStar/Tank-0.png") no-repeat
+            display: inline-block
+            width: 16px
+            height: 16px
+          .menuCost
+            justify-self: right
+            display: inline-block
+            cursor: pointer
+            font-size: 14px
 
 
 
