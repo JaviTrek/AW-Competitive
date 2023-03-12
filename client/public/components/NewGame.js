@@ -64,7 +64,10 @@ export const NewGame = () => {
   const imgMapping = (img) => (
     <img
       key={img}
-      className={selectedCO == img ? "selectedCO" : ""}
+      className={`
+      ${selectedCO == img ? "selectedCO" : ""} 
+      ${img == "Sami" || img == "Max" ? "" : "unavailable"}
+      `}
       onClick={() => setSelectedCO(img)}
       src={cos[`${img}-Small.png`]}
       onMouseEnter={() => {
@@ -91,7 +94,10 @@ export const NewGame = () => {
       }}
     >
       <img
-        className={selectedMap == map ? "selectedMap" : ""}
+        className={`
+        ${selectedMap == map ? "selectedMap" : ""} 
+        ${map == "Caustic-Finale" ? "" : "unavailable"}
+        `}
         src={maps[`${map}-Small.png`]}
         alt={`${map} small image`}
       />
@@ -104,7 +110,7 @@ export const NewGame = () => {
   const tempCO = useRef();
   const [hoveredCO, setHoveredCO] = useState("");
   const [selectedCountry, setSelectedCountry] = useState("Amber Blaze");
-  const [selectedMap, setSelectedMap] = useState("Amber-Valley");
+  const [selectedMap, setSelectedMap] = useState("Caustic-Finale");
   const tempMap = useRef();
   const [hoveredMap, setHoveredMap] = useState("");
 
