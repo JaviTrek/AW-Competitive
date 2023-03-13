@@ -29,7 +29,6 @@ const io = new Server(server, {
 
 // websocket event, when someone connects
 io.on('connection', (socket) => {
-    console.log(socket.id)
     //when we receive the sendAction
     socket.on("sendAction", (data) => {
         socket.broadcast.emit("receiveAction", data)
@@ -43,10 +42,15 @@ io.on('connection', (socket) => {
 server.listen(port, () => {
     database.connectToServer("users")
     console.log(`Server running on port ${port}`)
-
 });
 
+const mapParser = require('./scripts/awbwMapParser')
+mapParser(18, 18, "parsedMap")
+const parsedMap = require("./scripts/parsedMap.json");
 
+app.get('/map/parsedMap', (req, res) => {
+    res.json(parsedMap)
+});
 
 
 //This /home route is used by our home page

@@ -28,7 +28,7 @@ export function ParsedMap() {
                             checkActions(index)
                         }} key={index} className={`mapTile`}>
                             <div className={tile.terrainImage}></div>
-                            <div className={tile.hasUnit.name}></div>
+                            <div className={tile.hasUnit.country + tile.hasUnit.name}></div>
                             <div className="tileCursor"></div>
                         </div>
                     )
@@ -48,12 +48,22 @@ export function ParsedMap() {
 
 
     /*
+
+    TODO:
+        turns
+        ownership
+        status(free/used)
+        check who owns the base/city
+        display the countries units
+
+
+
     STANDARIZING ACTIONS
 
     0 - Reset board to current State
         Stop showing pathfinding or menus
-    1 - Click an unit or building
 
+    1 - Click an unit or building
         check gameState for hasUnit or hasProperty
         1.1 - If unit
             Show available pathfinding options
@@ -70,6 +80,7 @@ export function ParsedMap() {
                     Capture (if infantry && if on property)
         2.2 - If base
             Show available buying options and grey out unavailable ones
+
     3 - Confirm action
         Player must click on a menu option
 
@@ -91,7 +102,8 @@ export function ParsedMap() {
                 checkActions(index)
             }} key={index} className={`mapTile`}>
                 <div className={tile.terrainImage}></div>
-                <div className={gameState[index].hasUnit ? gameState[index].hasUnit.name : "undefined"}></div>
+                <div
+                    className={gameState[index].hasUnit ? gameState[index].hasUnit.country + gameState[index].hasUnit.name : "undefined"}></div>
                 <div className="tileCursor"></div>
                 <div className={"undefined"}></div>
             </div>
@@ -120,13 +132,13 @@ export function ParsedMap() {
         // lets call our function that can calculate the possible tiles we can take
         let blueTiles = pathFinding(18, 18, gameState[index], index, gameState, mapTiles)
         // lets use the return value from our pathFinding function (pathFinding), which is an array with the index of the tiles that we can move to
-        console.log(blueTiles)
         blueTiles.tilesToDraw.forEach((tile) => {
             mapTiles[tile.index] = <div key={tile.index} onClick={() => {
                 newPosition(blueTiles, tile.index)
             }} className={`mapTile`}>
                 <div className={gameState[tile.index].terrainImage}></div>
-                <div className={gameState[tile.index].hasUnit ? gameState[tile.index].hasUnit.name : "undefined"}></div>
+                <div
+                    className={gameState[tile.index].hasUnit ? gameState[tile.index].hasUnit.country + gameState[tile.index].hasUnit.name : "undefined"}></div>
                 <div className="tileMove"></div>
                 <div className="tileCursor"></div>
             </div>
@@ -171,18 +183,17 @@ export function ParsedMap() {
                     checkPath(newTile)
                 }} className={`mapTile`} id={newTile}>
                     <div className={gameState[newTile].terrainImage}></div>
-                    <div className={gameState[initialTile].hasUnit.name}></div>
+                    <div className={gameState[initialTile].hasUnit.country + gameState[initialTile].hasUnit.name}></div>
                     <div className="tileMove"></div>
                     <div className="tileCursor"></div>
                 </div>
             }
-            //resetGrid()
-            //socketFunction(initialTile, newTile, gameState[initialTile].hasUnit )
             showMenu(initialTile, newTile, true)
         }
 
     }
 
+    //TODO: God has forsaken me in this crazy long function and at some point I need to start butchering up this whole thing into more digestible components/not have 400 lines worth of functions in the react file
     async function showMenu(initialTile, newTile, isUnit) {
 
         /*
@@ -194,38 +205,51 @@ export function ParsedMap() {
                 if unit && notSameTeam
                     show attack option
          */
-        //lets initialize
+
         let tileMenu = [];
         let showBlueTile;
-
+        //lets check if its a unit
         if (await isUnit !== false) {
             showBlueTile = <div className="tileMove"></div>
             tileMenu =
                 <div className="tileMenu">
-                    <div className="menuName" onClick={() => confirmAction(initialTile, newTile, "wait")}>Wait</div>
+                    <div className="menuName" onClick={() => confirmAction(initialTile, newTile, moveUnit(initialTile, newTile))}>Wait</div>
                 </div>
 
+            //lets cheeck if its a factory/base
         } else if (await gameState[initialTile].terrainImage.slice(2, 3) === "2") {
+
+            //lets get the array with all the units
             const unitsToBuild = unitType(0, true)
-            unitsToBuild.forEach(element => {
+
+            //lets stablish if we display orangeStar or blueMoon units
+            const ownerShip = gameState[initialTile].terrainOwner
+
+            //lets make an array with each unit, display its information and a function to confirm the actrion
+            unitsToBuild.forEach((unit, id) => {
                 tileMenu.push(
-                    <div className="menuOptions" onClick={() => confirmAction(initialTile, newTile, element.name)}>
-                        <div className={`menuTank`}></div>
-                        <div className={`menuName`}> {element.menuName}</div>
-                        <div className={`menuCost`}> {element.cost}</div>
+                    <div className="menuOptions"
+                         onClick={() => confirmAction(initialTile, newTile, buildUnit(initialTile,
+                             {
+                                 ownerShip: ownerShip,
+                                 unit: unit,
+                                 id: id
+                             }
+                         ))}>
+                        <div className={`menu${ownerShip}${unit.menuName}`}></div>
+                        <div className={`menuName`}> {unit.menuName}</div>
+                        <div className={`menuCost`}> {unit.cost}</div>
                     </div>
                 )
             })
-            tileMenu = <div className="tileMenu" >
+            tileMenu = <div className="tileMenu">
                 {tileMenu}
             </div>
 
         }
-        console.log(tileMenu)
-
         mapTiles[newTile] = <div key={newTile} className={`mapTile`} id={newTile}>
             <div className={gameState[newTile].terrainImage}></div>
-            <div className={gameState[initialTile].hasUnit.name}></div>
+            <div className={gameState[initialTile].hasUnit.country + gameState[initialTile].hasUnit.name}></div>
             <div className="tileCursor"></div>
             {showBlueTile}
             {tileMenu}
@@ -235,12 +259,49 @@ export function ParsedMap() {
 
     }
 
-    function confirmAction(initialTile, newTile, command) {
+    function confirmAction(initialTile, newTile, functionToRun) {
+
+
+        //We run the command depending on what it was meant to be
+        functionToRun
+
+        //console.log(command)
+        resetGrid()
+    }
+
+
+    function moveUnit(initialTile, newTile) {
+        console.log('hello')
+        console.log(gameState[initialTile])
+        console.log(gameState[newTile])
+        console.log('banana')
+
         //lets update our local copy of mapdata (instead of issuing a new get request everytime we move, we just update the local variable)
         gameState[newTile].hasUnit = gameState[initialTile].hasUnit
         gameState[initialTile].hasUnit = false
-        //console.log(command)
-        resetGrid()
+    }
+    function buildUnit(initialTile, data) {
+        console.log("BUILDING")
+        console.log(data)
+
+        mapTiles[initialTile] = <div key={initialTile} onClick={() => {
+            checkPath(initialTile)
+        }} className={`mapTile`} id={initialTile}>
+            <div className={gameState[initialTile].terrainImage}></div>
+            <div className={data.ownerShip + data.unit.menuName}></div>
+            <div className="tileCursor"></div>
+        </div>
+
+        gameState[initialTile].hasUnit = {
+            id: data.id,
+            name: data.unit.menuName,
+            country: data.ownerShip,
+            hp: 100,
+            status: "used"
+        }
+
+
+
     }
 
 

@@ -16,10 +16,12 @@ const router = Router()
 
         //count amount of documents that have the _id value
         let myDoc = await collection.countDocuments({_id: {$gt: -1}})
-        const data = fs.readFileSync('./scripts/parsedMap.json', 'utf8');
+        const data =  fs.readFileSync('./scripts/parsedMap.json', 'utf8');
+        const parsedData = await JSON.parse(data)
         let gameDocument = {
             _id: 0,
-            gameState: JSON.parse(data)
+            gameState: parsedData.gameState,
+            details: parsedData.details
         }
 
         //insert the document

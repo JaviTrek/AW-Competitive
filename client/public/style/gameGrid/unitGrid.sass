@@ -1,4 +1,5 @@
-
+$imageName: Infantry, Mech, Recon, APC, Artillery, Tank, Anti-Air, Missile, Rocket, MdTank, PipeRunner, Neotank, MegaTank
+$countryName: orangeStar, blueMoon
 
 .gameBox
   display: grid
@@ -26,18 +27,65 @@
       &:hover
         .tileCursor
           display: block
-
-      //TODO: repeat the whole process in mapGrid.sass to create the background images of all units for Orange Star and Blue Moon
-      .tank
-        background: url("images/units/OrangeStar/Tank-0.png") no-repeat
-        background-size: contain
+      .tileMenu
+        display: grid
+        grid-template-columns: 1fr
+        gap: 4px
+        background: rgba(116, 116, 116, 0.8)
+        border: 2px solid rgba(59, 59, 59, 0.8)
+        z-index: 10
         position: absolute
-        z-index: 9
-        //currently adding 3px from the bottom to make them not step so much on the border of moveTile
-        bottom: 3px
-        height: 32px
-        width: 32px
-        image-rendering: pixelated
+        top: 0
+        left: 100%
+        .menuName
+          background-color: #eaeaea
+          cursor: pointer
+          font-size: 14px
+          padding: 0 6px
+
+          display: inline-block
+        .menuOptions
+          padding: 0 6px
+          background-color: #eaeaea
+          display: grid
+          grid-template-columns: auto auto auto
+          justify-items: left
+          align-items: center
+
+          .menuCost
+            justify-self: right
+            display: inline-block
+            cursor: pointer
+            font-size: 14px
+          //let our units be displayed correctly in the menu
+          @each $country in $countryName
+            @each $unit in $imageName
+              .menu#{$country}#{$unit}
+                background: url("images/units/#{$country}/#{$unit}-0.png") no-repeat
+                display: inline-block
+                width: 16px
+                height: 16px
+
+
+
+
+
+
+//let our units be displayed correctly in the battlefield/grid
+@each $country in $countryName
+  @each $unit in $imageName
+    .#{$country}#{$unit}
+      background: url("images/units/#{$country}/#{$unit}-0.png") no-repeat
+      background-size: contain
+      position: absolute
+      z-index: 9
+      //currently adding 3px from the bottom to make them not step so much on the border of moveTile
+      bottom: 0px
+      height: 32px
+      width: 32px
+      image-rendering: pixelated
+
+
 
 
 

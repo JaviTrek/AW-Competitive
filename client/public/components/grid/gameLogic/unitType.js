@@ -10,12 +10,12 @@ function unitType(unitIndex, returnData) {
         {name: "artillery",  menuName: "Artillery",  cost: 6000,  move: 5, moveType: "T", range: [2, 3], facility: "base"},
         {name: "tank",       menuName: "Tank",       cost: 7000,  move: 6, moveType: "T", range: [1, 1], facility: "base"},
         {name: "antiair",    menuName: "Anti-Air",   cost: 8000,  move: 6, moveType: "T", range: [1, 1], facility: "base"},
-        {name: "missile",    menuName: "Missile",    cost: 12000, move: 4, moveType: "W", range: [3, 5], facility: "base"},
+        //{name: "missile",    menuName: "Missile",    cost: 12000, move: 4, moveType: "W", range: [3, 5], facility: "base"},
         {name: "rocket",     menuName: "Rocket",     cost: 15000, move: 5, moveType: "W", range: [3, 5], facility: "base"},
-        {name: "mdTank",     menuName: "Md.Tank",    cost: 16000, move: 5, moveType: "T", range: [1, 1], facility: "base"},
-        //{name: "piperunner", menuName: "Piperunner", cost: 20000, move: 9, moveType: "P", range: [2, 5], facility: "base"},
+        {name: "mdTank",     menuName: "MdTank",    cost: 16000, move: 5, moveType: "T", range: [1, 1], facility: "base"},
+        //{name: "piperunner", menuName: "PipeRunner", cost: 20000, move: 9, moveType: "P", range: [2, 5], facility: "base"},
         {name: "neotank",    menuName: "Neotank",    cost: 22000, move: 6, moveType: "T", range: [1, 1], facility: "base"},
-        {name: "megatank",   menuName: "Mega Tank",  cost: 28000, move: 4, moveType: "T", range: [1, 1], facility: "base"},
+        {name: "megatank",   menuName: "MegaTank",  cost: 28000, move: 4, moveType: "T", range: [1, 1], facility: "base"},
     ];
 
     //this is so when we click on a factory, the function just returns the array of units
