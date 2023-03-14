@@ -148,18 +148,19 @@ module.exports = (columns, rows, name) => {
                 }
 
 
-                if (j % 7 === 4)
+                if (j % 7 === 5)
                     parsedMap.push({
                         terrainImage: awbwMap[j][1],
                         terrainType: terrainType,
                         terrainOwner: ownerShip,
+                        terrainCapture: 0,
                         hasUnit: {
-                            id: 5,
-                            name: "Tank",
+                            id: 0,
+                            name: "Infantry",
                             country: "orangeStar",
                             hp: 100,
                             status: "free"
-                            //bullets
+                            //ammo
                             //gas
 
                         }
@@ -170,6 +171,7 @@ module.exports = (columns, rows, name) => {
                         terrainImage: awbwMap[j][1],
                         terrainType: terrainType,
                         terrainOwner: ownerShip,
+                        terrainCapture: 0,
                         hasUnit: false
                     })
 

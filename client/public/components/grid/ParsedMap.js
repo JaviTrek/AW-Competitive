@@ -41,9 +41,9 @@ export function ParsedMap() {
 
     //we listen for actions being sent
     socket.on("receiveAction", data => {
-        //console.log(data.initialTile)
-        //console.log(data.newTile)
-        //console.log(data.unit)
+
+
+
     })
 
 
@@ -93,6 +93,11 @@ export function ParsedMap() {
             If attack: Run attack function and calculate damage, update 3 tiles (initial tile, new tile (with its unit), and enemy tile/unit )
      */
 
+    //lets change a specific tile and its elements
+    function changeTile(index, ) {
+
+    }
+
 //function used to resetGrid to original state
     function resetGrid() {
         let resetMap = []
@@ -113,7 +118,10 @@ export function ParsedMap() {
     }
 
     //Step 1
+
     function checkActions(index) {
+        //TODO: Instead of calling gameState[initialTile] like 100 times, lets put that into a variable to make our code much more compact
+
         resetGrid()
         //Lets make sure to reset the grid
         if (gameState[index].hasUnit !== false) {
@@ -122,19 +130,19 @@ export function ParsedMap() {
         } else if (gameState[index].terrainType === "property") {
             showMenu(index, index, false)
             //move to building menu actions function
-            console.log('property')
+
         }
     }
 
     //function used to render our blue squares and see what our available movements are
-    function checkPath(index) {
+    function checkPath(initialTile) {
         let newMap;
         // lets call our function that can calculate the possible tiles we can take
-        let blueTiles = pathFinding(18, 18, gameState[index], index, gameState, mapTiles)
+        let blueTiles = pathFinding(18, 18, gameState[initialTile], initialTile, gameState, mapTiles)
         // lets use the return value from our pathFinding function (pathFinding), which is an array with the index of the tiles that we can move to
         blueTiles.tilesToDraw.forEach((tile) => {
             mapTiles[tile.index] = <div key={tile.index} onClick={() => {
-                newPosition(blueTiles, tile.index)
+                newPosition(blueTiles,  tile.index, initialTile)
             }} className={`mapTile`}>
                 <div className={gameState[tile.index].terrainImage}></div>
                 <div
@@ -152,20 +160,21 @@ export function ParsedMap() {
     }
 
     //used to calculate the new position of the unit
-    function newPosition(movementArray, targetTile) {
-        //lets make sure user doesnt put unit on top of another unit
-        if (gameState[targetTile].hasUnit !== false) {
+    function newPosition(movementArray, targetTile, initialTile, ) {
+        let shortestPath = moveUnit(movementArray, targetTile);
+        //lets make sure user doesnt put unit on top of another unit (but if able to put the unit on the same spot as well)
+        if (gameState[targetTile].hasUnit !== false && shortestPath.length !== 1) {
             checkPath(checkActions(targetTile))
         } else {
             //lets see what the shortest path is
             let shortestPath = moveUnit(movementArray, targetTile);
-            //where we start
-            let initialTile = shortestPath[0];
-            //where we end
-            let newTile = shortestPath[shortestPath.length - 1];
+            let newTile;
+            if (shortestPath.length <= 1) {
+                newTile = shortestPath[0]
+            } else newTile = shortestPath[shortestPath.length - 1];
+
             //if the unit moves to the same tile it was already in, we don't need to do anything
             if (newTile !== initialTile) {
-                //now we need to slowly move this unit to its new tile
                 // TODO: these movements should go from path[0] (initial tile) to path[path.length -1] (newTile) by moving a tile at a time instead of jumping from start to end (so 0,1,2,3...) because the unit moves through the terrain, it doesnt just teleport to its target location.
 
                 //lets delete/set the unit in the old tile as undefined
@@ -211,10 +220,22 @@ export function ParsedMap() {
         //lets check if its a unit
         if (await isUnit !== false) {
             showBlueTile = <div className="tileMove"></div>
+            tileMenu.push(<div className="menuName"
+                               onClick={() => confirmAction(initialTile, newTile, moveAction(initialTile, newTile))}>Wait</div>)
+            //if its an infantry and also on a property
+
+            if ( gameState[initialTile].hasUnit.id === 0 || 1)
+                if (gameState[newTile].terrainType === "property" && gameState[newTile].terrainOwner !== gameState[initialTile].hasUnit.country) {
+
+                tileMenu.push(<div className="menuName"
+                                   onClick={() => confirmAction(initialTile, newTile, captureAction(initialTile, newTile))}>Capture</div>)
+            }
+
             tileMenu =
                 <div className="tileMenu">
-                    <div className="menuName" onClick={() => confirmAction(initialTile, newTile, moveAction(initialTile, newTile))}>Wait</div>
+                    {tileMenu}
                 </div>
+
 
             //lets cheeck if its a factory/base
         } else if (await gameState[initialTile].terrainImage.slice(2, 3) === "2") {
@@ -274,9 +295,33 @@ export function ParsedMap() {
 
     function moveAction(initialTile, newTile) {
         //lets update our local copy of mapdata (instead of issuing a new get request everytime we move, we just update the local variable)
-        gameState[newTile].hasUnit = gameState[initialTile].hasUnit
-        gameState[initialTile].hasUnit = false
+        if  (initialTile !== newTile) {
+            gameState[initialTile].terrainCapture = 0
+            gameState[newTile].hasUnit = gameState[initialTile].hasUnit
+            gameState[initialTile].hasUnit = false
+        }
+
     }
+
+    function captureAction(initialTile, newTile) {
+        let countryTags = {
+            orangeStar: "os",
+            blueMoon: "bm"
+        }
+
+        let currentCapture = gameState[newTile].terrainCapture
+
+        gameState[newTile].terrainCapture = currentCapture + 100
+        console.log(currentCapture)
+        if (gameState[newTile].terrainCapture >= 200) {
+            gameState[newTile].terrainOwner = gameState[newTile].hasUnit.country
+            gameState[newTile].terrainImage = countryTags[gameState[newTile].hasUnit.country] + gameState[newTile].terrainImage.slice(2,3)
+        }
+        moveAction(initialTile, newTile)
+
+
+    }
+
     function buildAction(initialTile, data) {
         mapTiles[initialTile] = <div key={initialTile} onClick={() => {
             checkPath(initialTile)
@@ -294,7 +339,6 @@ export function ParsedMap() {
             hp: 100,
             status: "used"
         }
-
 
 
     }
