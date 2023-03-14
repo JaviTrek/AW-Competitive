@@ -1,68 +1,42 @@
 import React from "react";
-import {useState, useEffect} from "react";
-import axios from "axios";
 import '../style/App.sass'
-import { Outlet } from "react-router-dom";
 import awLogo from "../images/awLogo.webp"
+import bannerMap from "../images/homePageImages/backgroundMap.png";
+import charactersGroupshot from "../images/homePageImages/charactersGroup.png";
+import redditLogo from '../images/footerImages/Reddit.png';
+import ghLogo from '../images/footerImages/GitHub.png';
+import discordLogo from '../images/footerImages/Discord.png';
+
 export function App() {
-
-    let userArray = [];
-    const [data, setData] = useState()
-    useEffect(() => {
-        axios.get("/home")
-            .then(res => {
-                let userData = res.data.pushData
-                console.log(userData[0].armyColor)
-                userData.forEach((user, index) => {
-                    console.log(user)
-                    userArray.push(
-                        <div className="users" key={index}>
-                            <p> Username: {user.username}</p>
-                            <p> Army Color: {user.armyColor}</p>
-                            <p> Favorite CO: {user.favoriteCO}</p>
-                            <br/>
-                        </div>
-                    )
-                    setData(userArray)
-                })
-
-            }).catch(e => console.error(e));
-    }, []);
-
-
-
-
+    
     return (
-        <div>
+            <div>
 
-            <img src={awLogo} alt=""/>
+                <div className="backgroundMapTiles">
+                    <img className = "tile" src ={bannerMap} alt =""/>  
+                        <img className="charactersLined" src = {charactersGroupshot} alt= ""/>
+                            <img className = "logo" src ={awLogo} alt =""/>
+                </div>
 
+                <div className="playNowBtn">
+                    <p1> Play Now</p1>
+                </div>
 
-            <h1>Welcome to AW-Competitive</h1>
-            <p>This application depends on us running our server and client at the same time in order for React (our frontend) talks with Express (our middleman backend) to communicate with MongoDB (our database) for everything to work correctly</p>
-            <h2>Add a new User to MongoDB:</h2>
-            <form method='post' action="/createUser">
-                <label htmlFor="username"> Username:</label>
-                <input type="text" name="username"/>
+                <div className="logosGrid">
+                    <img className = "ghLogo" src ={redditLogo} alt =""/>
+                    <img className = "redditLogo" src ={discordLogo} alt =""/>
+                    <img className = "discordLogo" src ={ghLogo} alt =""/>
+                </div>
 
-                <label htmlFor="armyColor"> ArmyColor:</label>
-                <input type="text" name="armyColor"/>
+                <div className="remasteredElement">
+                    <div className ='s1'><p1>The Ultimate Turn-Based Strategy Game</p1></div>
+                
+                    <div className ='s2'><p1 >Remastered</p1></div>
+                    
+                    <div className ='s3'> <p1>Play Advance Wars Competitively Join thousands on the nostalgia!</p1></div>
+                </div>
 
-                <label htmlFor="favoriteCO"> Favorite CO:</label>
-                <input type="text" name="favoriteCO"/>
-
-
-                <button type="submit"> Add new user</button>
-                <br/>
-
-            </form>
-            <h3> Data from MongoDB</h3>
-            {data}
-            <br/>
-            <Outlet />
-            <br/>
-
-
-        </div>
+            </div>
+        
     )
 }
