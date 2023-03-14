@@ -28,6 +28,18 @@ app.listen(port, () => {
 });
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 //This /home route is used by our home page
 app.get("/home", async (req, res) => {
     console.log("get home")
@@ -45,11 +57,41 @@ app.get("/home", async (req, res) => {
 })
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 app.get("/about", async (req, res) => {
     res.send("hello")
 })
 
-// comment aaaa
 
 // ------------
 // POST REQUESTS
@@ -74,4 +116,35 @@ app.post('/createUser', async (req, res) => {
     //insert the document
     await collection.insertOne(userDocument);
     res.redirect('/');
+})
+
+app.post('/changeSettings', async (req, res) => {
+    try{
+        // Insert the document
+        let dbConnect = database.getDatabase()
+        //use the collection
+        let collection = dbConnect.collection("settings")
+        let myDoc = await collection.countDocuments({_id: {$gt: -1} })
+        console.log(myDoc)
+        //Lets define a document
+        const newUsername = req.body.newUsername
+        const newArmyColor = req.body.newArmyColor
+        const newFavoriteCO = req.body.newFavoriteCO
+        let userDocument = {
+            _id: myDoc + 1,
+            usernameChange: newUsername,
+            armyColorChange: newArmyColor,
+            favoriteCOChange: newFavoriteCO,
+        }
+
+        await collection.insertOne(userDocument);
+
+        // If everything was successful, then the url should show that
+        res.redirect('/?change=true');
+    }catch{
+
+        // If at any point the settingsChange fails, then the url should represent that
+        res.redirect('/?change=false');
+    }
+
 })
