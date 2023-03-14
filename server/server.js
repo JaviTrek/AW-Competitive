@@ -116,6 +116,9 @@ app.get('/routes/auth/redirect', passport.authenticate('discord', {
 const { hashPassword, comparePassword } = require('./Authentication_Strategies/hashing_password'); 
 const LocalStrategy = require('./Authentication_Strategies/localStrategy');
 
+//Passport
+app.use(passport.initialize());
+app.use(passport.session());
 //login post request using passport local
 app.post('/loginUser', passport.authenticate('local'), (req,res)=> {
     console.log('logged in');
@@ -152,6 +155,18 @@ app.post('/registerUser', async (req,res) => {
    
 });
 
- //Passport
- app.use(passport.initialize());
- app.use(passport.session());
+
+//Protected route, it checks if user is authenticated, if so, you can access the protectRoute, otherwise, you get redirected to login
+app.get("/protectRoute", loggedIn, (req,res) => {
+    console.log('you accessed our route')
+    res.redirect("/game")
+})
+function loggedIn(req, res, next) {
+    if (req.isAuthenticated) {
+        console.log('user is logged In')
+        next();
+    } else {
+        console.log("not logged")
+        res.redirect("/login")
+    }}
+
