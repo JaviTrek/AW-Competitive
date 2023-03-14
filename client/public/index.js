@@ -1,4 +1,4 @@
-import React from "react";
+import React, {StrictMode} from 'react';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Template } from "./components/template/Template";
 import { App } from "./components/App";
@@ -8,6 +8,7 @@ import { AppChildren } from "./components/AppChildren";
 import { CurrentGames } from "./components/CurrentGames";
 import { NewGame } from "./components/NewGame";
 import { createRoot } from "react-dom/client";
+
 
 const container = document.getElementById("app");
 const router = createBrowserRouter([

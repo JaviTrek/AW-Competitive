@@ -4,7 +4,7 @@ import {unitType} from "./unitType";
 import {checkTerrain} from "./checkTerrain";
 
 
-function pathFinding(maxX, maxY, unit, startIndex, mapData) {
+function pathFinding(maxX, maxY, unit, startIndex, gameState) {
 
 
     //Our function goes and check what ID is the unit we have
@@ -126,13 +126,12 @@ function pathFinding(maxX, maxY, unit, startIndex, mapData) {
             if (visitedNodes[nextNodeIndex]) continue;
 
             //lets check the terrain cost of our next index/tile
-            let costToMove = checkTerrain(unitMoveType, mapData[nextNodeIndex])
+            let costToMove = checkTerrain(unitMoveType, gameState[nextNodeIndex])
             //lets setup the movement cost of our new tile
             movementCost[nextNodeIndex] = costToMove
 
             //The new distance from our initial tile to the new tile
             let newDistance = overallDistance + costToMove
-
 
             //if new distance is less than the distance of the next node AND the new distance isn't bigger than what the unit can move, then we add this tile to ou
             if (newDistance < distance[nextNodeIndex] && newDistance <= unitMove) {
@@ -147,7 +146,6 @@ function pathFinding(maxX, maxY, unit, startIndex, mapData) {
                         y: addY
                     });
                     verifyTile[nextNodeIndex] = newDistance
-
                     // we push the tile we will draw later
                     tilesToDraw.push({
                         distance: newDistance,
@@ -163,9 +161,7 @@ function pathFinding(maxX, maxY, unit, startIndex, mapData) {
                             queue[node].distance = newDistance;
                     }
                 }
-
             }
-
         }
     }
 

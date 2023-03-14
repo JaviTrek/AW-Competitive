@@ -28,7 +28,7 @@ module.exports = {
 
                 //here are the routes that actually go to express
                 // must restart Webpack for them to work
-                context: ['/home', '/createUser', '/map/randomMap', '/map/parsedMap'],
+                context: ['/home', '/createUser', '/map/randomMap', '/map/parsedMap', "/createNewGame", "/getGameState", "/moveUnit"],
                 target:  'http://localhost:4000'
             }
         ],

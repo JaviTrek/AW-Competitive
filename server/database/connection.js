@@ -5,15 +5,15 @@ const client = new MongoClient(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 })
-const dbName = "users"
+
 let db = ''
 module.exports = {
-    connectToServer: async () => {
+    connectToServer: async (dbName) => {
 
         try {
             await client.connect();
             db = client.db(dbName)
-            console.log('connected to mongoDB correctly')
+            console.log(`connected to mongoDB "${dbName}" collection correctly`)
 
         } catch (e) {
             console.error(e);

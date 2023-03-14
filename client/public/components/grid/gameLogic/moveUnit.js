@@ -9,8 +9,10 @@ function moveUnit(movementArray, targetTile) {
     for (let i = targetTile; i !== null; i = previous[i]) {
         path.push(i);
     }
-    //console.log(path.reverse())
-    return path
+    //lets reverse it so we don't start at the end
+    const reversePath = path.reverse()
+
+    return reversePath
 
 
 }
