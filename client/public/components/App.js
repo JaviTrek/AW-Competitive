@@ -6,6 +6,8 @@ import charactersGroupshot from "../images/homePageImages/charactersGroup.png";
 import redditLogo from '../images/footerImages/Reddit.png';
 import ghLogo from '../images/footerImages/GitHub.png';
 import discordLogo from '../images/footerImages/Discord.png';
+import io from "socket.io-client"
+const socket = io.connect("http://localhost:4000")
 
 export function App() {
     
@@ -35,6 +37,16 @@ export function App() {
                     
                     <div className ='s3'> <p1>Play Advance Wars Competitively Join thousands on the nostalgia!</p1></div>
                 </div>
+
+                <h2>Add a new User to MongoDB:</h2>
+            <a href="/createNewGame">
+                <button> Try creating New Game</button>
+
+            </a>
+            <a href="/game">
+                <button> See game</button>
+
+            </a>
 
             </div>
         

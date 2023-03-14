@@ -1,5 +1,26 @@
 const fs = require('fs')
 
+
+/*
+
+
+EXPRESS STUFF
+
+this script isnt being used or called from anywhere right now but it basically parses an AWBW map and creates a json file from it
+
+// Map Parser
+const mapParser = require('./scripts/awbwMapParser')
+mapParser(18, 18, "parsedMap")
+const parsedMap = require("./scripts/parsedMap.json");
+
+app.get('/map/parsedMap', (req, res) => {
+    res.json(parsedMap)
+});
+
+
+
+ */
+
 // ['plains', 'mountain', "forest", "road", "bridge", "factory", "city", "shoal", "river"];
 
 // These numbers are what AWBW uses for its tiles, so we can grab an array by AWBW with these numbers and know what they mean for our notation
@@ -78,7 +99,9 @@ module.exports = (columns, rows, name) => {
     for (let i = 0; i < mapToParse.length; i++) {
 
         for (let j = 0; j < awbwMap.length; j++) {
-            let terrainType = ''
+            let terrainType;
+            let ownerShip;
+            let country;
             if (mapToParse[i] === awbwMap[j][0]) {
                 // we insert this type because tiles need a type
                 switch (awbwMap[j][1].slice(0, 2)) {
@@ -113,22 +136,42 @@ module.exports = (columns, rows, name) => {
                         terrainType = "property"
                 }
 
+                switch (awbwMap[j][1].slice(0, 2)) {
+                    case "bm":
+                        ownerShip = "blueMoon"
+                        break;
+                    case "os":
+                        ownerShip = "orangeStar"
+                        break;
+                    default:
+                        ownerShip = false
+                }
+
 
                 if (j % 7 === 4)
                     parsedMap.push({
                         terrainImage: awbwMap[j][1],
                         terrainType: terrainType,
+                        terrainOwner: ownerShip,
                         hasUnit: {
                             id: 5,
-                            name: "tank"
+                            name: "Tank",
+                            country: "orangeStar",
+                            hp: 100,
+                            status: "free"
+                            //bullets
+                            //gas
+
                         }
+
                     })
                 else
                     parsedMap.push({
-                    terrainImage: awbwMap[j][1],
-                    terrainType: terrainType,
-                    hasUnit: false
-                })
+                        terrainImage: awbwMap[j][1],
+                        terrainType: terrainType,
+                        terrainOwner: ownerShip,
+                        hasUnit: false
+                    })
 
                 break
             }
@@ -140,24 +183,23 @@ module.exports = (columns, rows, name) => {
     //logs any tiles that we havent added
     //console.log(missingTiles)
 
-    // how to calculate the tile's position just being given its index in the array
-    // first line is column  = 0 * 18 row = variable++
-    // so 0 1 0 2 0 3... then 1* 18 = 18 and then second row can be index 19 = 1,1
-    // its the remainder that tells the story!
-    // 19 / 18 = 1 R 1
 
-    parsedMap.push({
-        mapName: "Caustic Finale",
-        columns: 18,
-        rows: 18,
-        players: 2,
-        author: "Hellraider",
-        published: "05/11/2008",
-    })
+    //TODO:this needs to be sent to database when creating a game
+    let mapData = {
+        mapData: {
+            mapName: "Caustic Finale",
+            columns: 18,
+            rows: 18,
+            players: 2,
+            author: "Hellraider",
+            published: "05/11/2008",
+        },
+        gameState: parsedMap
+    }
 
 
     //we write our function
-    fs.writeFileSync(`./scripts/${name}.json`, JSON.stringify(parsedMap), 'utf-8');
-    return parsedMap
+    fs.writeFileSync(`./scripts/${name}.json`, JSON.stringify(mapData), 'utf-8');
+    return mapData
 
 };

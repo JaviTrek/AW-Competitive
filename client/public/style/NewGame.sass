@@ -1,0 +1,124 @@
+@use 'abstracts/variables' as variables
+
+.container
+  padding-bottom: 30px
+
+.unavailable
+  filter: brightness(50%)
+
+.newGameSection
+  padding: 15px 20px 20px
+  margin: 20px 30px
+  background-color: #1f1f1f
+  border: 5px solid #000
+  .newGameSectionTitle, .mapPreviewTitle
+    color: variables.$color-primary-variant
+    font-style: normal
+    font-weight: 400
+    line-height: 36px
+  .newGameSectionSubtitle
+    color: #B4B4B4
+    font-weight: 400
+    font-size: 14px
+    line-height: 21px
+    margin-bottom: 15px
+  
+.characterSection
+  display: flex
+
+.characterSectionLeft
+  .characterSectionGrid
+    display: flex
+    flex-direction: column
+    gap: 10px
+    .characterTier
+      display: flex
+      gap: 14px
+      p
+        width: 81px
+      img
+        width: 44px
+        height: 44px
+        border: 2px solid #000000
+      .selectedCO, img:hover
+        border: 2px solid #fff
+
+.characterDisplay
+  display: flex
+  flex-direction: column
+  align-items: center
+  width: 332px
+  min-width: 144px
+  h3
+    text-align: center
+  img 
+    max-width: 144px
+
+.countryGrid
+  display: flex
+  margin-left: 10px
+  gap: 15px
+  .usernameContainer
+    width: 208px
+    border: 2px solid #1f1f1f
+  .usernameContainer:hover, .selectedCountry
+    border: 2px solid #fff
+
+// https://stackoverflow.com/questions/45536537/centering-in-css-grid
+.mapSelections
+  display: grid
+  grid-template-columns: repeat(4, 1fr)
+  justify-items: center
+  .mapOption
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    width: 155px
+    color: variables.$color-primary
+    font-size: 15px
+    img
+      width: 100%
+      border: 2px solid #000000
+    .selectedMap, img:hover
+      border: 2px solid #fff
+
+.mapPreview 
+  position: relative
+  height: 345px
+  background-color: #131313
+  .mapPreviewImage
+    margin: 0 auto
+    height: 100%
+  h3
+    width: max-content
+    background-color: black
+    padding: 0px 10px
+    position: absolute
+    bottom: 0
+    left: 0
+    right: 0
+    margin: auto        
+
+.disclaimerText
+  margin: 20px 50px
+  font-weight: 400
+  font-size: 14px
+  line-height: 21px
+  color: #B4B4B4
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25)
+
+.btn
+  display: block
+  margin-left: auto
+  margin-right: auto
+  padding: 0
+  width: 340px
+  height: 68px
+  font-weight: 400
+  font-size: 50px
+  line-height: 64px
+  filter: drop-shadow(8px 8px 1px rgba(0, 0, 0, 0.25))
+
+
+

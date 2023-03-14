@@ -12,13 +12,16 @@
   justify-content: center
   color: black
   text-align: center
+  button
+    padding: 2em
+    background-color: black
+    color: white
   // our main grid where we have our map tiles
   .mapGrid
     display: grid
     margin: 0
     border: 1em solid #333b54
     // our individual tiles
-
     .mapTile
       width: 100%
       background-color: #bfdd33
@@ -28,6 +31,7 @@
         .tileCursor
           display: block
 
+      //the cursor we see over tiles
       //TODO: Fix the tile cursor, currently it looks centered but it really isn't centered
       .tileCursor
         display: none
@@ -42,19 +46,24 @@
         background-size: contain
         z-index: 10
         image-rendering: pixelated
+
+        //the blue square used by units to move
       .tileMove
         background: rgba(67, 217, 228, 0.5)
         border: 2px solid rgb(22, 98, 184)
         z-index: 5
         position: absolute
         top: 0
-        height: 30px
-        width: 30px
+        height: 31px
+        width: 31px
+      //the menu we see when an unit moves or a factory is cliecked
+
+
 
 
 //TODO: Cities, airport, base, comtower and mountains all need to have the same z index
 
-
+//This might be a bit complicated at first bu we are basically giving sass instructions to do specific instructions with all of these arrays in order for it to create alot of css background-image classes.
 //Here we have our array of maptiles
 $mapTiles: fo0, mo0, pl0, oc0, re0
 $roadTiles: ro1, ro2, ro3, ro4, ro6, ro8, br1, br3

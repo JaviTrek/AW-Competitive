@@ -1,14 +1,12 @@
+//This line gets us our .env file at setup.env, allowing us to use the process.env
+require("dotenv").config({path: "./setup.env"});
 // We initialize the dependencies we are going to use
 const express = require("express");
 const app = express();
 const cors = require("cors");
 const bodyParser = require("body-parser");
-
-
-//This line gets us our .env file at setup.env, allowing us to use the process.env
-require("dotenv").config({path: "./setup.env"});
-
-
+const http = require('http');
+const { Server } = require("socket.io");
 //our database
 const database = require("./database/connection.js");
 
@@ -18,13 +16,40 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(express.json());
 
+const server = http.createServer(app);
 const port = process.env.PORT || 4000;
+//lets setup our websocket
+const io = new Server(server, {
+    cors: {
+        origin: process.env.CORS_ORIGIN,
+        methods:["GET","POST"]
+    }
+});
 
 
-//get connected to the mongo database
-app.listen(port, () => {
-    database.connectToServer()
+// websocket event, when someone connects
+io.on('connection', (socket) => {
+    //when we receive the sendAction
+    socket.on("sendAction", (data) => {
+        socket.broadcast.emit("receiveAction", data)
+    })
+});
+
+
+
+
+//get connected to the mongo database and websocket at the same time?
+server.listen(port, () => {
+    database.connectToServer("users")
     console.log(`Server running on port ${port}`)
+});
+
+const mapParser = require('./scripts/awbwMapParser')
+mapParser(18, 18, "parsedMap")
+const parsedMap = require("./scripts/parsedMap.json");
+
+app.get('/map/parsedMap', (req, res) => {
+    res.json(parsedMap)
 });
 
 
@@ -75,11 +100,24 @@ app.post('/createUser', async (req, res) => {
     res.redirect('/');
 
 });
+
+const createGame = require("./database/createGame")
+app.use(createGame)
+const gameActions = require("./database/gameActions")
+app.use(gameActions)
+
+
+
+
+
+
+
+
 //------------------------------
 //Steve work on authorization
 //------------------------------
 const session = require('express-session');
-const DiscordStrategy = require('./Authentication_Strategies/discordStrategy');
+const DiscordStrategy = require('./authStrategy/discordStrategy');
 const passport = require('passport');
 
 
@@ -109,8 +147,8 @@ app.get('/routes/auth/redirect', passport.authenticate('discord', {
 //login
 //----
 
-const { hashPassword, comparePassword } = require('./Authentication_Strategies/hashing_password'); 
-const LocalStrategy = require('./Authentication_Strategies/localStrategy');
+const { hashPassword, comparePassword } = require('./authStrategy/hashing_password');
+const LocalStrategy = require('./authStrategy/localStrategy');
 
 //login post request using passport local
 app.post('/login', passport.authenticate('local'), (req,res)=> {
@@ -147,44 +185,5 @@ app.post('/register', async (req,res) => {
  //Passport
  app.use(passport.initialize());
  app.use(passport.session());
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//TODO: Move these scripts/get routes into its own file which we then get via app.use
-
-// MAP RENDERING
-
-// Random Map Generator
-
-const createMap = require('./scripts/randomMapGenerator')
-createMap(18, 18, "randomMap")
-const randomMap = require("./scripts/randomMap.json");
-app.get('/map/randomMap', (req, res) => {
-    res.json(randomMap)
-});
-
-
-// Map Parser
-const mapParser = require('./scripts/awbwMapParser')
-mapParser(18, 18, "parsedMap")
-const parsedMap = require("./scripts/parsedMap.json");
-
-app.get('/map/parsedMap', (req, res) => {
-    res.json(parsedMap)
-});
 
 
