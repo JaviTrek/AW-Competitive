@@ -213,7 +213,7 @@ export function ParsedMap() {
             showBlueTile = <div className="tileMove"></div>
             tileMenu =
                 <div className="tileMenu">
-                    <div className="menuName" onClick={() => confirmAction(initialTile, newTile, moveUnit(initialTile, newTile))}>Wait</div>
+                    <div className="menuName" onClick={() => confirmAction(initialTile, newTile, moveAction(initialTile, newTile))}>Wait</div>
                 </div>
 
             //lets cheeck if its a factory/base
@@ -229,7 +229,7 @@ export function ParsedMap() {
             unitsToBuild.forEach((unit, id) => {
                 tileMenu.push(
                     <div className="menuOptions"
-                         onClick={() => confirmAction(initialTile, newTile, buildUnit(initialTile,
+                         onClick={() => confirmAction(initialTile, newTile, buildAction(initialTile,
                              {
                                  ownerShip: ownerShip,
                                  unit: unit,
@@ -270,20 +270,14 @@ export function ParsedMap() {
     }
 
 
-    function moveUnit(initialTile, newTile) {
-        console.log('hello')
-        console.log(gameState[initialTile])
-        console.log(gameState[newTile])
-        console.log('banana')
+    // ACTION FUNCTIONS
 
+    function moveAction(initialTile, newTile) {
         //lets update our local copy of mapdata (instead of issuing a new get request everytime we move, we just update the local variable)
         gameState[newTile].hasUnit = gameState[initialTile].hasUnit
         gameState[initialTile].hasUnit = false
     }
-    function buildUnit(initialTile, data) {
-        console.log("BUILDING")
-        console.log(data)
-
+    function buildAction(initialTile, data) {
         mapTiles[initialTile] = <div key={initialTile} onClick={() => {
             checkPath(initialTile)
         }} className={`mapTile`} id={initialTile}>
@@ -292,6 +286,7 @@ export function ParsedMap() {
             <div className="tileCursor"></div>
         </div>
 
+        //we update the new unit in has tile with the correct information
         gameState[initialTile].hasUnit = {
             id: data.id,
             name: data.unit.menuName,
