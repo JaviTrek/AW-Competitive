@@ -12,7 +12,16 @@ const socket = io.connect("http://localhost:4000")
 
 export function ParsedMap() {
 
-
+//lets change a specific tile and its elements
+    function changeTile(index, instruction) {
+        mapTiles[index] = <div key={index} onClick={instruction.useFunction} className={`mapTile`}>
+            <div className={gameState[index].terrainImage}></div>
+            {instruction.hasUnit}
+            {instruction.tileMove}
+            {instruction.showMenu}
+            <div className="tileCursor"></div>
+        </div>
+    }
 // this function will request our server for a json file, read it and create tiles depending on the json file information
     let mapTiles = []
     let gameState = []
@@ -23,20 +32,15 @@ export function ParsedMap() {
                 gameState = res.data.gameState
                 res.data.gameState.forEach((tile, index) => {
                     //TODO: Find a way to add a custom HTML attribute to element and check its value. (We might not need this thou, maybe we can just keep checking the element).
-                    let hasUnit;
-
-
-                    mapTiles.push(
-                        <div onClick={() => {
+                    changeTile(index, {
+                        hasUnit:  res.data.gameState[index].hasUnit ? <div className={ res.data.gameState[index].hasUnit.country +  res.data.gameState[index].hasUnit.name}></div> : null,
+                        tileMove: null,
+                        showMenu: null,
+                        useFunction: () => {
                             checkActions(index)
-                        }} key={index} className={`mapTile`}>
-                            <div className={tile.terrainImage}></div>
-                            <div
-                                className={tile.hasUnit ? tile.hasUnit.country + tile.hasUnit.name : undefined}></div>
+                        }
+                    })
 
-                            <div className="tileCursor"></div>
-                        </div>
-                    )
                 })
                 setMap(mapTiles)
             }).catch(e => {
@@ -46,7 +50,6 @@ export function ParsedMap() {
 
     //we listen for actions being sent
     socket.on("receiveAction", data => {
-
 
 
     })
@@ -98,48 +101,30 @@ export function ParsedMap() {
             If attack: Run attack function and calculate damage, update 3 tiles (initial tile, new tile (with its unit), and enemy tile/unit )
      */
 
-    //lets change a specific tile and its elements
-    function changeTile(index, instructionObject ) {
 
-        let instruction = {
-            hasUnit: "undefined",
-            tileMove: false,
-
-        }
-        mapTiles[index] = <div key={index} onClick={() => {
-            checkPath(index)
-        }} className={`mapTile`}>
-            <div className={gameState[index].terrainImage}></div>
-            <div className={instructionObject.hasUnit}></div>
-            <div className="tileMove"></div>
-            <div className="tileCursor"></div>
-        </div>
-    }
 
 //function used to resetGrid to original state
     function resetGrid() {
-        let resetMap = []
+        let resetMap;
         // lets reset the map, to make sure we don't grab any other MoveTile divs with us
         gameState.forEach((tile, index) => {
-            mapTiles[index] = <div onClick={() => {
-                checkActions(index)
-            }} key={index} className={`mapTile`}>
-                <div className={tile.terrainImage}></div>
-                <div
-                    className={gameState[index].hasUnit ? gameState[index].hasUnit.country + gameState[index].hasUnit.name : "undefined"}></div>
-                <div className="tileCursor"></div>
-                <div className={"undefined"}></div>
-            </div>
+            changeTile(index, {
+                hasUnit: gameState[index].hasUnit ? <div className={gameState[index].hasUnit.country + gameState[index].hasUnit.name}></div> : null,
+                tileMove: null,
+                showMenu: null,
+                useFunction: () => {
+                    checkActions(index)
+                }
+            })
         })
+
         resetMap = mapTiles.slice()
         setMap(resetMap)
     }
 
     //Step 1
-
     function checkActions(index) {
         //TODO: Instead of calling gameState[initialTile] like 100 times, lets put that into a variable to make our code much more compact
-
         resetGrid()
         //Lets make sure to reset the grid
         if (gameState[index].hasUnit !== false) {
@@ -159,17 +144,18 @@ export function ParsedMap() {
         let blueTiles = pathFinding(18, 18, gameState[initialTile], initialTile, gameState, mapTiles)
         // lets use the return value from our pathFinding function (pathFinding), which is an array with the index of the tiles that we can move to
         blueTiles.tilesToDraw.forEach((tile) => {
+            let hasUnit = null;
+            if (gameState[tile.index].hasUnit) hasUnit = <div
+                className={gameState[tile.index].hasUnit.country + gameState[tile.index].hasUnit.name}></div>
+            changeTile(tile.index, {
+                hasUnit: gameState[tile.index].hasUnit ? <div className={gameState[tile.index].hasUnit.country + gameState[tile.index].hasUnit.name}></div> : null,
+                tileMove: <div className="tileMove"></div>,
+                showMenu: null,
+                useFunction: () => {
+                    newPosition(blueTiles, tile.index, initialTile)
+                }
+            })
 
-            let hasUnit =  <div
-                className={gameState[tile.index].hasUnit ? gameState[tile.index].hasUnit.country + gameState[tile.index].hasUnit.name : "undefined"}></div>
-            mapTiles[tile.index] = <div key={tile.index} onClick={() => {
-                newPosition(blueTiles,  tile.index, initialTile)
-            }} className={`mapTile`}>
-                <div className={gameState[tile.index].terrainImage}></div>
-                {hasUnit}
-                <div className="tileMove"></div>
-                <div className="tileCursor"></div>
-            </div>
         })
         // react needs to be tricked in order to re-render for some reason? Will not re-render mapTiles despite it being different
         //TODO: Can we take out this little .slice() trick and make react just re-render normally?
@@ -180,7 +166,7 @@ export function ParsedMap() {
     }
 
     //used to calculate the new position of the unit
-    function newPosition(movementArray, targetTile, initialTile, ) {
+    function newPosition(movementArray, targetTile, initialTile,) {
         let shortestPath = moveUnit(movementArray, targetTile);
         //lets make sure user doesnt put unit on top of another unit (but if able to put the unit on the same spot as well)
         if (gameState[targetTile].hasUnit !== false && shortestPath.length !== 1) {
@@ -197,31 +183,28 @@ export function ParsedMap() {
             if (newTile !== initialTile) {
                 // TODO: these movements should go from path[0] (initial tile) to path[path.length -1] (newTile) by moving a tile at a time instead of jumping from start to end (so 0,1,2,3...) because the unit moves through the terrain, it doesnt just teleport to its target location.
 
-                //lets delete/set the unit in the old tile as undefined
-                mapTiles[initialTile] = <div key={initialTile} onClick={() => {
-                    checkPath(initialTile)
-                }} className={`mapTile`}>
-                    <div className={gameState[initialTile].terrainImage}></div>
-                    <div className={"undefined"}></div>
-                    <div className="tileMove"></div>
-                    <div className="tileCursor"></div>
-                </div>
-
+                //lets delete/set the unit in the initial tile
+                changeTile(initialTile, {
+                    hasUnit: null,
+                    tileMove: <div className="tileMove"></div>,
+                    showMenu: null,
+                    useFunction: () => {
+                        checkPath(initialTile)
+                    }
+                })
                 //lets move our old tile unit to its new tile
-                mapTiles[newTile] = <div key={newTile} onClick={() => {
-                    checkPath(newTile)
-                }} className={`mapTile`} id={newTile}>
-                    <div className={gameState[newTile].terrainImage}></div>
-                    <div className={gameState[initialTile].hasUnit.country + gameState[initialTile].hasUnit.name}></div>
-                    <div className="tileMove"></div>
-                    <div className="tileCursor"></div>
-                </div>
+                changeTile(newTile, {
+                    hasUnit: gameState[newTile].hasUnit ? <div className={gameState[newTile].hasUnit.country + gameState[newTile].hasUnit.name}></div> : null,
+                    tileMove: <div className="tileMove"></div>,
+                    showMenu: null,
+                    useFunction: () => {
+                        checkPath(newTile)
+                    }
+                })
             }
             showMenu(initialTile, newTile, true)
         }
-
     }
-
     //TODO: God has forsaken me in this crazy long function and at some point I need to start butchering up this whole thing into more digestible components/not have 400 lines worth of functions in the react file
     async function showMenu(initialTile, newTile, isUnit) {
 
@@ -244,7 +227,7 @@ export function ParsedMap() {
                                onClick={() => confirmAction(initialTile, newTile, moveAction(initialTile, newTile))}>Wait</div>)
             //if its an infantry and also on a property
 
-            if ( gameState[initialTile].hasUnit.id === 0 || 1){
+            if (gameState[initialTile].hasUnit.id === 0 || 1) {
 
                 if (gameState[newTile].terrainType === "property" && gameState[newTile].terrainOwner !== gameState[initialTile].hasUnit.country) {
 
@@ -317,7 +300,7 @@ export function ParsedMap() {
 
     function moveAction(initialTile, newTile) {
         //lets update our local copy of mapdata (instead of issuing a new get request everytime we move, we just update the local variable)
-        if  (initialTile !== newTile) {
+        if (initialTile !== newTile) {
             gameState[initialTile].terrainCapture = 0
             gameState[newTile].hasUnit = gameState[initialTile].hasUnit
             gameState[initialTile].hasUnit = false
@@ -337,7 +320,7 @@ export function ParsedMap() {
         console.log(currentCapture)
         if (gameState[newTile].terrainCapture >= 200) {
             gameState[newTile].terrainOwner = gameState[newTile].hasUnit.country
-            gameState[newTile].terrainImage = countryTags[gameState[newTile].hasUnit.country] + gameState[newTile].terrainImage.slice(2,3)
+            gameState[newTile].terrainImage = countryTags[gameState[newTile].hasUnit.country] + gameState[newTile].terrainImage.slice(2, 3)
         }
         moveAction(initialTile, newTile)
 
