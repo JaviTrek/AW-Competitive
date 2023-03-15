@@ -23,12 +23,17 @@ export function ParsedMap() {
                 gameState = res.data.gameState
                 res.data.gameState.forEach((tile, index) => {
                     //TODO: Find a way to add a custom HTML attribute to element and check its value. (We might not need this thou, maybe we can just keep checking the element).
+                    let hasUnit;
+
+
                     mapTiles.push(
                         <div onClick={() => {
                             checkActions(index)
                         }} key={index} className={`mapTile`}>
                             <div className={tile.terrainImage}></div>
-                            <div className={tile.hasUnit.country + tile.hasUnit.name}></div>
+                            <div
+                                className={tile.hasUnit ? tile.hasUnit.country + tile.hasUnit.name : undefined}></div>
+
                             <div className="tileCursor"></div>
                         </div>
                     )
@@ -94,8 +99,21 @@ export function ParsedMap() {
      */
 
     //lets change a specific tile and its elements
-    function changeTile(index, ) {
+    function changeTile(index, instructionObject ) {
 
+        let instruction = {
+            hasUnit: "undefined",
+            tileMove: false,
+
+        }
+        mapTiles[index] = <div key={index} onClick={() => {
+            checkPath(index)
+        }} className={`mapTile`}>
+            <div className={gameState[index].terrainImage}></div>
+            <div className={instructionObject.hasUnit}></div>
+            <div className="tileMove"></div>
+            <div className="tileCursor"></div>
+        </div>
     }
 
 //function used to resetGrid to original state
@@ -141,12 +159,14 @@ export function ParsedMap() {
         let blueTiles = pathFinding(18, 18, gameState[initialTile], initialTile, gameState, mapTiles)
         // lets use the return value from our pathFinding function (pathFinding), which is an array with the index of the tiles that we can move to
         blueTiles.tilesToDraw.forEach((tile) => {
+
+            let hasUnit =  <div
+                className={gameState[tile.index].hasUnit ? gameState[tile.index].hasUnit.country + gameState[tile.index].hasUnit.name : "undefined"}></div>
             mapTiles[tile.index] = <div key={tile.index} onClick={() => {
                 newPosition(blueTiles,  tile.index, initialTile)
             }} className={`mapTile`}>
                 <div className={gameState[tile.index].terrainImage}></div>
-                <div
-                    className={gameState[tile.index].hasUnit ? gameState[tile.index].hasUnit.country + gameState[tile.index].hasUnit.name : "undefined"}></div>
+                {hasUnit}
                 <div className="tileMove"></div>
                 <div className="tileCursor"></div>
             </div>
@@ -224,11 +244,13 @@ export function ParsedMap() {
                                onClick={() => confirmAction(initialTile, newTile, moveAction(initialTile, newTile))}>Wait</div>)
             //if its an infantry and also on a property
 
-            if ( gameState[initialTile].hasUnit.id === 0 || 1)
+            if ( gameState[initialTile].hasUnit.id === 0 || 1){
+
                 if (gameState[newTile].terrainType === "property" && gameState[newTile].terrainOwner !== gameState[initialTile].hasUnit.country) {
 
-                tileMenu.push(<div className="menuName"
-                                   onClick={() => confirmAction(initialTile, newTile, captureAction(initialTile, newTile))}>Capture</div>)
+                    tileMenu.push(<div className="menuName"
+                                       onClick={() => confirmAction(initialTile, newTile, captureAction(initialTile, newTile))}>Capture</div>)
+                }
             }
 
             tileMenu =
