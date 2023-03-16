@@ -39,7 +39,7 @@ export function Login() {
         <p className={styles.subtext}>
           New to Advance Wars? <a href="/register">Sign Up</a>
         </p>
-        <button tabIndex={0} className={`btn ${styles.loginBtn}`} type="submit">
+        <button tabIndex={0} className={`btn ${styles.formBtn}`} type="submit">
           Login
         </button>
       </form>
