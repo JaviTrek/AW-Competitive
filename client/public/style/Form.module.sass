@@ -1,0 +1,85 @@
+
+@mixin discordBackground()
+  background-image: url("../images/discordLogo.png")
+  background-repeat: no-repeat
+  background-position: bottom 10px left 10px
+  background-size: auto 25px
+
+.discordButton
+  @include discordBackground()
+  margin-top: 40px
+  margin-bottom: 20px
+  width: 440px
+  height: 45px
+  color: white
+  font-size: 14px
+  line-height: 21px
+  background-color: #46599B
+  border: 1px solid black
+  
+.discordButton:hover
+  @include discordBackground()
+  background-color: darken(#46599B, 5%)
+
+.orDivider
+  display: flex
+  width: 440px
+  align-items: center
+  justify-content: space-between
+  color: #8f8f8f
+  font-size: 14px
+  line-height: 21px
+  text-align: center
+  .orLine
+    width: 180px
+    height: 1px
+    background: rgba(184, 176, 168, 0.25)
+
+.authenticationForm > input 
+  margin: 30px auto 30px
+
+.authenticationForm:first-child
+  margin: 20px auto 30px
+
+.input:first-of-type
+  margin: 20px auto 15px
+
+.input
+  width: 440px
+  height: 40px
+  margin-top: 15px
+  margin-bottom: 15px
+
+.input:last-of-type
+  margin: 15px auto 0
+
+// .inputPassword
+//   margin-top: 30px
+//   margin-bottom: 20px
+
+.subtext
+  margin-top: 20px
+  font-weight: 400
+  font-size: 14px
+  line-height: 21px
+  color: #8F8F8F
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25)
+  a
+    color: rgba(158, 188, 159, 0.84)
+  a:hover
+    text-decoration: underline
+    cursor: pointer
+
+.loginBtn
+  display: block
+  height: 45px
+  width: 250px
+  font-size: 24px
+  line-height: 36px
+  padding: 0
+  margin: 50px auto 20px
+
+
+
+
+

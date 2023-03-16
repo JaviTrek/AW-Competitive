@@ -1,28 +1,48 @@
 import React from "react";
-import { Container } from "./template/Container";
-import logo from "../images/awLogo.webp";
-import xicon from "../images/template/XIcon.png";
-import styles from "../style/LoginForm.module.sass";
+import { SmallContainer } from "./template/Container";
+import styles from "../style/Form.module.sass";
 
 export function Login() {
   return (
-    <Container styles={styles.container} size="small">
-      <img src={logo} alt="website logo" />
-      <img src={xicon} alt="X button to go back" />
-      <form method="post" action="/loginUser">
-        <label htmlFor="username"> Username:</label>
-        <input type="text" name="username" />
-
-        <label htmlFor="password"> Password:</label>
-        <input type="text" name="password" />
-
-        <button type="submit"> Login</button>
-        <br />
-      </form>
-
+    <SmallContainer title="Log In">
       <form method="get" action="/routes/auth">
-        <button type="submit"> Discord</button>
+        <button
+          tabIndex={0}
+          className={`btn ${styles.discordButton}`}
+          type="submit"
+        >
+          Continue with Discord
+        </button>
       </form>
-    </Container>
+
+      <div className={styles.orDivider}>
+        <div className={styles.orLine} />
+        <p>Or</p>
+        <div className={styles.orLine} />
+      </div>
+
+      <form className="authenticationForm" method="post" action="/loginUser">
+        <input
+          className={styles.input}
+          type="text"
+          placeholder="Username"
+          name="username"
+          required
+        />
+        <input
+          className={`${styles.input} ${styles.inputPassword}`}
+          type="password"
+          placeholder="Password"
+          name="password"
+          required
+        />
+        <p className={styles.subtext}>
+          New to Advance Wars? <a href="/register">Sign Up</a>
+        </p>
+        <button tabIndex={0} className={`btn ${styles.loginBtn}`} type="submit">
+          Login
+        </button>
+      </form>
+    </SmallContainer>
   );
 }

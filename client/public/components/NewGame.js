@@ -228,7 +228,7 @@ export const NewGame = () => {
         an opponent to join.
       </p>
 
-      <div className="btn btn-primary">PLAY</div>
+      <div className="btn btn-big">PLAY</div>
     </Container>
   );
 };
