@@ -14,9 +14,10 @@ export function ParsedMap() {
 
 //lets change a specific tile and its elements
     function changeTile(index, instruction) {
+
         mapTiles[index] = <div key={index} onClick={instruction.useFunction} className={`mapTile`}>
             <div className={gameState[index].terrainImage}></div>
-            {instruction.hasUnit}
+            {instruction.tileUnit}
             {instruction.tileMove}
             {instruction.showMenu}
             <div className="tileCursor"></div>
@@ -33,7 +34,7 @@ export function ParsedMap() {
                 res.data.gameState.forEach((tile, index) => {
                     //TODO: Find a way to add a custom HTML attribute to element and check its value. (We might not need this thou, maybe we can just keep checking the element).
                     changeTile(index, {
-                        hasUnit:  res.data.gameState[index].hasUnit ? <div className={ res.data.gameState[index].hasUnit.country +  res.data.gameState[index].hasUnit.name}></div> : null,
+                        tileUnit:  res.data.gameState[index].tileUnit ? <div className={ res.data.gameState[index].tileUnit.country +  res.data.gameState[index].tileUnit.name}></div> : null,
                         tileMove: null,
                         showMenu: null,
                         useFunction: () => {
@@ -72,7 +73,7 @@ export function ParsedMap() {
         Stop showing pathfinding or menus
 
     1 - Click an unit or building
-        check gameState for hasUnit or hasProperty
+        check gameState for tileUnit or hasProperty
         1.1 - If unit
             Show available pathfinding options
 
@@ -109,7 +110,7 @@ export function ParsedMap() {
         // lets reset the map, to make sure we don't grab any other MoveTile divs with us
         gameState.forEach((tile, index) => {
             changeTile(index, {
-                hasUnit: gameState[index].hasUnit ? <div className={gameState[index].hasUnit.country + gameState[index].hasUnit.name}></div> : null,
+                tileUnit: gameState[index].tileUnit ? <div className={gameState[index].tileUnit.country + gameState[index].tileUnit.name}></div> : null,
                 tileMove: null,
                 showMenu: null,
                 useFunction: () => {
@@ -127,7 +128,7 @@ export function ParsedMap() {
         //TODO: Instead of calling gameState[initialTile] like 100 times, lets put that into a variable to make our code much more compact
         resetGrid()
         //Lets make sure to reset the grid
-        if (gameState[index].hasUnit !== false) {
+        if (gameState[index].tileUnit !== false) {
             //show pathfinding options
             checkPath(index)
         } else if (gameState[index].terrainType === "property") {
@@ -144,11 +145,8 @@ export function ParsedMap() {
         let blueTiles = pathFinding(18, 18, gameState[initialTile], initialTile, gameState, mapTiles)
         // lets use the return value from our pathFinding function (pathFinding), which is an array with the index of the tiles that we can move to
         blueTiles.tilesToDraw.forEach((tile) => {
-            let hasUnit = null;
-            if (gameState[tile.index].hasUnit) hasUnit = <div
-                className={gameState[tile.index].hasUnit.country + gameState[tile.index].hasUnit.name}></div>
             changeTile(tile.index, {
-                hasUnit: gameState[tile.index].hasUnit ? <div className={gameState[tile.index].hasUnit.country + gameState[tile.index].hasUnit.name}></div> : null,
+                tileUnit: gameState[tile.index].tileUnit ? <div className={gameState[tile.index].tileUnit.country + gameState[tile.index].tileUnit.name}></div> : null,
                 tileMove: <div className="tileMove"></div>,
                 showMenu: null,
                 useFunction: () => {
@@ -169,7 +167,7 @@ export function ParsedMap() {
     function newPosition(movementArray, targetTile, initialTile,) {
         let shortestPath = moveUnit(movementArray, targetTile);
         //lets make sure user doesnt put unit on top of another unit (but if able to put the unit on the same spot as well)
-        if (gameState[targetTile].hasUnit !== false && shortestPath.length !== 1) {
+        if (gameState[targetTile].tileUnit !== false && shortestPath.length !== 1) {
             checkPath(checkActions(targetTile))
         } else {
             //lets see what the shortest path is
@@ -181,26 +179,34 @@ export function ParsedMap() {
 
             //if the unit moves to the same tile it was already in, we don't need to do anything
             if (newTile !== initialTile) {
+
+                console.log(initialTile)
+                console.log(gameState[initialTile].tileUnit)
+                console.log(gameState[initialTile].tileUnit === true)
+
                 // TODO: these movements should go from path[0] (initial tile) to path[path.length -1] (newTile) by moving a tile at a time instead of jumping from start to end (so 0,1,2,3...) because the unit moves through the terrain, it doesnt just teleport to its target location.
 
-                //lets delete/set the unit in the initial tile
-                changeTile(initialTile, {
-                    hasUnit: null,
-                    tileMove: <div className="tileMove"></div>,
-                    showMenu: null,
-                    useFunction: () => {
-                        checkPath(initialTile)
-                    }
-                })
-                //lets move our old tile unit to its new tile
                 changeTile(newTile, {
-                    hasUnit: gameState[newTile].hasUnit ? <div className={gameState[newTile].hasUnit.country + gameState[newTile].hasUnit.name}></div> : null,
+                    tileUnit: gameState[initialTile].tileUnit ? <div className={gameState[initialTile].tileUnit.country + gameState[initialTile].tileUnit.name}></div> : null,
                     tileMove: <div className="tileMove"></div>,
                     showMenu: null,
                     useFunction: () => {
                         checkPath(newTile)
                     }
                 })
+                //lets delete/set the unit in the initial tile
+                changeTile(initialTile, {
+                    tileUnit: null,
+                    tileMove: <div className="tileMove"></div>,
+                    showMenu: null,
+                    useFunction: () => {
+                        checkPath(initialTile)
+                    }
+                })
+
+                console.log('change Unit')
+                //lets move our old tile unit to its new tile
+
             }
             showMenu(initialTile, newTile, true)
         }
@@ -227,9 +233,9 @@ export function ParsedMap() {
                                onClick={() => confirmAction(initialTile, newTile, moveAction(initialTile, newTile))}>Wait</div>)
             //if its an infantry and also on a property
 
-            if (gameState[initialTile].hasUnit.id === 0 || 1) {
+            if (gameState[initialTile].tileUnit.id === 0 || 1) {
 
-                if (gameState[newTile].terrainType === "property" && gameState[newTile].terrainOwner !== gameState[initialTile].hasUnit.country) {
+                if (gameState[newTile].terrainType === "property" && gameState[newTile].terrainOwner !== gameState[initialTile].tileUnit.country) {
 
                     tileMenu.push(<div className="menuName"
                                        onClick={() => confirmAction(initialTile, newTile, captureAction(initialTile, newTile))}>Capture</div>)
@@ -273,14 +279,12 @@ export function ParsedMap() {
             </div>
 
         }
-        mapTiles[newTile] = <div key={newTile} className={`mapTile`} id={newTile}>
-            <div className={gameState[newTile].terrainImage}></div>
-            <div className={gameState[initialTile].hasUnit.country + gameState[initialTile].hasUnit.name}></div>
-            <div className="tileCursor"></div>
-            {showBlueTile}
-            {tileMenu}
-
-        </div>
+        changeTile(newTile, {
+            tileUnit: gameState[newTile].tileUnit ? <div className={gameState[newTile].tileUnit.country + gameState[newTile].tileUnit.name}></div> : null,
+            tileMove: showBlueTile,
+            showMenu: tileMenu,
+            useFunction: null
+        })
         setMap(mapTiles)
 
     }
@@ -302,8 +306,8 @@ export function ParsedMap() {
         //lets update our local copy of mapdata (instead of issuing a new get request everytime we move, we just update the local variable)
         if (initialTile !== newTile) {
             gameState[initialTile].terrainCapture = 0
-            gameState[newTile].hasUnit = gameState[initialTile].hasUnit
-            gameState[initialTile].hasUnit = false
+            gameState[newTile].tileUnit = gameState[initialTile].tileUnit
+            gameState[initialTile].tileUnit = false
         }
 
     }
@@ -319,8 +323,8 @@ export function ParsedMap() {
         gameState[newTile].terrainCapture = currentCapture + 100
         console.log(currentCapture)
         if (gameState[newTile].terrainCapture >= 200) {
-            gameState[newTile].terrainOwner = gameState[newTile].hasUnit.country
-            gameState[newTile].terrainImage = countryTags[gameState[newTile].hasUnit.country] + gameState[newTile].terrainImage.slice(2, 3)
+            gameState[newTile].terrainOwner = gameState[newTile].tileUnit.country
+            gameState[newTile].terrainImage = countryTags[gameState[newTile].tileUnit.country] + gameState[newTile].terrainImage.slice(2, 3)
         }
         moveAction(initialTile, newTile)
 
@@ -337,7 +341,7 @@ export function ParsedMap() {
         </div>
 
         //we update the new unit in has tile with the correct information
-        gameState[initialTile].hasUnit = {
+        gameState[initialTile].tileUnit = {
             id: data.id,
             name: data.unit.menuName,
             country: data.ownerShip,
@@ -354,7 +358,7 @@ export function ParsedMap() {
         axios.post('/moveUnit', {
             initialIndex: initialTile,
             newIndex: newTile,
-            unit: gameState[initialTile].hasUnit
+            unit: gameState[initialTile].tileUnit
         }).then((response) => {
 
         }).catch(error => console.log(error));

@@ -8,7 +8,7 @@ function pathFinding(maxX, maxY, unit, startIndex, gameState) {
 
 
     //Our function goes and check what ID is the unit we have
-    const unitData = unitType(unit.hasUnit.id)
+    const unitData = unitType(unit.tileUnit.id)
 
     //we set unitMove to 0 and unitMoveType to P because these are default values that will stop movement
     //The movement points a unit has (3, 6, etc)

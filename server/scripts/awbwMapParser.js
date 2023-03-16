@@ -154,7 +154,7 @@ module.exports = (columns, rows, name) => {
                         terrainType: terrainType,
                         terrainOwner: ownerShip,
                         terrainCapture: 0,
-                        hasUnit: {
+                        tileUnit: {
                             id: 0,
                             name: "Infantry",
                             country: "orangeStar",
@@ -172,7 +172,7 @@ module.exports = (columns, rows, name) => {
                         terrainType: terrainType,
                         terrainOwner: ownerShip,
                         terrainCapture: 0,
-                        hasUnit: false
+                        tileUnit: false
                     })
 
                 break
