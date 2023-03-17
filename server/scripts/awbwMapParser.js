@@ -148,18 +148,20 @@ module.exports = (columns, rows, name) => {
                 }
 
 
-                if (j % 7 === 4)
+                if (j % 7 === 6)
                     parsedMap.push({
                         terrainImage: awbwMap[j][1],
                         terrainType: terrainType,
                         terrainOwner: ownerShip,
-                        hasUnit: {
-                            id: 5,
-                            name: "Tank",
+                        terrainCapture: 0,
+                        tileUnit: {
+                            id: 0,
+                            name: "Infantry",
                             country: "orangeStar",
-                            hp: 100,
-                            status: "free"
-                            //bullets
+                            hp: Math.floor(Math.random() * (10 - 1) + 1),
+                            isUsed: false,
+                            capture: false
+                            //ammo
                             //gas
 
                         }
@@ -170,7 +172,8 @@ module.exports = (columns, rows, name) => {
                         terrainImage: awbwMap[j][1],
                         terrainType: terrainType,
                         terrainOwner: ownerShip,
-                        hasUnit: false
+                        terrainCapture: 0,
+                        tileUnit: false
                     })
 
                 break

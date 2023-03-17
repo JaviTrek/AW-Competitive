@@ -21,7 +21,7 @@ const router = Router()
         let gameDocument = {
             _id: 0,
             gameState: parsedData.gameState,
-            details: parsedData.details
+            mapData: parsedData.mapData
         }
 
         //insert the document
