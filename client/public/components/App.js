@@ -21,6 +21,5 @@ export function App() {
 
 
         </div>
-        
     )
 }

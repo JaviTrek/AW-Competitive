@@ -27,10 +27,13 @@ $countryName: orangeStar, blueMoon
       &:hover
         .tileCursor
           display: block
+
+
       .tileMenu
         display: grid
         grid-template-columns: 1fr
         gap: 4px
+        text-align: left
         background: rgba(116, 116, 116, 0.8)
         border: 2px solid rgba(59, 59, 59, 0.8)
         z-index: 10
@@ -67,8 +70,39 @@ $countryName: orangeStar, blueMoon
                 height: 16px
 
 
+//unit HP icons
+
+@for $i from 1 through 9
+  .HP#{$i}Icon
+    position: absolute
+    right: 0px
+    bottom: 0px
+    width: 16px
+    height: 14px
+    background: url("images/UI/hp/#{$i}.png") no-repeat
+    z-index: 9
+    image-rendering: pixelated
+    background-size: contain
 
 
+
+.captureIcon
+  position: absolute
+  left: 0px
+  bottom: 0px
+  width: 16px
+  height: 14px
+  background: url("images/UI/capture.png") no-repeat
+  z-index: 9
+  image-rendering: pixelated
+  background-size: contain
+
+
+//this allows us to make units wait
+.stateUsed
+
+  .tileUnit
+    filter: brightness(0.65)
 
 
 //let our units be displayed correctly in the battlefield/grid

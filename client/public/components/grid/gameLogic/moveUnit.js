@@ -1,8 +1,6 @@
 import React from "react";
 
 function moveUnit(movementArray, targetTile) {
-    console.log(targetTile)
-    console.log(movementArray)
     let previous = movementArray.previous
     let path = []
 
@@ -10,9 +8,7 @@ function moveUnit(movementArray, targetTile) {
         path.push(i);
     }
     //lets reverse it so we don't start at the end
-    const reversePath = path.reverse()
-
-    return reversePath
+    return path.reverse()
 
 
 }
