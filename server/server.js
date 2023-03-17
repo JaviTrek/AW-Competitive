@@ -6,7 +6,7 @@ const app = express();
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const http = require('http');
-const { Server } = require("socket.io");
+const {Server} = require("socket.io");
 //our database
 const database = require("./database/connection.js");
 
@@ -22,7 +22,7 @@ const port = process.env.PORT || 4000;
 const io = new Server(server, {
     cors: {
         origin: process.env.CORS_ORIGIN,
-        methods:["GET","POST"]
+        methods: ["GET", "POST"]
     }
 });
 
@@ -34,8 +34,6 @@ io.on('connection', (socket) => {
         socket.broadcast.emit("receiveAction", data)
     })
 });
-
-
 
 
 //get connected to the mongo database and websocket at the same time?
@@ -68,9 +66,6 @@ app.get("/home", async (req, res) => {
         pushData
     })
 })
-
-
-
 
 
 //TODO: Create our own folders for our account routes
@@ -107,19 +102,15 @@ const gameActions = require("./database/gameActions")
 app.use(gameActions)
 
 
-
-
-
-
-
-
 //------------------------------
 //Steve work on authorization
 //------------------------------
 const session = require('express-session');
-const DiscordStrategy = require('./authStrategy/discordStrategy');
-const passport = require('passport');
 
+const {hashPassword, comparePassword} = require('./authStrategy/hashing_password');
+//const localStrategy = require('./authStrategy/localStrategy');
+
+const passport = require('passport');
 
 
 app.use(session({
@@ -133,57 +124,157 @@ app.use(session({
     resave: true,
 }));
 
+//Passport
 
-//auth routes
-app.get('/routes/auth', passport.authenticate('discord'));
-app.get('/routes/auth/redirect', passport.authenticate('discord', {
-    failureRedirect: '/forbidden'
-}), (req,res) => {
-    res.send(req.user);
-});
+app.use(passport.session());
+app.use(passport.initialize());
 
 
 //-------
 //login
 //----
 
-const { hashPassword, comparePassword } = require('./authStrategy/hashing_password');
-const LocalStrategy = require('./authStrategy/localStrategy');
 
+const LocalStrategy = require('passport-local').Strategy;
 //login post request using passport local
-app.post('/login', passport.authenticate('local'), (req,res)=> {
+app.post('/loginUser', passport.authenticate('local'), (req, res) => {
     console.log('logged in');
+    console.log('local authenticate');
     res.sendStatus(200);
 })
 
+
+passport.use('local',
+    new LocalStrategy({
+        usernameField: 'username',
+    }, async (username, password, done) => {
+        console.log(username);
+        console.log(password);
+
+        try {
+            if (!username || !password) {
+                done(new Error('Bad request. Missing credentials'), null);
+            }
+            let dbConnect = database.getDatabase();
+            let collection = dbConnect.collection("learn");
+
+            const userDB = await collection.findOne({$or: [{username}]});
+            if (!userDB) {
+                throw new Error("User not found");
+            }
+            ;
+
+            const isValid = comparePassword(password, userDB.password);
+            if (isValid) {
+                console.log("Authenticated Successfully!");
+                // req.session.user = userDB;
+                done(null, userDB);
+                // return res.sendStatus(200);
+            } else {
+                console.log("Failed to Authenticate");
+                // return res.sendStatus(401);
+                done(null, null)
+            }
+
+        } catch (err) {
+            done(err, null);
+        }
+    })
+);
+
+
+//serializing
+passport.serializeUser((user, done) => {
+    console.log("Serializing user local");
+    done(null, user._id)
+});
+
+passport.deserializeUser(async (_id, done) => {
+    console.log("Deserializing user local strategy");
+    let dbConnect = database.getDatabase();
+    let collection = dbConnect.collection("learn");
+    try {
+        const userDB = await collection.findOne({$or: [{_id: _id}]});
+        console.log(userDB);
+        if (!userDB) throw new Error("User not found");
+        done(null, userDB);
+    } catch (err) {
+        console.log(err);
+        done(err, null);
+    }
+});
+
 //Register post request
-app.post('/register', async (req,res) => {
+app.post('/registerUser', async (req, res) => {
     let dbConnect = database.getDatabase()
     //use the collection
     let collection = dbConnect.collection("learn")
-    const { username, password } = req.body;
-    const userDB = await collection.findOne({$or : [{ username }]});
-    if(userDB){
+    const {username, password} = req.body;
+    const userDB = await collection.findOne({$or: [{username}]});
+    if (userDB) {
         console.log("user already exist!");
         res.sendStatus(400);
-    } else{
+    } else {
         const hashedPassword = hashPassword(password);
-        let myDoc = await collection.countDocuments({_id: {$gt: -1} });
+        let myDoc = await collection.countDocuments({_id: {$gt: -1}});
         let userDocument = {
-        _id: myDoc + 1,
-        username: username,
-        password: hashedPassword,
-    };
-    await collection.insertOne(userDocument);
-    console.log("User created");
-    res.sendStatus(201);
+            _id: myDoc + 1,
+            username: username,
+            password: hashedPassword,
+        };
+        try {
+            await collection.insertOne(userDocument);
+            console.log("User created");
+            res.redirect('/game?flash=correct');
+        } catch (e) {
+            console.log(e);
+        }
     }
 
-   
+
 });
 
- //Passport
- app.use(passport.initialize());
- app.use(passport.session());
+
+//Discord
+/*
+const discordStrategy = require('./authStrategy/discordStrategy');
+
+app.get('/routes/auth', passport.authenticate('discord123'));
+app.get('/routes/auth/redirect', passport.authenticate('discord123', {
+    failureRedirect: '/forbidden'
+}), (req,res) => {
+    console.log(req.user)
+    res.send(req.user);
+
+    console.log("discord authenticate");
+});
+
+*/
 
 
+//TODO: Create our own folders for our account routes
+//Protected route, it checks if user is authenticated, if so, you can access the protectRoute, otherwise, you get redirected to login
+app.get("/protectRoute", loggedIn, (req, res) => {
+    console.log('you accessed our route')
+    res.redirect("/game")
+})
+
+function loggedIn(req, res, next) {
+    if (req.isAuthenticated()) {
+        console.log(req.isAuthenticated());
+        console.log('user is logged In')
+        next();
+    } else {
+        console.log("not logged")
+        res.redirect("/login")
+    }
+}
+
+app.get('/logout', function (req, res, next) {
+    req.logout(function (err) {
+        if (err) {
+            return next(err);
+        }
+        res.redirect('/');
+    })
+});
