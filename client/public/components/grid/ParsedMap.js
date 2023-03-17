@@ -280,14 +280,12 @@ export function ParsedMap() {
             gameState[initialTile].terrainCapture = 0
             gameState[newTile].tileUnit = gameState[initialTile].tileUnit
             gameState[initialTile].tileUnit = false
-            //gameState[initialTile].tileUnit.capture = false
-
+            // if the unit moves to a tile with 0 capture, then they lose the capture icon
+            if (gameState[newTile].terrainCapture === 0) gameState[newTile].tileUnit.capture = false
         }
         gameState[newTile].tileUnit.isUsed = true
     }
 
-
-    //Function used to process the Capture Action
     function captureAction(initialTile, newTile) {
         let countryTags = {orangeStar: "os", blueMoon: "bm"}
         let currentCapture = gameState[newTile].terrainCapture
