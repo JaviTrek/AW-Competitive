@@ -148,7 +148,7 @@ module.exports = (columns, rows, name) => {
                 }
 
 
-                if (j % 7 === 5)
+                if (j % 7 === 6)
                     parsedMap.push({
                         terrainImage: awbwMap[j][1],
                         terrainType: terrainType,
@@ -158,8 +158,9 @@ module.exports = (columns, rows, name) => {
                             id: 0,
                             name: "Infantry",
                             country: "orangeStar",
-                            hp: 100,
-                            status: "free"
+                            hp: Math.floor(Math.random() * (10 - 1) + 1),
+                            isUsed: false,
+                            capture: false
                             //ammo
                             //gas
 
