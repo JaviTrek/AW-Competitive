@@ -1,0 +1,129 @@
+$imageName: Infantry, Mech, Recon, APC, Artillery, Tank, Anti-Air, Missile, Rocket, MdTank, PipeRunner, Neotank, MegaTank
+$countryName: orangeStar, blueMoon
+
+.gameBox
+  display: grid
+  grid-template-columns: min-content
+  text-align: center
+  padding: 2vw
+  margin: 5vw
+  align-items: center
+  align-content: center
+  justify-items: center
+  justify-content: center
+
+  // our main grid where we have our map tiles
+  .mapGrid
+    display: grid
+    margin: 0
+    border: 1em solid #333b54
+    // our individual tiles
+
+    .mapTile
+      width: 100%
+      background-color: #bfdd33
+      aspect-ratio: 1
+      position: relative
+      &:hover
+        .tileCursor
+          display: block
+
+
+      .tileMenu
+        display: grid
+        grid-template-columns: 1fr
+        gap: 4px
+        text-align: left
+        background: rgba(116, 116, 116, 0.8)
+        border: 2px solid rgba(59, 59, 59, 0.8)
+        z-index: 10
+        position: absolute
+        top: 0
+        left: 100%
+        .menuName
+          background-color: #eaeaea
+          cursor: pointer
+          font-size: 14px
+          padding: 0 6px
+
+          display: inline-block
+        .menuOptions
+          padding: 0 6px
+          background-color: #eaeaea
+          display: grid
+          grid-template-columns: auto auto auto
+          justify-items: left
+          align-items: center
+
+          .menuCost
+            justify-self: right
+            display: inline-block
+            cursor: pointer
+            font-size: 14px
+          //let our units be displayed correctly in the menu
+          @each $country in $countryName
+            @each $unit in $imageName
+              .menu#{$country}#{$unit}
+                background: url("images/units/#{$country}/#{$unit}-0.png") no-repeat
+                display: inline-block
+                width: 16px
+                height: 16px
+
+
+//unit HP icons
+
+@for $i from 1 through 9
+  .HP#{$i}Icon
+    position: absolute
+    right: 0px
+    bottom: 0px
+    width: 16px
+    height: 14px
+    background: url("images/UI/hp/#{$i}.png") no-repeat
+    z-index: 9
+    image-rendering: pixelated
+    background-size: contain
+
+
+
+.captureIcon
+  position: absolute
+  left: 0px
+  bottom: 0px
+  width: 16px
+  height: 14px
+  background: url("images/UI/capture.png") no-repeat
+  z-index: 9
+  image-rendering: pixelated
+  background-size: contain
+
+
+//this allows us to make units wait
+.stateUsed
+
+  .tileUnit
+    filter: brightness(0.65)
+
+
+//let our units be displayed correctly in the battlefield/grid
+@each $country in $countryName
+  @each $unit in $imageName
+    .#{$country}#{$unit}
+      background: url("images/units/#{$country}/#{$unit}-0.png") no-repeat
+      background-size: contain
+      position: absolute
+      z-index: 9
+      //currently adding 3px from the bottom to make them not step so much on the border of moveTile
+      bottom: 0px
+      height: 32px
+      width: 32px
+      image-rendering: pixelated
+
+
+
+
+
+
+
+
+

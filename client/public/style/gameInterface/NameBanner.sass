@@ -1,0 +1,43 @@
+.usernameContainer
+  display: flex
+  justify-content: space-between
+  align-items: center
+  width: 190px
+  height: 27px
+  padding: 0 2px
+  h3
+    font-style: normal
+    font-weight: 400
+    font-size: 21px
+    line-height: 32px
+
+  // I have to use a mixin here because I have to target userContainerIcon for each Country class for setting the (background) image
+@mixin userContainerIconMixin()
+  background-size: 100% 100%
+  width: 22px
+  height: 22px
+
+.redCountry
+  background: linear-gradient(90deg, rgba(255, 0, 0, 0.84) 0%, #690000 100%)
+  .userContainerIcon
+    @include userContainerIconMixin
+    background-image: url("../../images/oslogo1.png")
+
+.blueCountry
+  background: linear-gradient(90deg, rgba(35, 66, 186, 0.84) 0%, #0B2070 100%)
+  .userContainerIcon
+    @include userContainerIconMixin
+    background-image: url("../../images/oslogo2.png")
+
+.greenCountry
+  background: linear-gradient(90deg, rgba(135, 226, 135, 0.84) 0%, #3DC22D 100%)
+  .userContainerIcon
+    @include userContainerIconMixin
+    background-image: url("../../images/oslogo3.png")
+
+.yellowCountry
+  background: linear-gradient(90deg, rgba(240, 210, 4, 0.84) 0%, #C9BD02 100%)
+  .userContainerIcon
+    @include userContainerIconMixin
+    background-image: url("../../images/oslogo4.png")
+  

@@ -1,0 +1,43 @@
+@use '../abstracts/variables' as variables
+  
+.header
+  padding: 11px 40px 11px 13px
+  display: flex
+  justify-content: space-between
+  align-items: center
+  height: 85px
+  background: rgba(0, 0, 0, 0.5)
+  color: white
+  width: 100vw
+  margin: 0 auto
+
+  display: grid
+  grid-template-columns: 28% 60% 12% 
+  font-size: 1.6vw
+  max-height: 7%
+
+  font-weight: 500px
+  // max-width: 107%
+  // display: grid
+  // grid-template-columns: 28% 60% 12% 
+  // max-height: 7%
+
+.headerLogo
+  max-width: 216px
+  cursor: pointer
+  // grid-template-columns: min-content auto min-content
+  // padding-top: 3%
+  // max-height: 50%
+  // max-width: 60%
+
+.headerMenu
+  display: grid
+  grid-template-columns: 1fr 1fr 1fr 1fr
+  grid-gap: 50px
+
+
+.headerNav:hover
+  color: variables.$color-primary  
+  cursor: pointer
+  
+

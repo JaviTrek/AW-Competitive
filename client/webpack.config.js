@@ -25,7 +25,10 @@ module.exports = {
 
         proxy: [
             {
-                context: ['/home', '/createUser', '/map/randomMap', '/registerUser', '/routes/auth', '/loginUser', "/protectRoute", '/logout'],
+
+                //here are the routes that actually go to express
+                // must restart Webpack for them to work
+                context: ['/home', '/createUser', '/map/randomMap', '/map/parsedMap', "/createNewGame", "/getGameState", "/moveUnit", '/registerUser', '/routes/auth', '/loginUser', "/protectRoute", '/logout'],
                 target:  'http://localhost:4000'
             }
         ],
