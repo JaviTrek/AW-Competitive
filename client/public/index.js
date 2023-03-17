@@ -8,6 +8,8 @@ import { AppChildren } from "./components/AppChildren";
 import { CurrentGames } from "./components/CurrentGames";
 import { NewGame } from "./components/NewGame";
 import { createRoot } from "react-dom/client";
+import {Register} from "./components/RegisterForm";
+import {Login} from "./components/LoginForm";
 
 
 const container = document.getElementById("app");
