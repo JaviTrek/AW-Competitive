@@ -6,7 +6,7 @@ function unitType(unitIndex, returnData) {
         {name: "infantry",   menuName: "Infantry",   cost: 1000,  move: 3, moveType: "F", range: [1, 1], facility: "base"},
         {name: "mech",       menuName: "Mech",       cost: 3000,  move: 2, moveType: "B", range: [1, 1], facility: "base"},
         {name: "recon",      menuName: "Recon",      cost: 4000,  move: 8, moveType: "W", range: [1, 1], facility: "base"},
-        {name: "apc",        menuName: "APC",        cost: 5000,  move: 6, moveType: "T", range: [0, 0], facility: "base"},
+        //{name: "apc",        menuName: "APC",        cost: 5000,  move: 6, moveType: "T", range: [0, 0], facility: "base"},
         {name: "artillery",  menuName: "Artillery",  cost: 6000,  move: 5, moveType: "T", range: [2, 3], facility: "base"},
         {name: "tank",       menuName: "Tank",       cost: 7000,  move: 6, moveType: "T", range: [1, 1], facility: "base"},
         {name: "antiair",    menuName: "Anti-Air",   cost: 8000,  move: 6, moveType: "T", range: [1, 1], facility: "base"},

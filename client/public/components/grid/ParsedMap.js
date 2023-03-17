@@ -63,8 +63,11 @@ let gameState = []
 let mapTiles = []
 export function ParsedMap() {
     let [map, setMap] = useState([])
+
+
 //lets change a specific tile and its elements
     function changeTile(index, instruction) {
+
         if (!instruction.hp && gameState[index].tileUnit.hp < 10) {
             instruction.hp = <div className={`HP${Math.floor(gameState[index].tileUnit.hp)}Icon`}></div>
         }
@@ -157,10 +160,15 @@ export function ParsedMap() {
         let blueTiles = pathFinding(18, 18, gameState[initialTile], initialTile, gameState, mapTiles)
         // lets use the return value from our pathFinding function (pathFinding), which is an array with the index of the tiles that we can move to
         blueTiles.tilesToDraw.forEach((tile) => {
+
+            let tileMove = <div className="tileMove"></div>
+            console.log(tile.hasEnemy)
+            if (tile.hasEnemy) tileMove = <div className="tileEnemy"></div>
+
             changeTile(tile.index, {
                 tileUnit: gameState[tile.index].tileUnit ? <div
                     className={gameState[tile.index].tileUnit.country + gameState[tile.index].tileUnit.name + " tileUnit"}></div> : null,
-                tileMove: <div className="tileMove"></div>,
+                tileMove: tileMove,
                 showMenu: null,
                 useFunction: () => {
                     newPosition(blueTiles, tile.index, initialTile)

@@ -1,7 +1,9 @@
 import React from "react";
 
-function checkTerrain(moveType, tileData) {
+function checkTerrain(moveType, nextTile, initialTile) {
 
+    //if the next tile has an unit AND its not from the same country, return 9 movement to cross
+    if (nextTile.tileUnit && nextTile.tileUnit?.country !== initialTile.tileUnit.country) return "A"
 
     const movementCostClear = {
         "plain":     {F: 1, B: 1, T: 1, W: 2, A: 1, P: 9, S: 9, L: 9},
@@ -18,11 +20,8 @@ function checkTerrain(moveType, tileData) {
         "property": {F: 1, B: 1, T: 1, W: 1, A: 1, P: 9, S: 9, L: 9},
     };
 
-    function getCost (moveType, terrain) {
-        return movementCostClear[terrain][moveType]
-    }
+    return movementCostClear[nextTile.terrainType][moveType]
 
-    return getCost(moveType, tileData.terrainType)
 
 
 }
