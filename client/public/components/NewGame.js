@@ -59,7 +59,6 @@ export const NewGame = () => {
     "Darkling-Treshold",
     "Defiled-Logic",
   ];
-  console.log(maps);
 
   // Mapping functions
   const imgMapping = (img) => (

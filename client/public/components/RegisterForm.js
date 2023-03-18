@@ -34,7 +34,6 @@ export function Register() {
         <div className={styles.orLine} />
       </div>
 
-      {/* <form className="authenticationForm" method="post" action="/registerUser"> */}
       <form
         className="authenticationForm"
         onSubmit={handleSubmit((data) => {
