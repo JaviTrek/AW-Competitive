@@ -1,8 +1,18 @@
 import React from "react";
 import { SmallContainer } from "./template/Container";
 import styles from "../style/Form.module.sass";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 export function Login() {
+  const navigate = useNavigate();
+  const { register, handleSubmit, watch } = useForm({
+    defaultValues: {
+      username: "",
+      password: "",
+    },
+  });
+
   return (
     <SmallContainer title="Log In">
       <form method="get" action="/routes/auth">
@@ -21,7 +31,20 @@ export function Login() {
         <div className={styles.orLine} />
       </div>
 
-      <form className="authenticationForm" method="post" action="/loginUser">
+      <form
+        className="authenticationForm"
+        onSubmit={handleSubmit((data) => {
+          fetch("/loginUser", {
+            headers: { "Content-Type": "application/json" },
+            method: "post",
+            body: JSON.stringify(data),
+          })
+            .then((res) => res.json)
+            .then((json) => console.log("Form Reponse Text: ", json))
+            .catch((err) => console.error(err));
+          navigate("/");
+        })}
+      >
         <input
           className={styles.input}
           type="text"

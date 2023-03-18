@@ -2,8 +2,10 @@ import React from "react";
 import { SmallContainer } from "./template/Container";
 import styles from "../style/Form.module.sass";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 export function Register() {
+  const navigate = useNavigate();
   const { register, handleSubmit, watch } = useForm({
     defaultValues: {
       username: "",
@@ -36,7 +38,16 @@ export function Register() {
       <form
         className="authenticationForm"
         onSubmit={handleSubmit((data) => {
-          console.log(data);
+          delete data["confirm_password"];
+          fetch("/registerUser", {
+            headers: { "Content-Type": "application/json" },
+            method: "post",
+            body: JSON.stringify(data),
+          })
+            .then((res) => res.json)
+            .then((json) => console.log("Form Reponse Text: ", json))
+            .catch((err) => console.error(err));
+          navigate("/");
         })}
       >
         <input
