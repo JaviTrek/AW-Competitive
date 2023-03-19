@@ -58,13 +58,40 @@
         width: 31px
       //the red square on enemy units
       .tileEnemy
-        background: rgba(228, 67, 67, 0.5)
+        background: rgba(228, 67, 67, 0.25)
         border: 2px solid rgb(184, 22, 22)
         z-index: 5
         position: absolute
         top: 0
         height: 31px
         width: 31px
+      //the red square on enemy units
+      .tileAttack
+        animation: selectTarget 2s linear infinite
+        background: rgba(228, 67, 67, 0.5)
+        border: 2px solid rgb(184, 22, 22)
+        z-index: 5
+        position: absolute
+        left: 0
+        right: 0
+        top: 0
+        bottom: 0
+        margin: auto
+        height: 31px
+        width: 31px
+        @keyframes selectTarget
+          from
+            transform: rotate(0)
+            background: rgba(228, 67, 67, 0.5)
+
+
+          to
+            transform: rotate(270deg)
+            background: rgba(228, 67, 67, 0.95)
+
+
+
+
 
 
 

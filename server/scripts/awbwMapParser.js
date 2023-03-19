@@ -132,6 +132,10 @@ module.exports = (columns, rows, name) => {
                     case "se":
                         terrainType = "sea"
                         break;
+                    case "br":
+                        terrainType = "road"
+                        break;
+
                     default:
                         terrainType = "property"
                 }
@@ -146,9 +150,9 @@ module.exports = (columns, rows, name) => {
                     default:
                         ownerShip = false
                 }
+// https://www.youtube.com/watch?v=sPWGBmcDR50
 
-
-                if (j % 7 === 6)
+                if (j % 7 === 999)
                     parsedMap.push({
                         terrainImage: awbwMap[j][1],
                         terrainType: terrainType,
@@ -158,7 +162,7 @@ module.exports = (columns, rows, name) => {
                             id: 0,
                             name: "Infantry",
                             country: "orangeStar",
-                            hp: Math.floor(Math.random() * (10 - 1) + 1),
+                            hp: Math.floor(Math.random() * (101 - 1) + 1),
                             isUsed: false,
                             capture: false
                             //ammo
