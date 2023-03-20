@@ -1,23 +1,29 @@
-import React from "react";
+import React, {useState} from "react";
 import { SmallContainer } from "./template/Container";
 import styles from "../style/Form.module.sass";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export function Register() {
   const navigate = useNavigate();
   const { register, handleSubmit, watch } = useForm({
     defaultValues: {
-      username: "",
-      password: "",
-      confirm_password: "",
+      username: "JaviJavi",
+      password: "123",
+      confirmPassword: "123",
     },
   });
   const watchPassword = watch("password");
-  const watchConfirmPassword = watch("confirm_password");
-
+  const watchConfirmPassword = watch("confirmPassword");
+    const [flash, setFlash] = useState({
+        class: "none", message: "",
+    })
   return (
     <SmallContainer title="Sign In">
+        <div className={`flashMessage ${flash.class}Flash`}>
+            {flash.message}
+        </div>
       <form method="get" action="/routes/auth">
         <button
           tabIndex={0}
@@ -37,16 +43,25 @@ export function Register() {
       <form
         className="authenticationForm"
         onSubmit={handleSubmit((data) => {
-          delete data["confirm_password"];
-          fetch("/registerUser", {
-            headers: { "Content-Type": "application/json" },
-            method: "post",
-            body: JSON.stringify(data),
-          })
-            .then((res) => res.json)
-            .then((json) => console.log("Form Reponse Text: ", json))
-            .catch((err) => console.error(err));
-          navigate("/");
+
+            axios.post("/registerUser", data, null)
+                .then((res) => {
+                    setFlash({
+                        class: "success", message: "You have registered correctly! Redirecting..."
+                    })
+                    //give the user some time to read success message
+                    setTimeout(() => {
+                        navigate("/login")
+                    }, 3000)
+                })
+                .catch((err) => {
+                    console.error(err)
+                    setFlash({
+                        class: "error", message: "Error! User already exists"
+                    })
+                });
+
+
         })}
       >
         <input
@@ -54,7 +69,6 @@ export function Register() {
           {...register("username")}
           type="text"
           placeholder="Username"
-          name="username"
           required
         />
         <input
@@ -62,13 +76,12 @@ export function Register() {
           {...register("password")}
           type="password"
           placeholder="Password"
-          name="password"
           required
         />
         <input
           className={`${styles.input} ${styles.inputPassword}`}
           type="password"
-          {...register("confirm_password", {
+          {...register("confirmPassword", {
             validate: {
               match: (v) => watch("password") == v,
             },
