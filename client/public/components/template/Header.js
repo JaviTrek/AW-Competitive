@@ -17,7 +17,7 @@ export const Header = () => {
           <a className='headerNav headerMenuButton'> Tools</a>
         </nav>
 
-        <div className='headerNav loginButton'> Login</div>
+        <a href="/login"  className='headerNav loginButton'> Login</a>
 
     </header>
     
