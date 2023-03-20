@@ -18,23 +18,25 @@ export function ParsedMap() {
 
 //lets change a specific tile and its elements
     function changeTile(index, instruction) {
+        let {tileUnit, tileSquare, showMenu, hp, capture, hpTile, useFunction} = instruction
+        hpTile = hpTile ? hpTile : index;
+        if(hpTile !== index) console.log("not the same")
 
-
-        if (!instruction.hp && gameState[index].tileUnit.hp <= 100) {
-            let hp = gameState[index].tileUnit.hp / 10
-            instruction.hp = <div className={`HP${Math.ceil(hp)}Icon`}></div>
+        if (!hp && gameState[hpTile].tileUnit.hp <= 100) {
+            let hpNumber = gameState[hpTile].tileUnit.hp / 10
+            hp = <div className={`HP${Math.ceil(hpNumber)}Icon`}></div>
         }
         if (gameState[index].tileUnit.capture === true) {
-            instruction.capture = <div className={`captureIcon`}></div>
+            capture = <div className={`captureIcon`}></div>
         }
-        mapTiles[index] = <div id={index} key={index} onClick={instruction.useFunction}
+        mapTiles[index] = <div id={index} key={index} onClick={useFunction}
                                className={gameState[index].tileUnit.isUsed ? 'mapTile stateUsed' : `mapTile`}>
             <div className={`tileTerrain ${gameState[index].terrainImage}`}></div>
-            {instruction.tileUnit}
-            {instruction.tileSquare}
-            {instruction.showMenu}
-            {instruction.hp}
-            {instruction.capture}
+            {tileUnit}
+            {tileSquare}
+            {showMenu}
+            {hp}
+            {capture}
             <div className="tileCursor"></div>
         </div>
     }
@@ -44,8 +46,6 @@ export function ParsedMap() {
         axios.get('/getGameState')
             .then(res => {
                 gameState = res.data.gameState
-
-
                 res.data.gameState.forEach((tile, index) => {
                     //TODO: Find a way to add a custom HTML attribute to element and check its value. (We might not need this thou, maybe we can just keep checking the element).
                     changeTile(index, {
@@ -90,7 +90,7 @@ export function ParsedMap() {
 
     //Everytime a tile is clicked, we go through these steps
     function checkActions(index) {
-        //TODO: Instead of calling gameState[initialTile] like 100 times, lets put that into a variable to make our code much more compact
+        //TODO: Instead of calling gameState[initialTile] or gamestate[newTile] like 100 times, lets put that into a variable to make our code much more compact
         resetGrid()
         //Lets make sure to reset the grid
         if (gameState[index].tileUnit !== false) {
@@ -150,6 +150,7 @@ export function ParsedMap() {
                     tileUnit: null,
                     tileSquare: <div className="tileMove"></div>,
                     showMenu: null,
+                    //we put hp as true so it doesnt appear
                     hp: true,
                     capture: null,
                     useFunction: () => {
@@ -172,7 +173,7 @@ export function ParsedMap() {
             let validTargets = findTargets(newTile, gameState[initialTile].tileUnit, gameState)
             if (validTargets.length > 0) {
                 tileMenu.push(<div className="menuName"
-                                   onClick={() => confirmAction(initialTile, newTile, attackAction(initialTile, newTile))}>Attack</div>)
+                                   onClick={() => attackAction(initialTile, newTile)}>Attack</div>)
 
                 validTargets.forEach(tile => {
                     changeTile(tile, {
@@ -235,7 +236,7 @@ export function ParsedMap() {
             tileSquare: showBlueTile,
             showMenu: tileMenu,
             capture: null,
-            hp: <div className={`HP${Math.floor(gameState[initialTile].tileUnit.hp)}Icon`}></div>,
+            hpTile: initialTile,
             useFunction: null
         })
         setMap(mapTiles)
@@ -289,6 +290,7 @@ export function ParsedMap() {
     }
 
     function buildAction(initialTile, data) {
+        console.log(Math.floor(Math.random() * 2))
         //we update the new unit in has tile with the correct information
         gameState[initialTile].tileUnit = {
             id: data.id,
@@ -312,9 +314,19 @@ export function ParsedMap() {
     }
 
     function attackAction(initialTile, newTile) {
-        console.log("you attacked!")
-        moveAction(initialTile, newTile)
-
+        console.log('attacking!')
+        changeTile(newTile, {
+            tileUnit: <div className={`${gameState[initialTile].tileUnit.country + gameState[initialTile].tileUnit.name}  tileUnit`}></div>,
+            tileSquare:  <div className="tileMove"></div>,
+            hpTile: initialTile,
+            showMenu: null,
+            useFunction: () => {
+                checkPath(newTile)
+            }
+        })
+        let newMap;
+        newMap = mapTiles.slice()
+        setMap(newMap)
     }
 
 
