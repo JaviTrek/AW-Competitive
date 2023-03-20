@@ -42,59 +42,10 @@ server.listen(port, () => {
     console.log(`Server running on port ${port}`)
 });
 
+
+//The map parser simply parses our map with different input values inside the file, this is what determines what units or terrain are placed in which tiles inside our /game page
 const mapParser = require('./scripts/awbwMapParser')
 mapParser(18, 18, "parsedMap")
-const parsedMap = require("./scripts/parsedMap.json");
-
-app.get('/map/parsedMap', (req, res) => {
-    res.json(parsedMap)
-});
-
-
-//This /home route is used by our home page
-app.get("/home", async (req, res) => {
-    console.log("get home")
-    let dbConnect = database.getDatabase()
-    //use the collection
-    let collection = dbConnect.collection("users")
-    let myDoc = await collection.find()
-    let pushData = []
-    // find he documents in our collection and iterate through every one of them
-    await myDoc.forEach(doc => pushData.push(doc));
-
-    res.json({
-        pushData
-    })
-})
-
-
-//TODO: Create our own folders for our account routes
-
-// ------------
-// POST REQUESTS
-// ------------
-app.post('/createUser', async (req, res) => {
-    let dbConnect = database.getDatabase()
-    //use the collection
-    let collection = dbConnect.collection("users")
-    let myDoc = await collection.countDocuments({_id: {$gt: -1}})
-    console.log(myDoc)
-    //Lets define a document
-    const username = req.body.username
-    const armyColor = req.body.armyColor
-    const favoriteCO = req.body.favoriteCO
-    let userDocument = {
-        _id: myDoc + 1,
-        username: username,
-        armyColor: armyColor,
-        favoriteCO: favoriteCO,
-    }
-
-    //insert the document
-    await collection.insertOne(userDocument);
-    res.redirect('/');
-
-});
 
 const createGame = require("./database/createGame")
 app.use(createGame)
@@ -108,7 +59,7 @@ app.use(gameActions)
 const session = require('express-session');
 
 const {hashPassword, comparePassword} = require('./authStrategy/hashing_password');
-//const localStrategy = require('./authStrategy/localStrategy');
+const localStrategy = require('./authStrategy/localStrategy');
 
 const passport = require('passport');
 
@@ -139,18 +90,17 @@ const LocalStrategy = require('passport-local').Strategy;
 //login post request using passport local
 app.post('/loginUser', passport.authenticate('local'), (req, res) => {
     console.log('logged in');
-    console.log('local authenticate');
-    res.sendStatus(200);
+    //we send 200 because that means we logged in correctly
+    res.sendStatus(200)
+
 })
 
 
 passport.use('local',
     new LocalStrategy({
         usernameField: 'username',
-    }, async (username, password, done) => {
-        console.log(username);
-        console.log(password);
 
+    }, async (username, password, done) => {
         try {
             if (!username || !password) {
                 done(new Error('Bad request. Missing credentials'), null);
@@ -161,15 +111,14 @@ passport.use('local',
             const userDB = await collection.findOne({$or: [{username}]});
             if (!userDB) {
                 throw new Error("User not found");
-            }
-            ;
+            };
 
             const isValid = comparePassword(password, userDB.password);
             if (isValid) {
                 console.log("Authenticated Successfully!");
                 // req.session.user = userDB;
                 done(null, userDB);
-                // return res.sendStatus(200);
+
             } else {
                 console.log("Failed to Authenticate");
                 // return res.sendStatus(401);
@@ -195,7 +144,6 @@ passport.deserializeUser(async (_id, done) => {
     let collection = dbConnect.collection("learn");
     try {
         const userDB = await collection.findOne({$or: [{_id: _id}]});
-        console.log(userDB);
         if (!userDB) throw new Error("User not found");
         done(null, userDB);
     } catch (err) {
@@ -225,7 +173,7 @@ app.post('/registerUser', async (req, res) => {
         try {
             await collection.insertOne(userDocument);
             console.log("User created");
-            res.redirect('/game?flash=correct');
+            res.sendStatus(200)
         } catch (e) {
             console.log(e);
         }
@@ -262,10 +210,10 @@ app.get("/protectRoute", loggedIn, (req, res) => {
 function loggedIn(req, res, next) {
     if (req.isAuthenticated()) {
         console.log(req.isAuthenticated());
-        console.log('user is logged In')
+        console.log('user is logged In, access granted')
         next();
     } else {
-        console.log("not logged")
+        console.log("not logged, cant access protectRoute")
         res.redirect("/login")
     }
 }
