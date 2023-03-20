@@ -187,6 +187,9 @@ export const NewGame = () => {
             />
           ))}
         </div>
+        <div className="gameIconContainer">
+          <div className="infantryUnit" />
+        </div>
       </div>
 
       <div className="newGameSection">
@@ -204,7 +207,7 @@ export const NewGame = () => {
             <div className="mapPreview">
               <img
                 className="mapPreviewImage"
-                src={maps[`${hoveredMap}-Preview.png`]}
+                src={maps[`${hoveredMap}-Preview.jpg`]}
                 alt={`full image of ${hoveredMap}`}
               />
               <h3>{hoveredMap.replace(/-/g, " ")}</h3>
@@ -213,7 +216,7 @@ export const NewGame = () => {
             <div className="mapPreview">
               <img
                 className="mapPreviewImage"
-                src={maps[`${selectedMap}-Preview.png`]}
+                src={maps[`${selectedMap}-Preview.jpg`]}
                 alt={`full image of ${selectedMap}`}
               />
             </div>

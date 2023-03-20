@@ -54,6 +54,58 @@
   img 
     max-width: 144px
 
+// ******************** ANIMATIONS ********************
+$Infantry: 4
+$Tank: 4
+$B-Copter: 4
+$Carrier: 2
+$Sub: 4
+
+$unitTypes: $Infantry, $Tank, $B-Copter, $Carrier, $Sub
+
+// @each $unitType in $unitTypes
+//   .{}Unit
+
+.gameIconContainer
+  background-color: #131313
+
+@mixin unitFrame($unit, $frameNumber)
+  // background: url("../images/units/blueMoon/Infantry-0.png") 
+  background: url("../images/units/blueMoon/#{$unit}-#{$frameNumber}.png") 
+  background-size: contain
+  image-rendering: pixelated
+
+@keyframes infantryFrames
+  0%
+    @include unitFrame(Infantry, 0)
+  33%
+    @include unitFrame(Infantry, 1)
+  66%
+    @include unitFrame(Infantry, 2)
+  100%
+    @include unitFrame(Infantry, 3)
+    
+.infantryUnit
+  animation-name: infantryFrames
+  animation-duration: 0.85s
+  animation-iteration-count: infinite
+  width: 48px
+  height: 48px
+
+// .tankUnit
+//   background: url("images/units/blueMoon/Infantry-0.png") no-repeat
+
+// .bCopterUnit
+//   background: url("images/units/blueMoon/Infantry-0.png") no-repeat
+
+// .carrierUnit
+//   background: url("images/units/blueMoon/Infantry-0.png") no-repeat
+
+// .subUnit
+//   background: url("images/units/blueMoon/Infantry-0.png") no-repeat
+
+// ********************  ********************
+
 .countryGrid
   display: flex
   margin-left: 10px
