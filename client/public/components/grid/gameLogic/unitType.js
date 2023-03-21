@@ -2,6 +2,8 @@ import React from "react";
 
 function unitType(unitIndex, returnData) {
     // Here are our units, their names, menu name, cost, move, move type, etc
+
+    //TODO: CANT comment out APC, missile and piperunner because doing so causes issues in the damage calculations
     const unitData = [
         {name: "infantry",   menuName: "Infantry",   cost: 1000,  move: 3, moveType: "F", range: [1, 1], facility: "base"},
         {name: "mech",       menuName: "Mech",       cost: 3000,  move: 2, moveType: "B", range: [1, 1], facility: "base"},
@@ -10,10 +12,10 @@ function unitType(unitIndex, returnData) {
         {name: "artillery",  menuName: "Artillery",  cost: 6000,  move: 5, moveType: "T", range: [2, 3], facility: "base"},
         {name: "tank",       menuName: "Tank",       cost: 7000,  move: 6, moveType: "T", range: [1, 1], facility: "base"},
         {name: "antiair",    menuName: "Anti-Air",   cost: 8000,  move: 6, moveType: "T", range: [1, 1], facility: "base"},
-        //{name: "missile",    menuName: "Missile",    cost: 12000, move: 4, moveType: "W", range: [3, 5], facility: "base"},
+        {name: "missile",    menuName: "Missile",    cost: 12000, move: 4, moveType: "W", range: [3, 5], facility: "base"},
         {name: "rocket",     menuName: "Rocket",     cost: 15000, move: 5, moveType: "W", range: [3, 5], facility: "base"},
         {name: "mdTank",     menuName: "MdTank",    cost: 16000, move: 5, moveType: "T", range: [1, 1], facility: "base"},
-        //{name: "piperunner", menuName: "PipeRunner", cost: 20000, move: 9, moveType: "P", range: [2, 5], facility: "base"},
+        {name: "piperunner", menuName: "PipeRunner", cost: 20000, move: 9, moveType: "P", range: [2, 5], facility: "base"},
         {name: "neotank",    menuName: "Neotank",    cost: 22000, move: 6, moveType: "T", range: [1, 1], facility: "base"},
         {name: "megatank",   menuName: "MegaTank",  cost: 28000, move: 4, moveType: "T", range: [1, 1], facility: "base"},
     ];
