@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import { Container } from "./template/Container";
 import { NameBanner } from "./gameInterface/NameBanner";
 import "../style/NewGame.sass";
+import "../style/Animations.sass";
 
 // *Importing all the CO images to variable cos*
 // resources:
@@ -41,10 +42,10 @@ export const NewGame = () => {
     "Koal",
   ];
   const countries = {
-    "Amber Blaze": "red",
-    "Cobalt Ice": "blue",
-    "Green Earth": "green",
+    "Orange Star": "orange",
+    "Blue Moon": "blue",
     "Yellow Comet": "yellow",
+    "Green Earth": "green",
   };
   // Map example:
   // Amber-Valley-Layout
@@ -109,10 +110,14 @@ export const NewGame = () => {
   const [selectedCO, setSelectedCO] = useState("Max");
   const tempCO = useRef();
   const [hoveredCO, setHoveredCO] = useState("");
-  const [selectedCountry, setSelectedCountry] = useState("Amber Blaze");
+  const [selectedCountry, setSelectedCountry] = useState("Orange Star");
   const [selectedMap, setSelectedMap] = useState("Caustic-Finale");
   const tempMap = useRef();
   const [hoveredMap, setHoveredMap] = useState("");
+
+  let currentCountryCamelCase =
+    selectedCountry.charAt(0).toLowerCase() +
+    selectedCountry.slice(1).replace(/ /g, "");
 
   return (
     <Container title="New Game">
@@ -181,14 +186,30 @@ export const NewGame = () => {
             <NameBanner
               key={key}
               onClick={() => setSelectedCountry(key)}
-              className={selectedCountry == key ? "selectedCountry" : ""}
+              className={`
+              ${selectedCountry == key ? "selectedCountry" : ""} 
+              ${key == "Orange Star" || key == "Blue Moon" ? "" : "unavailable"}
+              `}
               name={key}
               color={countries[key]}
             />
           ))}
         </div>
-        <div className="gameIconContainer">
-          <div className="infantryUnit" />
+        <div className="gameUnitsContainer">
+          <div
+            className={`${currentCountryCamelCase}InfantryUnit bigGameUnit`}
+          />
+          <div className={`${currentCountryCamelCase}TankUnit bigGameUnit`} />
+          <div
+            className={`${currentCountryCamelCase}B-CopterUnit bigGameUnit`}
+          />
+          <div
+            className={`${currentCountryCamelCase}CarrierUnit bigGameUnit`}
+          />
+          <div className={`${currentCountryCamelCase}SubUnit bigGameUnit`} />
+          <div
+            className={`${currentCountryCamelCase}NeoTankUnit bigGameUnit`}
+          />
         </div>
       </div>
 
