@@ -21,8 +21,6 @@ module.exports = {
 
     historyApiFallback: true,
 
-    historyApiFallback: true,
-
     proxy: [
       {
         //here are the routes that actually go to express

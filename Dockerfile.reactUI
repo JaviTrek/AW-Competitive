@@ -1,0 +1,9 @@
+FROM node:19-alpine
+
+COPY ./package.json /app/
+COPY  ./client /app/
+WORKDIR /app
+
+EXPOSE 3000
+RUN npm install
+CMD ["npm", "start"]

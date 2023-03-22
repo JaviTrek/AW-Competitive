@@ -43,7 +43,7 @@ export function ParsedMap() {
 
 // this function will request our server for a json file, read it and create tiles depending on the json file information
     useEffect(() => {
-        axios.get('/getGameState')
+        axios.get('http://localhost:4000/getGameState')
             .then(res => {
                 gameState = res.data.gameState
                 res.data.gameState.forEach((tile, index) => {
@@ -162,11 +162,11 @@ export function ParsedMap() {
         }
     }
 
-    //TODO: God has forsaken me in this crazy long function and at some point I need to start butchering up this whole thing into more digestible components/not have 400 lines worth of functions in the react file
+    //TODO: Attack action is very inconsistent for indirect units, fix it up so they can only attack/show menu if they havent moved and in-range
     async function showMenu(initialTile, newTile, isUnit) {
         let tileMenu = [];
         let showBlueTile;
-
+//
         //lets check if its a unit
         if (await isUnit !== false) {
             //lets check all the validTargets unit can attack and render them
