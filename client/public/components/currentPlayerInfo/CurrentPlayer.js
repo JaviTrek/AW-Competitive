@@ -1,29 +1,57 @@
 import React from "react";
 import "../../style/currentPlayer.sass";
-import IMG from "../../images/CO/Max-Full.png";
+import gold from "../../images/gold.png";
+import clock from "../../images/clock.png";
+import building from "../../images/building.png";
 import { NameBanner } from "../gameInterface/NameBanner";
 
 
-export const CurrentPlayer = ({selectedCharacter,characterBackground,characterImagePosition,userName}) => {
+export const CurrentPlayer = ({
+  selectedCharacter,
+  characterBackground,
+  characterImagePosition,
+  userName,
+  playerBanner,
+  playerBalance,
+  timePlayed,
+  armyCount,
+  armyValue,
+  income,
+}) => {
   return (
     <div className="current-player">
       <div className="current-player-header">
-        <img className={characterImagePosition} src={selectedCharacter}/>
+        <img className={characterImagePosition} src={selectedCharacter} />
         <div className={characterBackground}></div>
       </div>
       <div className="player-name">
-        <NameBanner name={userName} color="blue" />
+        <NameBanner name={userName} color={playerBanner} />
       </div>
       <div className="player-stats">
         <div className="user-info">
-          <div>33:10:21</div>
-          <div>4000</div>
+          <div className="test">
+            <img className="icon" src={clock} />
+            {timePlayed}
+          </div>
+          <div className="test">
+            <img className="icon" src={gold} />
+            {playerBalance}
+          </div>
           <div className="exp-bar">Placeholder for EXP Bar</div>
         </div>
         <div className="army-stats">
-          <div>32</div>
-          <div>114100</div>
-          <div>21000</div>
+          <div className="test">
+            <img className="icon" src={gold} />
+            {armyCount}
+          </div>
+          <div className="test">
+            <img className="icon" src={gold} />
+            {armyValue}
+          </div>
+          <div className="test">
+            <img className="icon" src={building} />
+            {income}
+          </div>
         </div>
       </div>
     </div>
