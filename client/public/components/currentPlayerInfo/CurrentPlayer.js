@@ -29,26 +29,26 @@ export const CurrentPlayer = ({
       </div>
       <div className="player-stats">
         <div className="user-info">
-          <div className="test">
+          <div className="stat">
             <img className="icon" src={clock} />
             {timePlayed}
           </div>
-          <div className="test">
+          <div className="stat">
             <img className="icon" src={gold} />
             {playerBalance}
           </div>
           <div className="exp-bar">Placeholder for EXP Bar</div>
         </div>
         <div className="army-stats">
-          <div className="test">
+          <div className="stat">
             <img className="icon" src={gold} />
             {armyCount}
           </div>
-          <div className="test">
+          <div className="stat">
             <img className="icon" src={gold} />
             {armyValue}
           </div>
-          <div className="test">
+          <div className="stat">
             <img className="icon" src={building} />
             {income}
           </div>
