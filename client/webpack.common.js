@@ -1,9 +1,10 @@
 const path = require("path");
 const HTMLWebpackPlugin = require("html-webpack-plugin");
 
+
+//TODO: Use css-minimizer-webpacl-plugin to minify our css https://webpack.js.org/plugins/mini-css-extract-plugin/#minimizing-for-production
 module.exports = {
   entry: "./public/index.js",
-  mode: "development",
 
   output: {
     path: path.join(__dirname, "/dist"),
@@ -15,34 +16,7 @@ module.exports = {
       template: "./public/index.html",
     }),
   ],
-  devServer: {
-    port: 3000,
-    hot: "only",
 
-    historyApiFallback: true,
-
-    proxy: [
-      {
-        //here are the routes that actually go to express
-        // must restart Webpack for them to work
-        context: [
-          "/home",
-          "/createUser",
-          "/map/randomMap",
-          "/map/parsedMap",
-          "/createNewGame",
-          "/getGameState",
-          "/moveUnit",
-          "/registerUser",
-          "/routes/auth",
-          "/loginUser",
-          "/protectRoute",
-          "/logout",
-        ],
-        target: "http://localhost:4000",
-      },
-    ],
-  },
   module: {
     rules: [
       //Loads our JS
