@@ -10,11 +10,15 @@ import {findTargets} from "./gameLogic/validTargets";
 import {damageCalculator} from "./gameLogic/damageCalculator";
 
 const socket = io.connect("http://localhost:4000")
+
+let countriesOrder = ['orangeStar', 'blueMoon']
 let gameState = []
+
 let mapTiles = []
 
 export function ParsedMap() {
     let [map, setMap] = useState([])
+    let [playerState, setPlayerState] = useState({})
 
 //lets change a specific tile and its elements
     function changeTile(index, instruction) {
@@ -45,9 +49,9 @@ export function ParsedMap() {
     useEffect(() => {
         axios.get('/getGameState')
             .then(res => {
+                setPlayerState(res.data.players)
                 gameState = res.data.gameState
                 res.data.gameState.forEach((tile, index) => {
-                    //TODO: Find a way to add a custom HTML attribute to element and check its value. (We might not need this thou, maybe we can just keep checking the element).
                     changeTile(index, {
                         tileUnit: res.data.gameState[index].tileUnit ? <div
                             className={res.data.gameState[index].tileUnit.country + res.data.gameState[index].tileUnit.name + " tileUnit"}></div> : null,
@@ -69,7 +73,6 @@ export function ParsedMap() {
 
 //function used to resetGrid to original state
     function resetGrid() {
-
         let resetMap;
         // lets reset the map, to make sure we don't grab any other MoveTile divs with us
         gameState.forEach((tile, index) => {
@@ -92,13 +95,13 @@ export function ParsedMap() {
     function checkActions(index) {
         //TODO: Instead of calling gameState[initialTile] or gamestate[newTile] like 100 times, lets put that into a variable to make our code much more compact
         resetGrid()
-        //Lets make sure to reset the grid
         if (gameState[index].tileUnit !== false) {
             //show pathfinding options
             checkPath(index)
         } else if (gameState[index].terrainType === "property") {
-            showMenu(index, index, false)
             //move to building menu actions function
+            showMenu(index, index, false)
+
         }
     }
 
@@ -162,11 +165,19 @@ export function ParsedMap() {
         }
     }
 
-    //TODO: God has forsaken me in this crazy long function and at some point I need to start butchering up this whole thing into more digestible components/not have 400 lines worth of functions in the react file
     async function showMenu(initialTile, newTile, isUnit) {
         let tileMenu = [];
         let showBlueTile;
 
+        let {day,turn, players} = playerState
+        if (countriesOrder[turn] !== players[turn].country) return null
+
+        /*
+        TODO:
+            -Check if unit clicked shares turn number (so OS is 1, BM is 2), if it doesnt match, then break function since it is not the turn of that player and therefore they cannot move that
+            ADDITIONALLY
+                check the username, only the target username should be able to move! Maybe we need to change our value of turn to the username that is going to play the next
+         */
         //lets check if its a unit
         if (await isUnit !== false) {
             //lets check all the validTargets unit can attack and render them
@@ -212,6 +223,8 @@ export function ParsedMap() {
             //lets stablish if we display orangeStar or blueMoon units
             const ownerShip = gameState[initialTile].terrainOwner
             //lets make an array with each unit, display its information and a function to confirm the actrion
+
+            //TODO: Check which units are below our funds atm, allow those to be built and the rest grey out (maybe strike a line in the text too?)
             unitsToBuild.forEach((unit, id) => {
                 tileMenu.push(
                     <div className="menuOptions"
@@ -283,6 +296,7 @@ export function ParsedMap() {
             gameState[newTile].terrainOwner = gameState[newTile].tileUnit.country
             gameState[newTile].terrainImage = countryTags[gameState[newTile].tileUnit.country] + gameState[newTile].terrainImage.slice(2, 3)
             gameState[initialTile].tileUnit.capture = false
+            //TODO: Increase the income received by 1000 or decrease if allied building was captured
         }
         moveAction(initialTile, newTile)
 
@@ -290,7 +304,8 @@ export function ParsedMap() {
     }
 
     function buildAction(initialTile, data) {
-        console.log(Math.floor(Math.random() * 2))
+
+
         //we update the new unit in has tile with the correct information
         gameState[initialTile].tileUnit = {
             id: data.id,
@@ -345,14 +360,48 @@ export function ParsedMap() {
         gameState.forEach(tile => {
             if (tile.tileUnit) tile.tileUnit.isUsed = false;
         });
+
+        /*
+        TODO:
+            Pass turn
+                -Up day counter by one
+                - Check whether day is 1 or 2
+                    - Increase funding of player[day] * their income
+
+         */
+
         resetGrid()
     }
 
+    console.log(playerState)
     return (
         <div>
             <div className="gameBox">
                 <h1>Caustic Finale</h1>
-                <button onClick={passTurn}> Pass Turn</button>
+                <h1> Day: 1</h1>
+                <div className="playerBoxGrid">
+                    <div className="playerBox">
+                        <h2>{playerState.player1?.username}</h2>
+                        <p>Unit Count: {playerState.player1?.economy.unitCount}</p>
+                        <p>Income: {playerState.player1?.economy.properties * 1000}</p>
+                        <p>Funding: {playerState.player1?.economy.unitCount}</p>
+                    </div>
+
+
+                    <div className="playerBox">
+                        <h2>{playerState.player2?.username}</h2>
+                        <p>Unit Count: {playerState.player2?.economy.unitCount}</p>
+                        <p>Income: {playerState.player2?.economy.properties * 1000}</p>
+                        <p>Funding: {playerState.player2?.economy.unitCount}</p>
+                    </div>
+                    <div className="playerBox">
+                        <button onClick={passTurn}> Pass Turn</button>
+                    </div>
+
+                </div>
+
+                <br/>
+
                 <div className={`gridSize18 mapGrid`}>
                     {map}
                 </div>

@@ -1,3 +1,5 @@
+@use "../abstracts/variables"
+
 $imageName: Infantry, Mech, Recon, APC, Artillery, Tank, Anti-Air, Missile, Rocket, MdTank, PipeRunner, Neotank, MegaTank
 $countryName: orangeStar, blueMoon
 
@@ -124,6 +126,26 @@ $countryName: orangeStar, blueMoon
 
 
 
+h1
+  padding: 0.5em
 
 
+
+
+
+.playerBoxGrid
+  position: sticky
+  top: 0
+  left: 0px
+  display: grid
+  grid-template-columns: auto auto auto
+  justify-content: left
+  justify-items: left
+  z-index: 1000
+  color: white
+  gap: 4em
+  padding: 0.25em
+  .playerBox
+    background-color: variables.$color-bg
+    padding: 0.5em
 

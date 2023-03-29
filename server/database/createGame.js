@@ -20,8 +20,7 @@ const router = Router()
         const parsedData = await JSON.parse(data)
         let gameDocument = {
             _id: 0,
-            gameState: parsedData.gameState,
-            mapData: parsedData.mapData
+            ...parsedData
         }
 
         //insert the document
@@ -46,7 +45,7 @@ router.get('/getGameState', async (req,res)=>{
 
     res.json({
 
-        gameState: findGame.gameState
+        ...findGame
     })
 })
 

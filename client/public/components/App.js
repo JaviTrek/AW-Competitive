@@ -9,9 +9,12 @@ export function App() {
 
     return (
         <div>
-            <h2>Add a new User to MongoDB:</h2>
+
+            <br/>
             <a href="/createNewGame">
                 <button> Try creating New Game</button>
+<br/>
+                <br/>
 
             </a>
             <a href="/game">
