@@ -127,14 +127,13 @@ app.post('/changeSettings', async (req, res) => {
         let myDoc = await collection.countDocuments({_id: {$gt: -1} })
         console.log(myDoc)
         //Lets define a document
-        const newUsername = req.body.newUsername
-        const newArmyColor = req.body.newArmyColor
-        const newFavoriteCO = req.body.newFavoriteCO
+
+        const { userName, army, FavCO } = req.body
         let userDocument = {
             _id: myDoc + 1,
-            usernameChange: newUsername,
-            armyColorChange: newArmyColor,
-            favoriteCOChange: newFavoriteCO,
+            username: userName,
+            armyColorChange: army,
+            favoriteCOChange: FavCO,
         }
 
         await collection.insertOne(userDocument);
