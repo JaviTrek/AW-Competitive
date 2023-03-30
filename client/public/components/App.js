@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import "../style/App.sass";
 import { Outlet } from "react-router-dom";
-import { CurrentPlayer } from "./currentPlayerInfo/CurrentPlayer";
 import awLogo from "../images/awLogo.webp";
 export function App() {
   let userArray = [];
