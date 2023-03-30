@@ -87,14 +87,14 @@ export function App() {
 
             <h2>Change your settings:</h2>
             <form method='post' action="/changeSettings">
-                <label htmlFor="newUsername"> Username:</label>
-                <input type="text" name="newUsername"/>
+                <label htmlFor="username"> Username:</label>
+                <input type="text" name="username"/>
 
-                <label htmlFor="newArmyColor"> Army Color:</label>
-                <input type="text" name="newArmyColor"/>
+                <label htmlFor="armyColor"> Army Color:</label>
+                <input type="text" name="armyColor"/>
 
-                <label htmlFor="newFavoriteCO"> Favorite CO:</label>
-                <input type="text" name="newFavoriteCO"/>
+                <label htmlFor="favoriteCO"> Favorite CO:</label>
+                <input type="text" name="favoriteCO"/>
 
 
                 <button type="submit"> Change Settings</button>

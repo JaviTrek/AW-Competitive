@@ -103,9 +103,8 @@ app.post('/createUser', async (req, res) => {
     let myDoc = await collection.countDocuments({_id: {$gt: -1} })
     console.log(myDoc)
     //Lets define a document
-    const username = req.body.username
-    const armyColor = req.body.armyColor
-    const favoriteCO = req.body.favoriteCO
+    const { username, armyColor, favoriteCO } = req.body;
+
     let userDocument = {
         _id: myDoc + 1,
         username: username,
@@ -123,21 +122,31 @@ app.post('/changeSettings', async (req, res) => {
         // Insert the document
         let dbConnect = database.getDatabase()
         //use the collection
-        let collection = dbConnect.collection("settings")
-        let myDoc = await collection.countDocuments({_id: {$gt: -1} })
-        console.log(myDoc)
-        //Lets define a document
+        let collection = dbConnect.collection("users")
+        const { username, armyColor, favoriteCO } = req.body
+        const userDB = await collection.findOne({$or: [{username}]});
 
-        const { userName, army, FavCO } = req.body
-        let userDocument = {
-            _id: myDoc + 1,
-            username: userName,
-            armyColorChange: army,
-            favoriteCOChange: FavCO,
+        // db.movies.updateOne( { title: "Tag" },
+        // {   
+        //     $set: {
+        //         plot: "One month every year, five highly competitive friends"                
+        //             }
+        //     { $currentDate: { lastUpdated: true } }
+        // })
+        console.log(req.body);
+        if(userDB){
+            await collection.updateOne( {username: username} , 
+                {
+                    $set: {
+                        armyColor: armyColor,
+                        favoriteCO: favoriteCO,
+                    },
+                   $currentDate : {lastUpdated: true}
+                })
+            console.log("updated?")
+        }else{
+            console.log("ooooops! cannot change the settings of the user")
         }
-
-        await collection.insertOne(userDocument);
-
         // If everything was successful, then the url should show that
         res.redirect('/?change=true');
     }catch{
