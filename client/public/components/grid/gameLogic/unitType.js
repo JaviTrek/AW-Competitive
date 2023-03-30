@@ -16,7 +16,7 @@ function unitType(unitIndex, returnData) {
         {name: "rocket",     menuName: "Rocket",     cost: 15000, move: 5, moveType: "W", range: [3, 5], facility: "base"},
         {name: "mdTank",     menuName: "MdTank",    cost: 16000, move: 5, moveType: "T", range: [1, 1], facility: "base"},
         {name: "piperunner", menuName: "PipeRunner", cost: 20000, move: 9, moveType: "P", range: [2, 5], facility: "base"},
-        {name: "neotank",    menuName: "Neotank",    cost: 22000, move: 6, moveType: "T", range: [1, 1], facility: "base"},
+        {name: "neotank",    menuName: "NeoTank",    cost: 22000, move: 6, moveType: "T", range: [1, 1], facility: "base"},
         {name: "megatank",   menuName: "MegaTank",  cost: 28000, move: 4, moveType: "T", range: [1, 1], facility: "base"},
     ];
 
