@@ -9,29 +9,6 @@ import { currentPlayerData } from "./currentPlayerInfo/currentPlayerInfo";
 import img from "../images/CO/Max-Full.png";
 
 export function Match() {
-  let userArray = [];
-  const [data, setData] = useState();
-  useEffect(() => {
-    axios
-      .get("/home")
-      .then((res) => {
-        let userData = res.data.pushData;
-        console.log(userData[0].armyColor);
-        userData.forEach((user, index) => {
-          console.log(user);
-          userArray.push(
-            <div className="users" key={index}>
-              <p> Username: {user.username}</p>
-              <p> Army Color: {user.armyColor}</p>
-              <p> Favorite CO: {user.favoriteCO}</p>
-              <br />
-            </div>
-          );
-          setData(userArray);
-        });
-      })
-      .catch((e) => console.error(e));
-  }, []);
 
   return (
     <div className="PVP_Container">
