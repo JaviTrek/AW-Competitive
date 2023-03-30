@@ -13,18 +13,33 @@ const socket = io.connect("http://localhost:4000")
 
 let countriesOrder = ['orangeStar', 'blueMoon']
 let gameState = []
+let playerState = {}
 
 let mapTiles = []
 
 export function ParsedMap() {
     let [map, setMap] = useState([])
-    let [playerState, setPlayerState] = useState({})
+    let [players, setPlayers] = useState({
+        turn: 0, day: 1,
+            orangeStar: {
+                _id: 1, username: 'Javi',
+
+                economy: {
+                    unitCount: 0, properties: 3, funding: 0,
+                }
+            }, blueMoon: {
+                _id: 2, username: 'Asa', economy: {
+                    unitCount: 0, properties: 3, funding: 0,
+                }
+            }
+
+    })
 
 //lets change a specific tile and its elements
     function changeTile(index, instruction) {
         let {tileUnit, tileSquare, showMenu, hp, capture, hpTile, useFunction} = instruction
         hpTile = hpTile ? hpTile : index;
-        if(hpTile !== index) console.log("not the same")
+        if (hpTile !== index) console.log("not the same")
 
         if (!hp && gameState[hpTile].tileUnit.hp <= 100) {
             let hpNumber = gameState[hpTile].tileUnit.hp / 10
@@ -49,7 +64,7 @@ export function ParsedMap() {
     useEffect(() => {
         axios.get('/getGameState')
             .then(res => {
-                setPlayerState(res.data.players)
+                playerState = res.data.playerState
                 gameState = res.data.gameState
                 res.data.gameState.forEach((tile, index) => {
                     changeTile(index, {
@@ -63,6 +78,7 @@ export function ParsedMap() {
                     })
                 })
                 setMap(mapTiles)
+                setPlayers(playerState)
             }).catch(e => console.log(e));
     }, [])
 
@@ -77,9 +93,8 @@ export function ParsedMap() {
         // lets reset the map, to make sure we don't grab any other MoveTile divs with us
         gameState.forEach((tile, index) => {
             changeTile(index, {
-                tileUnit: gameState[index].tileUnit ?
-                    <div
-                        className={gameState[index].tileUnit.country + gameState[index].tileUnit.name + " tileUnit"}></div> : null,
+                tileUnit: gameState[index].tileUnit ? <div
+                    className={gameState[index].tileUnit.country + gameState[index].tileUnit.name + " tileUnit"}></div> : null,
                 tileSquare: null,
                 showMenu: null,
                 useFunction: () => {
@@ -150,13 +165,8 @@ export function ParsedMap() {
                 // TODO: these movements should go from path[0] (initial tile) to path[path.length -1] (newTile) by moving a tile at a time instead of jumping from start to end (so 0,1,2,3...) because the unit moves through the terrain, it doesnt just teleport to its target location.
                 //lets delete/set the unit in the initial tile
                 changeTile(initialTile, {
-                    tileUnit: null,
-                    tileSquare: <div className="tileMove"></div>,
-                    showMenu: null,
-                    //we put hp as true so it doesnt appear
-                    hp: true,
-                    capture: null,
-                    useFunction: () => {
+                    tileUnit: null, tileSquare: <div className="tileMove"></div>, showMenu: null, //we put hp as true so it doesnt appear
+                    hp: true, capture: null, useFunction: () => {
                         checkPath(initialTile)
                     }
                 })
@@ -169,8 +179,8 @@ export function ParsedMap() {
         let tileMenu = [];
         let showBlueTile;
 
-        let {day,turn, players} = playerState
-        if (countriesOrder[turn] !== players[turn].country) return null
+        let {day, turn, players} = playerState
+        //if (countriesOrder[turn] !== players[turn].country) return null
 
         /*
         TODO:
@@ -192,15 +202,12 @@ export function ParsedMap() {
                             className={gameState[tile].tileUnit.country + gameState[tile].tileUnit.name + " tileUnit"}></div>,
                         tileSquare: <div className="tileAttack"></div>,
                         showMenu: false,
-                        capture: gameState[tile].tileUnit.capture,
-                        //lets put a confirm Attack option here
+                        capture: gameState[tile].tileUnit.capture, //lets put a confirm Attack option here
                         useFunction: () => {
                             confirmAction(initialTile, newTile, confirmAttack(initialTile, newTile, tile, {
-                                unit: gameState[initialTile].tileUnit,
-                                terrain: gameState[newTile].terrainType,
+                                unit: gameState[initialTile].tileUnit, terrain: gameState[newTile].terrainType,
                             }, {
-                                unit: gameState[tile].tileUnit,
-                                terrain: gameState[tile].terrainType,
+                                unit: gameState[tile].tileUnit, terrain: gameState[tile].terrainType,
                             }))
                         }
                     })
@@ -226,18 +233,14 @@ export function ParsedMap() {
 
             //TODO: Check which units are below our funds atm, allow those to be built and the rest grey out (maybe strike a line in the text too?)
             unitsToBuild.forEach((unit, id) => {
-                tileMenu.push(
-                    <div className="menuOptions"
-                         onClick={() => confirmAction(initialTile, newTile, buildAction(initialTile,
-                             {
-                                 ownerShip: ownerShip, unit: unit, id: id
-                             }
-                         ))}>
-                        <div className={`menu${ownerShip}${unit.menuName}`}></div>
-                        <div className={`menuName`}> {unit.menuName}</div>
-                        <div className={`menuCost`}> {unit.cost}</div>
-                    </div>
-                )
+                tileMenu.push(<div className="menuOptions"
+                                   onClick={() => confirmAction(initialTile, newTile, buildAction(initialTile, {
+                                       ownerShip: ownerShip, unit: unit, id: id
+                                   }))}>
+                    <div className={`menu${ownerShip}${unit.menuName}`}></div>
+                    <div className={`menuName`}> {unit.menuName}</div>
+                    <div className={`menuCost`}> {unit.cost}</div>
+                </div>)
             })
         }
         tileMenu = <div className="tileMenu">
@@ -292,11 +295,23 @@ export function ParsedMap() {
         let currentHP = Math.ceil(gameState[initialTile].tileUnit.hp / 10)
         gameState[newTile].terrainCapture = currentCapture + currentHP
         gameState[initialTile].tileUnit.capture = true
+        //we can actually capture it
         if (gameState[newTile].terrainCapture >= 20) {
+            // The property has an owner? (not false), then we reduce their funding by 1k
+            if (gameState[newTile].terrainOwner) {
+                playerState[gameState[newTile].ownerShip].funding -= 1000
+            }
             gameState[newTile].terrainOwner = gameState[newTile].tileUnit.country
             gameState[newTile].terrainImage = countryTags[gameState[newTile].tileUnit.country] + gameState[newTile].terrainImage.slice(2, 3)
             gameState[initialTile].tileUnit.capture = false
+            console.log( playerState[gameState[initialTile].tileUnit.country].funding)
+            console.log(gameState[initialTile].tileUnit.country)
+            playerState[gameState[initialTile].tileUnit.country].funding += 1000
+            setPlayers(playerState)
+            console.log(playerState[gameState[initialTile].tileUnit.country].funding)
             //TODO: Increase the income received by 1000 or decrease if allied building was captured
+
+
         }
         moveAction(initialTile, newTile)
 
@@ -308,12 +323,7 @@ export function ParsedMap() {
 
         //we update the new unit in has tile with the correct information
         gameState[initialTile].tileUnit = {
-            id: data.id,
-            name: data.unit.menuName,
-            country: data.ownerShip,
-            hp: 100,
-            isUsed: true,
-            capture: null
+            id: data.id, name: data.unit.menuName, country: data.ownerShip, hp: 100, isUsed: true, capture: null
         }
 
         changeTile(initialTile, {
@@ -324,15 +334,14 @@ export function ParsedMap() {
                 checkPath(initialTile)
             }
         })
-
-
     }
 
     function attackAction(initialTile, newTile) {
         console.log('attacking!')
         changeTile(newTile, {
-            tileUnit: <div className={`${gameState[initialTile].tileUnit.country + gameState[initialTile].tileUnit.name}  tileUnit`}></div>,
-            tileSquare:  <div className="tileMove"></div>,
+            tileUnit: <div
+                className={`${gameState[initialTile].tileUnit.country + gameState[initialTile].tileUnit.name}  tileUnit`}></div>,
+            tileSquare: <div className="tileMove"></div>,
             hpTile: initialTile,
             showMenu: null,
             useFunction: () => {
@@ -348,9 +357,7 @@ export function ParsedMap() {
     function sendToDatabase(initialTile, newTile) {
         //lets send the move to the database so its saved
         axios.post('/moveUnit', {
-            initialIndex: initialTile,
-            newIndex: newTile,
-            unit: gameState[initialTile].tileUnit
+            initialIndex: initialTile, newIndex: newTile, unit: gameState[initialTile].tileUnit
         }).then((response) => {
 
         }).catch(error => console.log(error));
@@ -370,44 +377,44 @@ export function ParsedMap() {
 
          */
 
+        /*
+
+         */
+
         resetGrid()
     }
 
-    console.log(playerState)
-    return (
-        <div>
-            <div className="gameBox">
-                <h1>Caustic Finale</h1>
-                <h1> Day: 1</h1>
-                <div className="playerBoxGrid">
-                    <div className="playerBox">
-                        <h2>{playerState.player1?.username}</h2>
-                        <p>Unit Count: {playerState.player1?.economy.unitCount}</p>
-                        <p>Income: {playerState.player1?.economy.properties * 1000}</p>
-                        <p>Funding: {playerState.player1?.economy.unitCount}</p>
-                    </div>
 
-
-                    <div className="playerBox">
-                        <h2>{playerState.player2?.username}</h2>
-                        <p>Unit Count: {playerState.player2?.economy.unitCount}</p>
-                        <p>Income: {playerState.player2?.economy.properties * 1000}</p>
-                        <p>Funding: {playerState.player2?.economy.unitCount}</p>
-                    </div>
-                    <div className="playerBox">
-                        <button onClick={passTurn}> Pass Turn</button>
-                    </div>
-
+    return (<div>
+        <div className="gameBox">
+            <h1>Caustic Finale</h1>
+            <h1> Day: 1</h1>
+            <div className="playerBoxGrid">
+                <div className="playerBox">
+                    <h2>{players[countriesOrder[0]]?.username}</h2>
+                    <p>Unit Count: {players[countriesOrder[0]]?.economy.unitCount}</p>
+                    <p>Income: {players[countriesOrder[0]]?.economy.properties * 1000}</p>
+                    <p>Funding: {players[countriesOrder[0]]?.economy.unitCount}</p>
+                </div>
+                <div className="playerBox">
+                    <h2>{players[countriesOrder[1]]?.username}</h2>
+                    <p>Unit Count: {players[countriesOrder[1]]?.economy.unitCount}</p>
+                    <p>Income: {players[countriesOrder[1]]?.economy.properties * 1000}</p>
+                    <p>Funding: {players[countriesOrder[1]]?.economy.unitCount}</p>
+                </div>
+                <div className="playerBox">
+                    <button onClick={passTurn}> Pass Turn</button>
                 </div>
 
-                <br/>
+            </div>
 
-                <div className={`gridSize18 mapGrid`}>
-                    {map}
-                </div>
+            <br/>
+
+            <div className={`gridSize18 mapGrid`}>
+                {map}
             </div>
         </div>
-    )
+    </div>)
 
 }
 

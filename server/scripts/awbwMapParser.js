@@ -196,10 +196,9 @@ module.exports = (columns, rows, name) => {
         playerState: {
             turn: 0,
             day: 1,
-            players: [
-                {
+
+               orangeStar: {
                     _id: 1,
-                    country: "orangeStar",
                     username: 'Javi',
 
                     economy: {
@@ -208,9 +207,8 @@ module.exports = (columns, rows, name) => {
                         funding: 0,
                     }
                 },
-                {
+                blueMoon: {
                     _id: 2,
-                    country: "blueMoon",
                     username: 'Asa',
                     economy: {
                         unitCount: 0,
@@ -218,8 +216,8 @@ module.exports = (columns, rows, name) => {
                         funding: 0,
                     }
                 }
-            ],
-        },
+            },
+
         mapData: {
             mapName: "Caustic Finale",
             columns: 18,
