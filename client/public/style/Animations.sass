@@ -4,8 +4,8 @@
 // Class name examples: 
 // greenEarthInfantryUnit, orangeStarB-CopterUnit, yellowCometTankUnit, blueMoonNeoTankUnit, etc.
 $countries: "orangeStar", "blueMoon", "yellowComet", "greenEarth"
-$TwoFrameUnits: "Bomber", "Carrier", "Cruiser", "Fighter", "Lander", "Mech", "Missile", "PipeRunner", "Rocket", "Stealth"
-$FourFrameUnits: "Anti-Air", "APC", "Artillery", "B-Copter", "BlackBoat", "BlackBomb", "Infantry", "MdTank", "MegaTank", "NeoTank", "Recon", "Sub", "T-Copter", "Tank"
+$TwoFrameUnits: Bomber, Carrier, Cruiser, Fighter, Lander, Mech, Missile, PipeRunner, Rocket, Stealth
+$FourFrameUnits: Anti-Air, APC, Artillery, B-Copter, BlackBoat, BlackBomb, Infantry, MdTank, MegaTank, NeoTank, Recon, Sub, T-Copter, Tank
 
 @mixin unitFrame($unit, $frameNumber, $country)
   background: url("../images/units/#{$country}/#{$unit}-#{$frameNumber}.png") 
@@ -26,7 +26,7 @@ $FourFrameUnits: "Anti-Air", "APC", "Artillery", "B-Copter", "BlackBoat", "Black
         @include unitFrame($unitImagePrefix, 1, $country)
       100%
         @include unitFrame($unitImagePrefix, 0, $country)
-    .#{$country}#{$unitImagePrefix}Unit 
+    .#{$country}#{$unitImagePrefix}
       animation-name: #{$country}#{$unitImagePrefix}Frames
       animation-duration: .9s
       animation-iteration-count: infinite
@@ -47,7 +47,7 @@ $FourFrameUnits: "Anti-Air", "APC", "Artillery", "B-Copter", "BlackBoat", "Black
         @include unitFrame($unitImagePrefix, 3, $country)
       100%
         @include unitFrame($unitImagePrefix, 0, $country)
-    .#{$country}#{$unitImagePrefix}Unit 
+    .#{$country}#{$unitImagePrefix}
       animation-name: #{$country}#{$unitImagePrefix}Frames
       animation-duration: .9s
       animation-iteration-count: infinite

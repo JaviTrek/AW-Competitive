@@ -71,7 +71,7 @@ $countryName: orangeStar, blueMoon
 
 
 //unit HP icons
-
+//
 @for $i from 1 through 9
   .HP#{$i}Icon
     position: absolute
@@ -105,15 +105,15 @@ $countryName: orangeStar, blueMoon
     filter: brightness(0.65)
 
 
+
 //let our units be displayed correctly in the battlefield/grid
-@each $country in $countryName
+//@each $country in $countryName
   @each $unit in $imageName
     .#{$country}#{$unit}
       background: url("images/units/#{$country}/#{$unit}-0.png") no-repeat
       background-size: contain
       position: absolute
       z-index: 9
-      //currently adding 3px from the bottom to make them not step so much on the border of moveTile
       bottom: 0px
       height: 32px
       width: 32px
