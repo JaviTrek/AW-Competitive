@@ -3,6 +3,8 @@ import "../../style/currentPlayer.sass";
 import gold from "../../images/gold.png";
 import clock from "../../images/clock.png";
 import building from "../../images/building.png";
+import armyUnit from "../../images/unit_Icon.png";
+import armyGold from "../../images/unit_Gold.png";
 import { NameBanner } from "../gameInterface/NameBanner";
 
 
@@ -41,11 +43,11 @@ export const CurrentPlayer = ({
         </div>
         <div className="army-stats">
           <div className="stat">
-            <img className="icon" src={gold} />
+            <img className="icon" src={armyUnit} />
             {armyCount}
           </div>
           <div className="stat">
-            <img className="icon" src={gold} />
+            <img className="icon" src={armyGold} />
             {armyValue}
           </div>
           <div className="stat">
