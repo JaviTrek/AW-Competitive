@@ -126,13 +126,6 @@ app.post('/changeSettings', async (req, res) => {
         const { username, armyColor, favoriteCO } = req.body
         const userDB = await collection.findOne({$or: [{username}]});
 
-        // db.movies.updateOne( { title: "Tag" },
-        // {   
-        //     $set: {
-        //         plot: "One month every year, five highly competitive friends"                
-        //             }
-        //     { $currentDate: { lastUpdated: true } }
-        // })
         console.log(req.body);
         if(userDB){
             await collection.updateOne( {username: username} , 
@@ -143,7 +136,7 @@ app.post('/changeSettings', async (req, res) => {
                     },
                    $currentDate : {lastUpdated: true}
                 })
-            console.log("updated?")
+            console.log("updated")
         }else{
             console.log("ooooops! cannot change the settings of the user")
         }
