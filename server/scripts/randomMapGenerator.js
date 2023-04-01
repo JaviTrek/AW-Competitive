@@ -1,5 +1,24 @@
 const fs = require('fs')
 
+
+
+/*
+
+EXPRESS CODE!!!
+
+// Random Map Generator
+
+const createMap = require('./scripts/randomMapGenerator')
+createMap(18, 18, "randomMap")
+const randomMap = require("./scripts/randomMap.json");
+app.get('/map/randomMap', (req, res) => {
+    res.json(randomMap)
+});
+
+
+ */
+
+
 // ['plains', 'mountain', "forest", "road", "bridge", "factory", "city", "shoal", "river"];
 //TODO: Make the random map generator have better parameters such as the possibility of using templates or knowing that it should spam 2 bases 1 hq per player and other parameters that will make it generate better random maps.
 const terrainTypes = [];

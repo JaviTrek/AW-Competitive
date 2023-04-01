@@ -7,7 +7,7 @@
   padding: 0 2px
   h3
     font-style: normal
-    font-weight: 500
+    font-weight: 400
     font-size: 21px
     line-height: 32px
 
@@ -17,15 +17,29 @@
   width: 22px
   height: 22px
 
-.redCountry
-  background: linear-gradient(90deg, rgba(255, 0, 0, 0.84) 0%, #690000 100%)
+.orangeCountry
+  background-repeat: no-repeat
+  background-image: linear-gradient(90deg, rgb(255,51,4) 0%, rgb(126, 27, 5) 100%)
   .userContainerIcon
     @include userContainerIconMixin
     background-image: url("../../images/oslogo1.png")
 
 .blueCountry
-  background: linear-gradient(90deg, rgba(35, 66, 186, 0.84) 0%, #0B2070 100%)
+  background: linear-gradient(90deg, rgb(3,96,171) 0%, rgb(2, 44, 78) 100%)
   .userContainerIcon
     @include userContainerIconMixin
     background-image: url("../../images/oslogo2.png")
+
+.yellowCountry
+  background: linear-gradient(90deg, rgb(255,176,9) 0%, rgb(117, 82, 5) 100%)
+  .userContainerIcon
+    @include userContainerIconMixin
+    background-image: url("../../images/oslogo4.png")
+
+.greenCountry
+  background: linear-gradient(90deg, rgb(43,155,1) 0%, rgb(20, 71, 1) 100%)
+  .userContainerIcon
+    @include userContainerIconMixin
+    background-image: url("../../images/oslogo3.png")
+
   

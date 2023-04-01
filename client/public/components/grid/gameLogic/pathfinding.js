@@ -4,11 +4,11 @@ import {unitType} from "./unitType";
 import {checkTerrain} from "./checkTerrain";
 
 
-function pathFinding(maxX, maxY, unit, startIndex, mapData) {
+function pathFinding(maxX, maxY, unit, initialTile, gameState) {
 
 
     //Our function goes and check what ID is the unit we have
-    const unitData = unitType(unit.hasUnit.id)
+    const unitData = unitType(unit.tileUnit.id)
 
     //we set unitMove to 0 and unitMoveType to P because these are default values that will stop movement
     //The movement points a unit has (3, 6, etc)
@@ -21,10 +21,10 @@ function pathFinding(maxX, maxY, unit, startIndex, mapData) {
         unitMoveType = unitData.moveType
     }
 
-    // startIndex / 18 will give us a number without a decimal (thanks to Math.trunc), this tells us the current column we are in
-    const startY = Math.trunc(startIndex / 18)
-    // the remainder of startIndex / 18 is equal to our current row
-    const startX = (startIndex) % 18
+    // initialTile / 18 will give us a number without a decimal (thanks to Math.trunc), this tells us the current column we are in
+    const startY = Math.trunc(initialTile / 18)
+    // the remainder of initialTile / 18 is equal to our current row
+    const startX = (initialTile) % 18
 
     //maxX maxY = rows columns, multiply together and get all tiles in grid
     const nodeAmount = maxX * maxY
@@ -126,16 +126,24 @@ function pathFinding(maxX, maxY, unit, startIndex, mapData) {
             if (visitedNodes[nextNodeIndex]) continue;
 
             //lets check the terrain cost of our next index/tile
-            let costToMove = checkTerrain(unitMoveType, mapData[nextNodeIndex])
-            //lets setup the movement cost of our new tile
-            movementCost[nextNodeIndex] = costToMove
+            let costToMove = checkTerrain(unitMoveType, gameState[nextNodeIndex], gameState[initialTile] )
+            let hasEnemy;
+            //if an enemy unit is in range, we deliver "A"
+            if (costToMove === "A") {
+                movementCost[nextNodeIndex] = 9
+                hasEnemy = true
+
+                //lets setup the movement cost of our new tile
+            } else movementCost[nextNodeIndex] = costToMove
+
 
             //The new distance from our initial tile to the new tile
             let newDistance = overallDistance + costToMove
 
-
             //if new distance is less than the distance of the next node AND the new distance isn't bigger than what the unit can move, then we add this tile to ou
-            if (newDistance < distance[nextNodeIndex] && newDistance <= unitMove) {
+
+            //TODO: Check that its an enemy then mark as red, but only if its not more than move points + 1
+            if (hasEnemy  && overallDistance < unitMove + 1|| newDistance < distance[nextNodeIndex] && newDistance <= unitMove) {
                 previous[nextNodeIndex] = index
                 distance[nextNodeIndex] = newDistance
                 // if we havent verified this tile
@@ -147,11 +155,11 @@ function pathFinding(maxX, maxY, unit, startIndex, mapData) {
                         y: addY
                     });
                     verifyTile[nextNodeIndex] = newDistance
-
                     // we push the tile we will draw later
                     tilesToDraw.push({
                         distance: newDistance,
                         index: nextNodeIndex,
+                        hasEnemy: hasEnemy,
                         x: addX,
                         y: addY
                     });
@@ -163,9 +171,7 @@ function pathFinding(maxX, maxY, unit, startIndex, mapData) {
                             queue[node].distance = newDistance;
                     }
                 }
-
             }
-
         }
     }
 
