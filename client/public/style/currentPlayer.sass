@@ -1,0 +1,142 @@
+
+$player1-color: linear-gradient(270.04deg, rgba(0, 0, 0, 0) 0.08%, #2342BA 72.38%, #0E1A47 95.82%)
+$player2-color: linear-gradient(90.04deg, rgba(0, 0, 0, 0) 0.08%, #E61F1F 79.61%, #470E0E 99.23%)
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap')
+div
+    // border: 1px solid black    
+
+
+.current-player
+    // background: #eee
+    max-width: 30%
+    height: auto
+    max-height: 18em
+    color: #eed2d2
+    display: grid
+    grid-template-columns: 1fr
+    font-family: 'VT323', monospace
+
+
+    .current-player-header
+        padding: 0
+        width: 100%
+        height: 8em
+        max-height: 8em
+        position: relative
+        
+        // display: grid
+        // grid-template-columns: 1fr 1fr
+
+        .character-image-player1
+            min-width: 25%
+            width: 25%
+            max-width: 25%
+            object-position: 100% 0%
+            height: 100%
+            max-height: 100%
+            position: absolute
+            z-index: 1
+            margin-left: 15%
+            transform: scaleX(-1)
+
+        .character-image-player2
+            min-width: 25%
+            width: 25%
+            max-width: 25%
+            object-position: 100% 0%
+            height: 100%
+            max-height: 100%
+            position: absolute
+            z-index: 1
+            margin-left: 55%
+            
+        .character-background-blue
+            background:$player1-color      
+            width: 100%
+            max-width: 100%
+            height: 60%
+            max-height: 60%
+            position: absolute
+            margin-top: 10%
+
+        .character-background-red
+            background:$player2-color     
+            width: 100%
+            max-width: 100%
+            height: 60%
+            max-height: 60%
+            position: absolute
+            margin-top: 10%
+
+
+    .player-name
+             
+        .usernameContainer
+            width: 100%
+            padding-left: 2%
+            padding-right: 2%   
+    
+    .stat
+        display: grid
+        grid-template-columns: 1fr 1fr
+
+    .icon
+        width: 25%
+        margin: auto auto auto 0%
+        max-width: 25%
+
+
+    .player-stats
+        display: grid
+        grid-template-columns: 2fr 1fr
+        grid-template-rows: 1fr
+        gap: 5px
+
+
+    .user-info
+        display: grid
+        grid-template-columns: repeat(2, 1fr) 
+        grid-row-start: 1
+        gap: 5px
+        align-items: center
+
+        div
+            text-align: right
+            padding-left: 5%
+            padding-right: 5%
+            border: 3px solid #211f1f
+            background-color: #393535
+
+        
+        .exp-bar
+            grid-column-start: 1
+            grid-column-end: 3
+            grid-row-start:2
+    
+    .army-stats
+        margin-top: 5% 
+        grid-template-columns: 1fr 
+        
+        
+        
+        div
+            text-align: right
+            padding-right: 5%
+            padding-left: 5%
+            background-color: #393535
+            border: 2px solid #211f1f
+
+.PVP_Container
+  display: flex
+  justify-content: space-evenly
+    
+        
+// .icon
+//     width: 20    
+            
+           
+            
+            
+        
+   
+

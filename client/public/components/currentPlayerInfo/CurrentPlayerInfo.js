@@ -1,0 +1,26 @@
+export const currentPlayerData = [
+  {
+    selectedCharacter: "../images/CO/Max-Full.png",
+    characterBackground: "character-background-blue",
+    characterImage: "character-image-player1",
+    userName: "Emasaur",
+    bannerColor: "blue",
+    timePlayed: "33:10:21",
+    playerBalance: "5600",
+    armyCount: "32",
+    armyValue: "114100",
+    income: "21000",
+  },
+  {
+    selectedCharacter: "../images/CO/Sami-Full.png",
+    characterBackground: "character-background-red",
+    characterImage: "character-image-player2",
+    userName: "XMontu",
+    bannerColor: "red",
+    timePlayed: "27:04:57",
+    playerBalance: "4103",
+    armyCount: "47",
+    armyValue: "129115",
+    income: "24503r",
+  },
+];
