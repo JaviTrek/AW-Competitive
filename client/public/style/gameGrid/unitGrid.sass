@@ -1,4 +1,8 @@
+
+@use "../abstracts/variables"
+
 $imageName: Infantry, Mech, Recon, APC, Artillery, Tank, Anti-Air, Missile, Rocket, MdTank, PipeRunner, NeoTank, MegaTank
+
 $countryName: orangeStar, blueMoon
 
 .gameBox
@@ -41,7 +45,7 @@ $countryName: orangeStar, blueMoon
         top: 0
         left: 100%
         .menuName
-          background-color: #eaeaea
+          background-color: #d3d3d3
           cursor: pointer
           font-size: 14px
           padding: 0 6px
@@ -49,16 +53,19 @@ $countryName: orangeStar, blueMoon
           display: inline-block
         .menuOptions
           padding: 0 6px
-          background-color: #eaeaea
+          background-color: #d3d3d3
           display: grid
           grid-template-columns: auto auto auto
           justify-items: left
           align-items: center
+          cursor: pointer
+          &:hover
+            filter: contrast(1.4)
 
           .menuCost
             justify-self: right
             display: inline-block
-            cursor: pointer
+
             font-size: 14px
           //let our units be displayed correctly in the menu
           @each $country in $countryName
@@ -68,6 +75,13 @@ $countryName: orangeStar, blueMoon
                 display: inline-block
                 width: 16px
                 height: 16px
+        .menuNoBuy
+          filter: brightness(0.6)
+          text-decoration: line-through
+          cursor: not-allowed
+          pointer-events: none
+
+
 
 
 //unit HP icons
@@ -127,6 +141,34 @@ $countryName: orangeStar, blueMoon
 
 
 
+h1
+  padding: 0.5em
 
 
+
+
+
+.playerBoxGrid
+  position: sticky
+  top: 0
+  left: 0px
+  display: grid
+  grid-template-columns: auto auto auto
+  justify-content: left
+  justify-items: left
+  z-index: 1000
+  color: variables.$text-main
+  gap: 4em
+  padding: 0.25em
+  .playerBox
+    background-color: variables.$color-bg
+    padding: 0.5em
+  .activePlayer
+    filter: brightness(1.2) contrast(1.1)
+  .inactivePlayer
+    filter: brightness(0.8) contrast(0.9)
+
+.gameTitle
+  color: variables.$text-main
+  padding: 0.25em 0
 
