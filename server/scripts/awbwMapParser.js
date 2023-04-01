@@ -194,27 +194,28 @@ module.exports = (columns, rows, name) => {
     //TODO:this needs to be sent to database when creating a game
     let mapData = {
         playerState: {
+
             turn: 0,
             day: 1,
 
                orangeStar: {
                     _id: 1,
-                    username: 'Javi',
+                    username: 'orangeStar',
 
-                    economy: {
+
                         unitCount: 0,
                         properties: 3,
-                        funding: 0,
-                    }
+                        funding: 3000,
+
                 },
                 blueMoon: {
                     _id: 2,
-                    username: 'Asa',
-                    economy: {
+                    username: 'blueMoon',
+
                         unitCount: 0,
                         properties: 3,
                         funding: 0,
-                    }
+
                 }
             },
 
