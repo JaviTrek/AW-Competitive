@@ -18,7 +18,7 @@ export const CurrentGames = () => {
         <div className="CGUsers">
           <NameCO name="Femboy" color="blue" character="max" playerNumber="1" />
           <img className="VSImage" src="../../images/vs.png" />
-          <NameCO name="Mipin" color="red" character="sami" playerNumber="2" />
+          <NameCO name="Mipin" color="orange" character="sami" playerNumber="2" />
         </div>
 
         <div className="CGMap">

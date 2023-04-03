@@ -151,8 +151,8 @@ module.exports = (columns, rows, name) => {
                         ownerShip = false
                 }
 // https://www.youtube.com/watch?v=sPWGBmcDR50
-let countries = ["orangeStar", "blueMoon"]
-                if (j % 7 === 5)
+                let countries = ["orangeStar", "blueMoon"]
+                if (j % 7 === 999)
                     parsedMap.push({
                         terrainImage: awbwMap[j][1],
                         terrainType: terrainType,
@@ -193,6 +193,25 @@ let countries = ["orangeStar", "blueMoon"]
 
     //TODO:this needs to be sent to database when creating a game
     let mapData = {
+        playerState: {
+
+            turn: 0, day: 1,
+
+            orangeStar: {
+                _id: 1, username: 'orangeStar',
+                CO: "Sami", color: 'orange',  armyValue: "0", timePlayed: "00:00:00",
+
+
+                unitCount: 0, properties: 3, gold: 3000,
+
+            }, blueMoon: {
+                _id: 2, username: 'blueMoon',
+                CO: "Max", color: 'blue',  armyValue: "0", timePlayed: "00:00:00",
+                unitCount: 0, properties: 3, gold: 0,
+
+            }
+        },
+
         mapData: {
             mapName: "Caustic Finale",
             columns: 18,
