@@ -8,6 +8,7 @@ import io from "socket.io-client"
 import {unitType} from "./gameLogic/unitType";
 import {findTargets} from "./gameLogic/validTargets";
 import {damageCalculator} from "./gameLogic/damageCalculator";
+import {CurrentPlayer} from "../currentPlayerInfo/CurrentPlayer";
 
 const socket = io.connect("http://localhost:4000")
 
@@ -20,18 +21,28 @@ let mapTiles = []
 export function ParsedMap() {
     let [map, setMap] = useState([])
     let [players, setPlayers] = useState({
+
         turn: 0, day: 1,
+
         orangeStar: {
-            _id: 1, username: 'orangeStar',
-            unitCount: 0, properties: 3, funding: 0,
+            _id: 1, username: 'orangeStar', CO: "Sami", color: 'orange', armyValue: "0", timePlayed: "00:00:00",
+
+
+            unitCount: 0, properties: 3, gold: 3000,
 
         }, blueMoon: {
-            _id: 2, username: 'blueMoon',
-            unitCount: 0, properties: 3, funding: 0,
+            _id: 2,
+            username: 'blueMoon',
+            CO: "Max",
+            color: 'blue',
+            armyValue: "0",
+            timePlayed: "00:00:00",
+            unitCount: 0,
+            properties: 3,
+            gold: 0,
 
         }
-
-    })
+    },)
 
 //lets change a specific tile and its elements
     function changeTile(index, instruction) {
@@ -177,7 +188,6 @@ export function ParsedMap() {
         let showBlueTile;
 
 
-
         let {day, turn} = playerState
 
 
@@ -230,8 +240,8 @@ export function ParsedMap() {
             }
         }
 
-        //------------------------------
-        // ITS A BUILDING
+            //------------------------------
+            // ITS A BUILDING
         //lets cheeck if its a factory/base
         else if (await gameState[initialTile].terrainImage.slice(2, 3) === "2") {
             //lets get the array with all the units
@@ -243,7 +253,7 @@ export function ParsedMap() {
             //TODO: Check which units are below our funds atm, allow those to be built and the rest grey out (maybe strike a line in the text too?)
             unitsToBuild.forEach((unit, id) => {
                 let menuOptions = "menuOptions menuNoBuy"
-                if (unit.cost <= playerState[ownerShip].funding) menuOptions = "menuOptions"
+                if (unit.cost <= playerState[ownerShip].gold) menuOptions = "menuOptions"
 
                 tileMenu.push(<div className={menuOptions}
                                    onClick={() => confirmAction(initialTile, newTile, buildAction(initialTile, {
@@ -312,7 +322,7 @@ export function ParsedMap() {
         //we can actually capture it
 
         if (gameState[newTile].terrainCapture >= 20) {
-            // The property has an owner? (not false), then we reduce their funding by 1k
+            // The property has an owner? (not false), then we reduce their gold by 1k
             if (gameState[newTile].terrainOwner) playerState[gameState[initialTile].terrainOwner].properties--
             gameState[newTile].terrainOwner = gameState[newTile].tileUnit.country
             gameState[newTile].terrainImage = countryTags[gameState[newTile].tileUnit.country] + gameState[newTile].terrainImage.slice(2, 3)
@@ -341,7 +351,7 @@ export function ParsedMap() {
         })
         //lets setup the fund changes and unit count
         playerState[data.ownerShip].unitCount++
-        playerState[data.ownerShip].funding -= data.unit.cost
+        playerState[data.ownerShip].gold -= data.unit.cost
         setPlayers((playerState))
     }
 
@@ -378,10 +388,10 @@ export function ParsedMap() {
         playerState.day++
         if (playerState.turn === 1) {
             playerState.turn--
-            playerState[countriesOrder[0]].funding += playerState[countriesOrder[0]].properties * 1000
+            playerState[countriesOrder[0]].gold += playerState[countriesOrder[0]].properties * 1000
         } else {
             playerState.turn++
-            playerState[countriesOrder[1]].funding += playerState[countriesOrder[1]].properties * 1000
+            playerState[countriesOrder[1]].gold += playerState[countriesOrder[1]].properties * 1000
         }
         setPlayers(playerState)
         resetGrid()
@@ -390,37 +400,55 @@ export function ParsedMap() {
 
     return (<div>
         <div className="gameBox">
-            <div className="gameTitle">
+            <div className="gameTitle column3">
                 <h1>Caustic Finale</h1>
                 <h1>Day: {players.day}</h1>
+                <button onClick={passTurn}> Pass Turn</button>
             </div>
 
-            <div className="playerBoxGrid">
-                <div className={`playerBox ${playerState.turn === 0 ? "activePlayer" : "inactivePlayer"}`} >
-                    <h2>{players[countriesOrder[0]]?.username}</h2>
-                    <p>Unit Count: {players[countriesOrder[0]]?.unitCount}</p>
-                    <p>Income: {players[countriesOrder[0]]?.properties * 1000}</p>
-                    <p>Funding: {players[countriesOrder[0]]?.funding}</p>
-                </div>
-                <div className={`playerBox ${playerState.turn === 1 ? "activePlayer" : "inactivePlayer"}`}>
-                    <h2>{players[countriesOrder[1]]?.username}</h2>
-                    <p>Unit Count: {players[countriesOrder[1]]?.unitCount}</p>
-                    <p>Income: {players[countriesOrder[1]]?.properties * 1000}</p>
-                    <p>Funding: {players[countriesOrder[1]]?.funding}</p>
-                </div>
-                <div className="playerBox">
-                    <button onClick={passTurn}> Pass Turn</button>
-                </div>
+            <div className={`playerBox ${playerState.turn === 0 ? "activePlayer" : "inactivePlayer"}`}>
 
+                <CurrentPlayer
+                    selectedCharacter={players[countriesOrder[0]].CO}
+                    userName={players[countriesOrder[0]].username}
+                    bannerColor={players[countriesOrder[0]].color}
+                    timePlayed={players[countriesOrder[0]].timePlayed}
+                    playerBalance={players[countriesOrder[0]].gold}
+                    armyCount={players[countriesOrder[0]].unitCount}
+                    armyValue={players[countriesOrder[0]].armyValue}
+                    income={players[countriesOrder[0]].properties * 1000}
+                />
             </div>
 
-            <br/>
+
 
             <div className={`gridSize18 mapGrid`}>
+
                 {map}
+            </div>
+
+            <div className={`playerBox ${playerState.turn === 1 ? "activePlayer" : "inactivePlayer"}`}>
+                <CurrentPlayer
+                    selectedCharacter={players[countriesOrder[1]].CO}
+                    userName={players[countriesOrder[1]].username}
+                    bannerColor={players[countriesOrder[1]].color}
+                    timePlayed={players[countriesOrder[1]].timePlayed}
+                    playerBalance={players[countriesOrder[1]].gold}
+                    armyCount={players[countriesOrder[1]].unitCount}
+                    armyValue={players[countriesOrder[1]].armyValue}
+                    income={players[countriesOrder[1]].properties * 1000}
+                />
             </div>
         </div>
     </div>)
 
 }
 
+/*
+ <div className={`playerBox ${playerState.turn === 0 ? "activePlayer" : "inactivePlayer"}`} >
+                    <h2>{players[countriesOrder[0]]?.username}</h2>
+                    <p>Unit Count: {players[countriesOrder[0]]?.unitCount}</p>
+                    <p>Income: {players[countriesOrder[0]]?.properties * 1000}</p>
+                    <p>Funding: {players[countriesOrder[0]]?.gold}</p>
+                </div>
+ */

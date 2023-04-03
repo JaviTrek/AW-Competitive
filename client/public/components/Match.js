@@ -6,7 +6,6 @@ import { Outlet } from "react-router-dom";
 import { CurrentPlayer } from "./currentPlayerInfo/CurrentPlayer";
 import awLogo from "../images/awLogo.webp";
 import { currentPlayerData } from "./currentPlayerInfo/currentPlayerInfo";
-import img from "../images/CO/Max-Full.png";
 
 export function Match() {
 
@@ -15,10 +14,8 @@ export function Match() {
       {currentPlayerData.map((data) => (
         <CurrentPlayer
           selectedCharacter={data.selectedCharacter}
-          characterImagePosition={data.characterImage}
-          characterBackground={data.characterBackground}
           userName={data.userName}
-          playerBanner={data.bannerColor}
+          bannerColor={data.bannerColor}
           timePlayed={data.timePlayed}
           playerBalance={data.playerBalance}
           armyCount={data.armyCount}

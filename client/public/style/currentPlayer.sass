@@ -1,6 +1,6 @@
 
-$player1-color: linear-gradient(270.04deg, rgba(0, 0, 0, 0) 0.08%, #2342BA 72.38%, #0E1A47 95.82%)
-$player2-color: linear-gradient(90.04deg, rgba(0, 0, 0, 0) 0.08%, #E61F1F 79.61%, #470E0E 99.23%)
+$player2-color: linear-gradient(90.04deg, rgba(0, 0, 0, 0) 0.08%, #2342BA 72.38%, #0E1A47 95.82%)
+$player1-color: linear-gradient( 270.04deg, rgba(0, 0, 0, 0) 0.08%, #E61F1F 79.61%, #470E0E 99.23%)
 @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap')
 div
     // border: 1px solid black    
@@ -8,14 +8,13 @@ div
 
 .current-player
     // background: #eee
-    max-width: 30%
+
     height: auto
     max-height: 18em
     color: #eed2d2
     display: grid
     grid-template-columns: 1fr
     font-family: 'VT323', monospace
-
 
     .current-player-header
         padding: 0
@@ -27,7 +26,7 @@ div
         // display: grid
         // grid-template-columns: 1fr 1fr
 
-        .character-image-player1
+        .character-image-orange
             min-width: 25%
             width: 25%
             max-width: 25%
@@ -36,10 +35,10 @@ div
             max-height: 100%
             position: absolute
             z-index: 1
-            margin-left: 15%
+
             transform: scaleX(-1)
 
-        .character-image-player2
+        .character-image-blue
             min-width: 25%
             width: 25%
             max-width: 25%
@@ -47,11 +46,12 @@ div
             height: 100%
             max-height: 100%
             position: absolute
+            right: 0
             z-index: 1
-            margin-left: 55%
+
             
         .character-background-blue
-            background:$player1-color      
+            background:$player2-color
             width: 100%
             max-width: 100%
             height: 60%
@@ -59,8 +59,8 @@ div
             position: absolute
             margin-top: 10%
 
-        .character-background-red
-            background:$player2-color     
+        .character-background-orange
+            background:$player1-color
             width: 100%
             max-width: 100%
             height: 60%
@@ -89,15 +89,11 @@ div
     .player-stats
         display: grid
         grid-template-columns: 2fr 1fr
-        grid-template-rows: 1fr
-        gap: 5px
-
+        font-size: 20px
 
     .user-info
         display: grid
-        grid-template-columns: repeat(2, 1fr) 
-        grid-row-start: 1
-        gap: 5px
+        grid-template-columns: repeat(2, 1fr)
         align-items: center
 
         div
@@ -126,17 +122,4 @@ div
             background-color: #393535
             border: 2px solid #211f1f
 
-.PVP_Container
-  display: flex
-  justify-content: space-evenly
-    
-        
-// .icon
-//     width: 20    
-            
-           
-            
-            
-        
-   
 

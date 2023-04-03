@@ -7,14 +7,27 @@ $countryName: orangeStar, blueMoon
 
 .gameBox
   display: grid
-  grid-template-columns: min-content
+  position: relative
+  padding: 0
+  margin: 0
+  grid-template-columns: auto max-content auto
   text-align: center
-  padding: 2vw
-  margin: 5vw
-  align-items: center
+  align-items: start
   align-content: center
   justify-items: center
   justify-content: center
+  button
+    cursor: pointer
+    background-color: variables.$color-primary
+    color: black
+    padding: 0.5em
+    font-size: 24px
+    font-weight: 500
+    transition: 0.4s
+    &:hover
+      background-color: variables.$color-primary-variant
+      color: black
+
 
   // our main grid where we have our map tiles
   .mapGrid
@@ -148,27 +161,34 @@ h1
 
 
 
-.playerBoxGrid
-  position: sticky
+//.playerBoxGrid
+  position: absolute
   top: 0
   left: 0px
   display: grid
-  grid-template-columns: auto auto auto
+  grid-template-columns: max-content max-content min-content
   justify-content: left
   justify-items: left
   z-index: 1000
   color: variables.$text-main
   gap: 4em
-  padding: 0.25em
-  .playerBox
-    background-color: variables.$color-bg
-    padding: 0.5em
-  .activePlayer
-    filter: brightness(1.2) contrast(1.1)
-  .inactivePlayer
-    filter: brightness(0.8) contrast(0.9)
+.playerBox
+  width: 100%
+
+  z-index: 1000
+
+.activePlayer
+  filter: brightness(1.2) contrast(1.1)
+.inactivePlayer
+  filter: brightness(0.8) contrast(0.7)
 
 .gameTitle
   color: variables.$text-main
   padding: 0.25em 0
 
+.column2
+  grid-column: span 2
+
+
+.column3
+  grid-column: span 3
