@@ -1,6 +1,6 @@
 import {unitType} from "./unitType";
 import React from "react";
-
+//TODO: If unit attacking is indirect, there is no counterattack/counter = 0
 function damageCalculator(attacker, defender) {
     let damageChart = [
         [55, 45, 12, 14, 15, 5, 5, 26, 25, 1, 5, 1, 1, 30, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],

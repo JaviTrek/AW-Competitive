@@ -1,0 +1,21 @@
+version: "2.2"
+services:
+  react:
+    build:
+      context: .
+      dockerfile: Dockerfile.reactUI
+
+    ports:
+      - "3000:3000"
+  express:
+    build:
+      context: .
+      dockerfile: Dockerfile.express
+
+    ports:
+      - "4000:4000"
+networks:
+  mySharedNetwork: {}
+  myPrivateNetwork: {}
+volumes:
+  my-named-global-volume:

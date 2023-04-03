@@ -70,7 +70,7 @@ export function ParsedMap() {
 
 // this function will request our server for a json file, read it and create tiles depending on the json file information
     useEffect(() => {
-        axios.get('/getGameState')
+        axios.get('http://localhost:4000/getGameState')
             .then(res => {
                 playerState = res.data.playerState
                 gameState = res.data.gameState
@@ -200,6 +200,7 @@ export function ParsedMap() {
 
         //------------------------
         //ITS AN UNIT
+
         if (await isUnit !== false) {
 
             //lets make it so only the player whose's turn it is can move

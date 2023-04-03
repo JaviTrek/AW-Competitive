@@ -4,7 +4,8 @@
   "description": "",
   "main": "public/index.js",
   "scripts": {
-    "start": "webpack-dev-server"
+    "start": " webpack serve --config webpack.dev.js",
+    "prod": "webpack --config webpack.prod.js"
   },
   "keywords": [],
   "author": "",
@@ -30,5 +31,8 @@
     "webpack": "^5.75.0",
     "webpack-cli": "^5.0.1",
     "webpack-dev-server": "^4.11.1"
+  },
+  "devDependencies": {
+    "webpack-merge": "^5.8.0"
   }
 }
