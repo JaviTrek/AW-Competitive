@@ -8,7 +8,7 @@ import {About} from "./components/About";
 import {AppChildren} from "./components/AppChildren";
 import {CurrentGames} from "./components/CurrentGames";
 
-import {Match} from "./components/Match";
+
 import {NewGame} from "./components/NewGame";
 import {createRoot} from "react-dom/client";
 import {Register} from "./components/RegisterForm";
@@ -46,12 +46,7 @@ const router = createBrowserRouter([
                 path: "currentgames",
                 element: <CurrentGames/>,
             },
-            {
 
-                name: "match",
-                path: "match",
-                element: <Match/>,
-            },
             {
                 name: "newgame",
                 path: "newgame",
