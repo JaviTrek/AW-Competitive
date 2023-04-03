@@ -196,20 +196,12 @@ export const NewGame = () => {
           ))}
         </div>
         <div className="gameUnitsContainer">
-          <div
-            className={`${currentCountryCamelCase}Infantry bigGameUnit`}
-          />
+          <div className={`${currentCountryCamelCase}Infantry bigGameUnit`} />
           <div className={`${currentCountryCamelCase}Tank bigGameUnit`} />
-          <div
-            className={`${currentCountryCamelCase}B-Copter bigGameUnit`}
-          />
-          <div
-            className={`${currentCountryCamelCase}Carrier bigGameUnit`}
-          />
+          <div className={`${currentCountryCamelCase}B-Copter bigGameUnit`} />
+          <div className={`${currentCountryCamelCase}Carrier bigGameUnit`} />
           <div className={`${currentCountryCamelCase}Sub bigGameUnit`} />
-          <div
-            className={`${currentCountryCamelCase}NeoTank bigGameUnit`}
-          />
+          <div className={`${currentCountryCamelCase}NeoTank bigGameUnit`} />
         </div>
       </div>
 

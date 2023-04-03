@@ -10,7 +10,6 @@ const {Server} = require("socket.io");
 //our database
 const database = require("./database/connection.js");
 
-
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cors());
@@ -226,3 +225,5 @@ app.get('/logout', function (req, res, next) {
         res.redirect('/');
     })
 });
+
+// 
