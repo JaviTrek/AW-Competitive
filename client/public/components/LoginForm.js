@@ -48,6 +48,8 @@ export function Login() {
               params: data,
             })
             .then((res) => {
+              localStorage.clear();
+              localStorage.setItem("user", JSON.stringify(res.data));
               setFlash({
                 class: "success",
                 message: "You have logged in correctly! Redirecting...",

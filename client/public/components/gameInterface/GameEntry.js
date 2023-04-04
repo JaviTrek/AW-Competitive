@@ -1,6 +1,6 @@
 import React from "react";
-import "../style/GameEntry.sass";
-import { NameCO } from "./gameInterface/NameCO";
+import "../../style/GameEntry.sass";
+import { NameCO } from "./NameCO";
 
 export const GameEntry = ({
   title = (
@@ -52,11 +52,11 @@ export const GameEntry = ({
       </div>
 
       <div className="CGMap">
-          <img
-            className="CGMapImage"
-            src="../../images/mapTiles/full/Caustic-Finale-Small.png"
-            alt="Current Game Map Image"
-          />
+        <img
+          className="CGMapImage"
+          src="../../images/mapTiles/full/Caustic-Finale-Small.png"
+          alt="Current Game Map Image"
+        />
         <h4 className="CGMapName">{map}</h4>
       </div>
 

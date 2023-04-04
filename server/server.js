@@ -46,11 +46,6 @@ server.listen(port, () => {
 const mapParser = require('./scripts/awbwMapParser')
 mapParser(18, 18, "parsedMap")
 
-const createGame = require("./database/createGame")
-app.use(createGame)
-const gameActions = require("./database/gameActions")
-app.use(gameActions)
-
 
 //------------------------------
 //Steve work on authorization
@@ -89,6 +84,8 @@ const LocalStrategy = require('passport-local').Strategy;
 //login post request using passport local
 app.post('/loginUser', passport.authenticate('local'), (req, res) => {
     console.log('logged in');
+    req.session.username = req.user.username;
+
     //we send 200 because that means we logged in correctly
     res.sendStatus(200)
 
@@ -226,4 +223,43 @@ app.get('/logout', function (req, res, next) {
     })
 });
 
-// 
+// StartGames Data from database
+
+app.get("/getStartGames", loggedIn, async (req, res) => {
+  let dbConnect = database.getDatabase();
+  let collection = dbConnect.collection("startGame"); // change this to startGame
+  let myDoc = await collection.find();
+  let pushData = [];
+  await myDoc.forEach((doc) => pushData.push(doc));
+  res.json({
+    pushData,
+  });
+  
+});
+
+app.get("/getCurrentGames", loggedIn, async (req, res) => {
+  let dbConnect = database.getDatabase();
+  let collection = dbConnect.collection("currentGames");
+  let myDoc = await collection.find();
+  let pushData = [];
+  await myDoc.forEach((doc) => pushData.push(doc));
+  res.json({
+    pushData,
+  });
+});
+
+app.get('/getGameLog', loggedIn, (req, res) => {
+    res.redirect('/startGames') 
+})
+
+const createGame = require("./database/createGame");
+app.use(createGame);
+const gameActions = require("./database/gameActions");
+app.use(gameActions);
+
+app.get('/userInfo', (req, res) => {
+    const data = req.session
+    res.json({
+        data
+    })
+})

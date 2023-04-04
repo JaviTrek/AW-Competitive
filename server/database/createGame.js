@@ -6,29 +6,31 @@ const router = Router()
     //Currently this just submits parsedMap.json to mongoDB.
 //TODO: Make this route take user input, a user creating a game needs to put down their id so when we check the game we can route it back to them.
     router.get("/createNewGame", async (req, res) => {
-
+        console.log(req.session.username);
 
         let dbConnect = database.getDatabase()
 
         //use the collection
-        let collection = dbConnect.collection("currentGames")
+        let collection = dbConnect.collection("startGame")
 
 
         //count amount of documents that have the _id value
-        let myDoc = await collection.countDocuments({_id: {$gt: -1}})
+        let id = await collection.countDocuments({_id: {$gt: -1}})
         const data =  fs.readFileSync('./scripts/parsedMap.json', 'utf8');
         const parsedData = await JSON.parse(data)
         let gameDocument = {
-            _id: 0,
+            _id: id,
             ...parsedData
         }
 
+        gameDocument.playerState.orangeStar.username = req.session.username;
+        
         //insert the document
         await collection.insertOne(gameDocument);
-
-
+        
+        
         //insert the document
-
+        
         res.redirect('/')
 
     })
