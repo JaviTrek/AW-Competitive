@@ -1,5 +1,5 @@
 import React from "react";
-import "../../style/GameEntry.sass";
+import "../style/GameEntry.sass";
 import { NameCO } from "./gameInterface/NameCO";
 
 export const GameEntry = ({
