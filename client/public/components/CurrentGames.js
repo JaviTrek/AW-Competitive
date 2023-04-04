@@ -1,6 +1,6 @@
 import React from "react";
 import { Container } from "./template/Container";
-import { GameEntry } from "./gameInterface/GameEntry";
+import { GameEntry } from "./GameEntry";
 
 export const CurrentGames = () => {
   return (

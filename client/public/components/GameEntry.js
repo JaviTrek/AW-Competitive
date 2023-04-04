@@ -1,6 +1,6 @@
 import React from "react";
 import "../../style/GameEntry.sass";
-import { NameCO } from "./NameCO";
+import { NameCO } from "./gameInterface/NameCO";
 
 export const GameEntry = ({
   title = (

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Container } from "./template/Container";
-import { GameEntry } from "./gameInterface/GameEntry";
+import { GameEntry } from "./GameEntry";
 
 export const StartGames = () => {
   let startGamesArray = [];
@@ -17,7 +17,7 @@ export const StartGames = () => {
             <GameEntry
               index={index}
               title="empty"
-              day= {`Day ${startGame.playerState.day}`}
+              day={`Day ${startGame.playerState.day}`}
               player1={{
                 name: startGame.playerState.orangeStar.username, // change to player1 in the future
                 CO: startGame.playerState.orangeStar.color, // change to color in NameBanner
