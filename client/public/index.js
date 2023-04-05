@@ -5,7 +5,7 @@ import {Template} from "./components/template/Template";
 import {App} from "./components/App";
 import {Grid} from "./components/grid/Grid";
 import {About} from "./components/About";
-import {AppChildren} from "./components/AppChildren";
+
 import {CurrentGames} from "./components/CurrentGames";
 
 
@@ -26,11 +26,7 @@ const router = createBrowserRouter([
                 path: "/",
                 element: <App/>,
             },
-            {
-                name: "children",
-                path: "children",
-                element: <AppChildren/>,
-            },
+
             {
                 name: "about",
                 path: "about",

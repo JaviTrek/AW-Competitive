@@ -1,11 +1,11 @@
 import React from "react";
-import "../../style/currentPlayer.sass";
-import gold from "../../images/gold.png";
-import clock from "../../images/clock.png";
-import building from "../../images/building.png";
-import armyUnit from "../../images/unit_Icon.png";
-import armyGold from "../../images/unit_Gold.png";
-import {NameBanner} from "../gameInterface/NameBanner";
+import "../style/currentPlayer.sass";
+import gold from "../images/gold.png";
+import clock from "../images/clock.png";
+import building from "../images/building.png";
+import armyUnit from "../images/unit_Icon.png";
+import armyGold from "../images/unit_Gold.png";
+import {NameBanner} from "./gameInterface/NameBanner";
 
 
 export const CurrentPlayer = ({
@@ -20,7 +20,7 @@ export const CurrentPlayer = ({
                               }) => {
     return (<div className="current-player">
             <div className="current-player-header">
-                <img className={`character-image-${bannerColor}`} src={`../../images/CO/${selectedCharacter}-Full.png`}/>
+                <img className={`character-image-${bannerColor}`} src={selectedCharacter}/>
                 <div className={`character-background-${bannerColor}`}></div>
             </div>
             <div className="player-name">
