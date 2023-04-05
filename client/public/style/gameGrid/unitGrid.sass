@@ -18,6 +18,8 @@ $countryName: orangeStar, blueMoon
   align-content: center
   justify-items: center
   justify-content: center
+  image-rendering: pixelated
+  color: black
   button
     cursor: pointer
     background-color: variables.$color-primary
@@ -33,9 +35,9 @@ $countryName: orangeStar, blueMoon
 
   // our main grid where we have our map tiles
   .mapGrid
-    display: grid
+
     margin: 0
-    border: 1em solid #333b54
+    border: 1em solid #091a4f
     // our individual tiles
 
     .mapTile
@@ -55,7 +57,7 @@ $countryName: orangeStar, blueMoon
         text-align: left
         background: rgba(116, 116, 116, 0.8)
         border: 2px solid rgba(59, 59, 59, 0.8)
-        z-index: 10
+        z-index: 12
         position: absolute
         top: 0
         left: 100%
@@ -91,8 +93,7 @@ $countryName: orangeStar, blueMoon
                 width: 16px
                 height: 16px
         .menuNoBuy
-          filter: brightness(0.6)
-          text-decoration: line-through
+          filter: brightness(0.5)
           cursor: not-allowed
           pointer-events: none
 

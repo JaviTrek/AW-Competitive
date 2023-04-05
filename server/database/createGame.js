@@ -13,7 +13,7 @@ const router = Router()
         //use the collection
         let collection = dbConnect.collection("currentGames")
 
-
+        await collection.deleteMany({});
         //count amount of documents that have the _id value
         let myDoc = await collection.countDocuments({_id: {$gt: -1}})
         const data =  fs.readFileSync('./scripts/parsedMap.json', 'utf8');

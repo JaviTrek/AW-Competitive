@@ -9,10 +9,7 @@ import {unitType} from "./gameLogic/unitType";
 import {findTargets} from "./gameLogic/validTargets";
 import {battleProbabilities, damageCalculator} from "./gameLogic/damageCalculator";
 import {CurrentPlayer} from "../CurrentPlayer";
-
-
-const socket = io.connect("http://localhost:4000")
-
+//const socket = io.connect("http://localhost:4000")
 let countriesOrder = ['orangeStar', 'blueMoon']
 let gameState = []
 let playerState = {}
@@ -21,25 +18,38 @@ let mapTiles = []
 
 export function ParsedMap() {
     let [map, setMap] = useState([])
-    let [battle, setBattle] = useState({})
-
     let [players, setPlayers] = useState({
 
         turn: 0, day: 1,
 
         orangeStar: {
-            _id: 1, username: 'orangeStar',
-            CO: 'Sami', img: `../../images/CO/Sami-Full.png`, color: 'orange',  armyValue: "0", timePlayed: "00:00:00", unitCount: 0, properties: 3, gold: 3000,
+            _id: 1,
+            username: 'orangeStar',
+            CO: 'Sami',
+            img: `../../images/CO/Sami-Full.png`,
+            color: 'orange',
+            armyValue: "0",
+            timePlayed: "00:00:00",
+            unitCount: 0,
+            properties: 3,
+            gold: 3000,
         }, blueMoon: {
-            _id: 2, username: 'blueMoon',
-            CO: 'Max', img: `../../images/CO/Max-Full.png`, color: 'blue',  armyValue: "0", timePlayed: "00:00:00", unitCount: 0, properties: 3, gold: 0,
+            _id: 2,
+            username: 'blueMoon',
+            CO: 'Max',
+            img: `../../images/CO/Max-Full.png`,
+            color: 'blue',
+            armyValue: "0",
+            timePlayed: "00:00:00",
+            unitCount: 0,
+            properties: 3,
+            gold: 0,
         }
     },)
 
 //lets change a specific tile and its elements
     function changeTile(index, instruction) {
         let {tileUnit, tileSquare, showMenu, hp, capture, hpTile, useFunction} = instruction
-
         //if there is an hpTile (a tile where HP needs to be displayed, like when an unit moves,
         hpTile = hpTile ? hpTile : index;
 
@@ -52,7 +62,7 @@ export function ParsedMap() {
         }
         mapTiles[index] = <div id={index} key={index} onClick={useFunction}
                                className={gameState[index].tileUnit.isUsed ? 'mapTile stateUsed' : `mapTile`}>
-            <div className={`tileTerrain ${gameState[index].terrainImage}`}></div>
+            <div className={`tileTerrain ${gameState[index].terrainImage}`}> <h5>{index}</h5></div>
             {tileUnit}
             {tileSquare}
             {showMenu}
@@ -84,14 +94,15 @@ export function ParsedMap() {
             }).catch(e => console.log(e));
     }, [])
 
+    /*
     //we listen for actions being sent
     socket.on("receiveAction", data => {
 
     })
+     */
 
     //function used to resetGrid to original state
     function resetGrid() {
-
         movePath = []
         let resetMap;
         gameState.forEach((tile, index) => {
@@ -129,25 +140,38 @@ export function ParsedMap() {
         let newMap;
         // lets call our function that can calculate the possible tiles we can move to
         let blueTiles = pathFinding(18, 18, gameState[initialTile], initialTile, gameState, mapTiles)
+
+
         //lets show the array of tiles where we can move
         blueTiles.tilesToDraw.forEach((tile) => {
-            let tileMove = <div className="tileMove" onMouseEnter={() => {drawPath(blueTiles, tile.index, initialTile)}}></div>
+            //default tile square
+            let tileSquareType = 'tileMove'
+            let tileSquare = <div className={tileSquareType} onMouseEnter={() => {
+                drawPath(blueTiles, tile.index, initialTile)
+            }}></div>
 
-            if (tile.hasEnemy) tileMove = <div className="tileEnemy" onMouseEnter={() => {
 
-                let forecast = battleProbabilities({
-                    unit: gameState[initialTile].tileUnit, terrain: gameState[initialTile].terrainType,
-                }, {
-                    unit: gameState[tile.index].tileUnit, terrain: gameState[tile.index].terrainType,
-                })
-                console.log(forecast)
-            }}
-            ></div>
+            if (tile.hasEnemy) {
+                tileSquareType = 'tileEnemy'
+                tileSquare = <div className={tileSquareType} onMouseEnter={() => { battleForecast(initialTile, tile.index, tileSquare)}} onMouseLeave={() => {
+                    changeTile(tile.index, {
+                        tileUnit: <div
+                            className={gameState[tile.index].tileUnit.country + gameState[tile.index].tileUnit.name + " tileUnit"}></div>,
+                        tileSquare: tileSquare,
+                        showMenu: null,
+                        useFunction: () => {
+                            newPosition(blueTiles, tile.index, initialTile)
+                        }
+                    })
+                    newMap = mapTiles.slice()
+                    setMap(newMap)
+                }}></div>
+            }
 
             changeTile(tile.index, {
                 tileUnit: gameState[tile.index].tileUnit ? <div
                     className={gameState[tile.index].tileUnit.country + gameState[tile.index].tileUnit.name + " tileUnit"}></div> : null,
-                tileSquare: tileMove,
+                tileSquare: tileSquare,
                 showMenu: null,
                 useFunction: () => {
                     newPosition(blueTiles, tile.index, initialTile)
@@ -155,6 +179,63 @@ export function ParsedMap() {
             })
         })
         // react cheese used to re-render
+        newMap = mapTiles.slice()
+        setMap(newMap)
+    }
+
+
+    function battleForecast(initialTile, attackTile, tileSquare) {
+
+
+        //default tile square
+        let lastMovePath = movePath[movePath.length - 1] ? movePath[movePath.length - 1] : initialTile
+        //lets show our battle forecast (damage we will do and receive)
+        let forecast = battleProbabilities({
+            unit: gameState[initialTile].tileUnit, terrain: gameState[lastMovePath].terrainType,
+        }, {
+            unit: gameState[attackTile].tileUnit, terrain: gameState[attackTile].terrainType,
+        })
+        const tileMenu = <div className="forecast">
+            <div className="forecastRelative">
+                <div className="arrow arrowNormal"></div>
+                <div
+                    className={gameState[initialTile].tileUnit.country + gameState[initialTile].tileUnit.name}></div>
+                <div className={`HP${Math.ceil(gameState[initialTile].tileUnit.hp / 10)}Icon`}></div>
+            </div>
+
+            <div>
+                <h2>{forecast[0][0]}% - {forecast[0][1]}%</h2>
+                <h2>{forecast[1][1]}% - {forecast[1][0]}%</h2>
+            </div>
+
+            <div className="forecastRelative">
+                <div className=" arrow  arrowRotate"></div>
+                <div
+                    className={gameState[attackTile].tileUnit.country + gameState[attackTile].tileUnit.name}></div>
+                <div className={`HP${Math.ceil(gameState[attackTile].tileUnit.hp / 10)}Icon`}></div>
+            </div>
+        </div>
+        changeTile(attackTile, {
+            tileUnit: <div
+                className={gameState[attackTile].tileUnit.country + gameState[attackTile].tileUnit.name + " tileUnit"}></div>,
+            tileSquare: tileSquare,
+            showMenu: tileMenu,
+            useFunction: () => {
+                let validTargets = findTargets(lastMovePath, gameState[initialTile].tileUnit, gameState)
+                if (validTargets.length > 0) {
+                    attackAction(initialTile, lastMovePath, attackTile, {
+                        unit: gameState[initialTile].tileUnit,
+                        terrain: gameState[lastMovePath].terrainType,
+                    }, {
+                        unit: gameState[attackTile].tileUnit,
+                        terrain: gameState[attackTile].terrainType,
+                    })
+                }
+
+
+            }
+        })
+        let newMap;
         newMap = mapTiles.slice()
         setMap(newMap)
     }
@@ -167,7 +248,9 @@ export function ParsedMap() {
             changeTile(tile, {
                 tileUnit: gameState[tile].tileUnit ? <div
                     className={gameState[tile].tileUnit.country + gameState[tile].tileUnit.name + " tileUnit"}></div> : null,
-                tileSquare: <div className="tileMove" onMouseEnter={() => {drawPath(blueTiles, tile, initialTile)}}></div>,
+                tileSquare: <div className="tileMove" onMouseEnter={() => {
+                    drawPath(blueTiles, tile, initialTile)
+                }}></div>,
                 showMenu: null,
                 useFunction: () => {
                     newPosition(blueTiles, tile, initialTile)
@@ -188,7 +271,6 @@ export function ParsedMap() {
                     newPosition(blueTiles, tile, initialTile)
                 }
             })
-
         })
         newMap = mapTiles.slice()
         setMap(newMap)
@@ -224,10 +306,7 @@ export function ParsedMap() {
     async function showMenu(initialTile, newTile, isUnit) {
         let tileMenu = [];
         let showBlueTile;
-
-
         let {day, turn} = playerState
-
 
         /*
         TODO:
@@ -238,9 +317,7 @@ export function ParsedMap() {
 
         //------------------------
         //ITS AN UNIT
-
         if (await isUnit !== false) {
-
             //lets make it so only the player whose's turn it is can move
             if (countriesOrder[turn] !== gameState[initialTile].tileUnit.country) return null
 
@@ -248,7 +325,7 @@ export function ParsedMap() {
             let validTargets = findTargets(newTile, gameState[initialTile].tileUnit, gameState)
             if (validTargets.length > 0) {
                 tileMenu.push(<div className="menuName"
-                                   onClick={() => attackAction(initialTile, newTile)}>Attack</div>)
+                                   onClick={() => removeMenu(initialTile, newTile)}>Attack</div>)
 
                 validTargets.forEach(tile => {
                     changeTile(tile, {
@@ -258,29 +335,29 @@ export function ParsedMap() {
                         showMenu: false,
                         capture: gameState[tile].tileUnit.capture, //lets put a confirm Attack option here
                         useFunction: () => {
-                            confirmAction(initialTile, newTile, confirmAttack(initialTile, newTile, tile, {
+                            attackAction(initialTile, newTile, tile, {
                                 unit: gameState[initialTile].tileUnit, terrain: gameState[newTile].terrainType,
                             }, {
                                 unit: gameState[tile].tileUnit, terrain: gameState[tile].terrainType,
-                            }))
+                            })
                         }
                     })
                 })
             }
             showBlueTile = <div className="tilePath"></div>
             tileMenu.push(<div className="menuName"
-                               onClick={() => confirmAction(initialTile, newTile, moveAction(initialTile, newTile))}>Wait</div>)
+                               onClick={() => moveAction(initialTile, newTile)}>Wait</div>)
             //if its an infantry and also on an enemy/neutral property, allow to capture
             if (gameState[initialTile].tileUnit.id === 0 || gameState[initialTile].tileUnit.id === 1) {
                 if (gameState[newTile].terrainType === "property" && gameState[newTile].terrainOwner !== gameState[initialTile].tileUnit.country) {
                     tileMenu.push(<div className="menuName"
-                                       onClick={() => confirmAction(initialTile, newTile, captureAction(initialTile, newTile))}>Capture</div>)
+                                       onClick={() => captureAction(initialTile, newTile)}>Capture</div>)
                 }
             }
         }
 
             //------------------------------
-            // ITS A BUILDING
+        // ITS A BUILDING
         else if (await gameState[initialTile].terrainImage.slice(2, 3) === "2") {
             //lets get the array with all the units
             const unitsToBuild = unitType(0, true)
@@ -291,9 +368,9 @@ export function ParsedMap() {
                 if (unit.cost <= playerState[ownerShip].gold) menuOptions = "menuOptions"
 
                 tileMenu.push(<div className={menuOptions}
-                                   onClick={() => confirmAction(initialTile, newTile, buildAction(initialTile, {
+                                   onClick={() => buildAction(initialTile, {
                                        ownerShip: ownerShip, unit: unit, id: id
-                                   }))}>
+                                   })}>
                     <div className={`menu${ownerShip}${unit.menuName}`}></div>
                     <div className={`menuName`}> {unit.menuName}</div>
                     <div className={`menuCost`}> {unit.cost}</div>
@@ -318,15 +395,13 @@ export function ParsedMap() {
 
 
     //this is the function that we run after any action
-    function confirmAction(initialTile, newTile, functionToRun) {
-        //We run the command depending on what it was meant to be
-        functionToRun
+    function confirmAction(initialTile, newTile) {
         resetGrid()
     }
 
-    function confirmAttack(initialTile, newTile, attackedTile, atk, def) {
+    function attackAction(initialTile, newTile, attackedTile, atk, def) {
+        if (countriesOrder[players.turn] !== gameState[initialTile].tileUnit.country) return null
         let results = damageCalculator(atk, def)
-
         gameState[initialTile].tileUnit.hp = results.atkHP
         gameState[attackedTile].tileUnit.hp = results.defHP
         if (results.atkHP <= 0) gameState[initialTile].tileUnit = false
@@ -347,6 +422,7 @@ export function ParsedMap() {
             if (gameState[newTile].terrainCapture === 0 && gameState[newTile]?.tileUnit) gameState[newTile].tileUnit.capture = null
         }
         if (gameState[newTile].tileUnit) gameState[newTile].tileUnit.isUsed = true
+        confirmAction(initialTile, newTile)
     }
 
     function captureAction(initialTile, newTile) {
@@ -387,9 +463,10 @@ export function ParsedMap() {
         playerState[data.ownerShip].unitCount++
         playerState[data.ownerShip].gold -= data.unit.cost
         setPlayers((playerState))
+        confirmAction(initialTile, initialTile)
     }
 
-    function attackAction(initialTile, newTile) {
+    function removeMenu(initialTile, newTile) {
         changeTile(newTile, {
             tileUnit: <div
                 className={`${gameState[initialTile].tileUnit.country + gameState[initialTile].tileUnit.name}  tileUnit`}></div>,
@@ -400,9 +477,7 @@ export function ParsedMap() {
                 checkPath(newTile)
             }
         })
-        let newMap;
-        newMap = mapTiles.slice()
-        setMap(newMap)
+        confirmAction(initialTile, newTile)
     }
 
 
@@ -480,12 +555,3 @@ export function ParsedMap() {
     </div>)
 
 }
-
-/*
- <div className={`playerBox ${playerState.turn === 0 ? "activePlayer" : "inactivePlayer"}`} >
-                    <h2>{players[countriesOrder[0]]?.username}</h2>
-                    <p>Unit Count: {players[countriesOrder[0]]?.unitCount}</p>
-                    <p>Income: {players[countriesOrder[0]]?.properties * 1000}</p>
-                    <p>Funding: {players[countriesOrder[0]]?.gold}</p>
-                </div>
- */

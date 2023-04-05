@@ -1,20 +1,20 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import {useState, useEffect} from "react";
 import axios from "axios";
 
 import '../style/App.sass'
 import io from "socket.io-client"
+
 const socket = io.connect("http://localhost:4000")
 
 export function App() {
 
-    return (
-        <div>
+    return (<div>
 
             <br/>
             <a href="/createNewGame">
-                <button> Try creating New Game</button>
-<br/>
+                <button> Delete current /game and recreate it</button>
+                <br/>
                 <br/>
 
             </a>
@@ -24,6 +24,5 @@ export function App() {
             </a>
 
 
-    </div>
-  );
+        </div>);
 }

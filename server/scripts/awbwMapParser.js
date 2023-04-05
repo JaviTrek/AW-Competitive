@@ -152,15 +152,15 @@ module.exports = (columns, rows, name) => {
                 }
 // https://www.youtube.com/watch?v=sPWGBmcDR50
                 let countries = ["orangeStar", "blueMoon"]
-                if (j % 7 === 5)
+                if (j % 3 === 2)
                     parsedMap.push({
                         terrainImage: awbwMap[j][1],
                         terrainType: terrainType,
                         terrainOwner: ownerShip,
                         terrainCapture: 0,
                         tileUnit: {
-                            id: 5,
-                            name: "Tank",
+                            id: 4,
+                            name: "Artillery",
                             country: countries[Math.floor(Math.random() * 2)],
                             hp: 100, //Math.floor(Math.random() * (101 - 1) + 1),
                             isUsed: false,

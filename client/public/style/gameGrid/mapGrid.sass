@@ -1,36 +1,9 @@
 @use "../abstracts/mixins"
 
 .gameBox
-  display: grid
-  grid-template-columns: min-content
-  text-align: center
-  padding: 2vw
-  margin: 5vw
-  align-items: center
-  align-content: center
-  justify-items: center
-  justify-content: center
-  color: black
-  text-align: center
-  button
-    padding: 2em
-    background-color: black
-    color: white
-  // our main grid where we have our map tiles
   .mapGrid
-    display: grid
-    margin: 0
-    border: 1em solid #333b54
     // our individual tiles
     .mapTile
-      width: 100%
-      background-color: #bfdd33
-      aspect-ratio: 1
-      position: relative
-      &:hover
-        .tileCursor
-          display: block
-
       //the cursor we see over tiles
       //TODO: Fix the tile cursor, currently it looks centered but it really isn't centered
       .tileCursor
@@ -69,17 +42,21 @@
       .tileEnemy
         background: rgba(228, 67, 67, 0.25)
         border: 2px solid rgb(184, 22, 22)
-        z-index: 100
+        z-index: 20
         position: absolute
         top: 0
+        margin: 0 auto
         height: 31px
         width: 31px
+        &:hover
+          cursor: pointer
+          animation: selectTarget 3s linear infinite
       //the red square on enemy units
       .tileAttack
-        animation: selectTarget 2s linear infinite
+        animation: selectTarget 4s linear infinite
         background: rgba(228, 67, 67, 0.5)
         border: 2px solid rgb(184, 22, 22)
-        z-index: 5
+        z-index: 20
         position: absolute
         left: 0
         right: 0
@@ -91,12 +68,52 @@
         @keyframes selectTarget
           from
             transform: rotate(0)
-            background: rgba(228, 67, 67, 0.5)
+            background: rgba(228, 67, 67, 0.25)
 
 
-          to
+          50%
             transform: rotate(270deg)
-            background: rgba(228, 67, 67, 0.95)
+            background: rgba(228, 67, 67, 0.75)
+          to
+            transform: rotate(540deg)
+            background: rgba(228, 67, 67, 0.25)
+
+.forecast
+  position: absolute
+  z-index: 100
+  display: grid
+  left: -200%
+  right: -200%
+  top: 150%
+  grid-template-columns: auto auto auto
+  background: rgba(255, 255, 255, 0.8)
+  border: 0.1em solid black
+  color: black
+  width: 600%
+  margin: 0 auto
+  align-items: center
+  justify-items: center
+  .arrow
+    background-image: url("images/UI/arrow2.svg")
+    width: 30px
+    height: 30px
+    position: absolute
+
+    filter: drop-shadow(2px 0px 0 black) drop-shadow(-1px -1px 0 black)
+
+  .arrowNormal
+    top: -75%
+    left: 0
+  .arrowRotate
+    bottom: -75%
+    right: 0
+    rotate: 180deg
+
+  .forecastRelative
+    position: relative
+  h2
+    font-size: 18px
+    font-weight: 500
 
 
 
