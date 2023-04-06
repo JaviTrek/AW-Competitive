@@ -16,13 +16,9 @@ export function App() {
                 <button> Delete current /game and recreate it</button>
                 <br/>
                 <br/>
-
             </a>
             <a href="/game">
                 <button> See game</button>
-
             </a>
-
-
         </div>);
 }

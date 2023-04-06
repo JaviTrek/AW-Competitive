@@ -57,7 +57,7 @@ $countryName: orangeStar, blueMoon
         text-align: left
         background: rgba(116, 116, 116, 0.8)
         border: 2px solid rgba(59, 59, 59, 0.8)
-        z-index: 12
+        z-index: 100
         position: absolute
         top: 0
         left: 100%
@@ -66,8 +66,9 @@ $countryName: orangeStar, blueMoon
           cursor: pointer
           font-size: 14px
           padding: 0 6px
-
           display: inline-block
+          &:hover
+            filter: contrast(1.4)
         .menuOptions
           padding: 0 6px
           background-color: #d3d3d3
@@ -178,7 +179,7 @@ h1
 .playerBox
   width: 100%
 
-  z-index: 1000
+  z-index: 25
 
 .activePlayer
   filter: brightness(1.2) contrast(1.1)

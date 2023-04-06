@@ -46,7 +46,7 @@ function damageCalculator(attacker, defender) {
 
     const luckDEF = Math.floor(Math.random() * 10)
     //there is an actual counterattack if unit is still alive
-    if (def.hp > 0) {
+    if (def.hp > 0 && def.id !== (4 || 7 || 8)) {
         hpDEF = Math.ceil(def.hp / 10)
         const counterFormula = (((damageChart[def.id][atk.id] * def.atk) / 100) + luckDEF) * hpDEF / 10 * ((200 - (atk.def + terrainStars[atk.terrain] * hpATK)) / 100)
         atk.hp = atk.hp - Math.floor(counterFormula)
@@ -64,6 +64,7 @@ export {damageCalculator};
 
 
 function battleProbabilities(attacker, defender) {
+
     let atk = {
         id: attacker.unit.id, hp: attacker.unit.hp, atk: 100, def: 100, terrain: attacker.terrain
     }
@@ -85,7 +86,7 @@ function battleProbabilities(attacker, defender) {
 
     let counterFormula;
         //lets calculate both possibilities
-        if (def.hp > 0) {
+        if (def.hp > 0 && def.id !== (4 || 7 || 8)) {
             hpDEF = Math.ceil(def.hp / 10)
             counterFormula = (((damageChart[def.id][atk.id] * def.atk) / 100) + highLowLuck[index]) * hpDEF / 10 * ((200 - (atk.def + terrainStars[atk.terrain] * hpATK)) / 100)
         } else counterFormula = 0

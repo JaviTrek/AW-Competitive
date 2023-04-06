@@ -159,8 +159,8 @@ module.exports = (columns, rows, name) => {
                         terrainOwner: ownerShip,
                         terrainCapture: 0,
                         tileUnit: {
-                            id: 4,
-                            name: "Artillery",
+                            id: 5,
+                            name: "Tank",
                             country: countries[Math.floor(Math.random() * 2)],
                             hp: 100, //Math.floor(Math.random() * (101 - 1) + 1),
                             isUsed: false,
