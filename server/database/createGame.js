@@ -13,18 +13,22 @@ const router = Router()
         //use the collection
         let collection = dbConnect.collection("startGame")
 
+        // let id = await collection.countDocuments({_id: {$gt: -1}})
+        // let gameDocument = {
+        //     _id: id,
+        //     ...parsedData 
+        // }
 
         //count amount of documents that have the _id value
-        let id = await collection.countDocuments({_id: {$gt: -1}})
         // CHANGED PARSEDMAP.JSON FILE, CHECK DATABASE FOR STRUCTURE OR ASK STEVEN OR REY
         const data =  fs.readFileSync('./scripts/parsedMap.json', 'utf8');
         const parsedData = await JSON.parse(data)
         let gameDocument = {
-            _id: id,
-            ...parsedData 
-        }
+          ...parsedData,
+        };
 
         gameDocument.playerState.orangeStar.username = req.session.username;
+        gameDocument.playerState.orangeStar._id = req.session._id
         
         //insert the document
         await collection.insertOne(gameDocument);

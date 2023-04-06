@@ -1,8 +1,10 @@
 import React from "react";
 import "../style/GameEntry.sass";
 import { NameCO } from "./gameInterface/NameCO";
+import axios from "axios";
 
 export const GameEntry = ({
+  index,
   title = (
     <>
       GL STD [T1]: Femboy <span>vs</span> Mipin
@@ -28,7 +30,16 @@ export const GameEntry = ({
   // for turning the title into html
 
   return (
-    <article className="currentGame">
+    <article
+      className="currentGame"
+      onClick={() => {
+        console.log(index);
+        const data = { index: index };
+        axios.post("/joinGame", data, null).then((res) => {
+          console.log(res);
+        });
+      }}
+    >
       {/* CG = currentGame */}
       <div className="CGTopBar">
         <h2 className="CGTitle">{title}</h2>

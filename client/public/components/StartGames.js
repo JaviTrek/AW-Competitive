@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Container } from "./template/Container";
 import { GameEntry } from "./GameEntry";
+import { redirect } from "react-router-dom";
 
 export const StartGames = () => {
   let startGamesArray = [];
@@ -11,11 +12,10 @@ export const StartGames = () => {
       .get("/getStartGames")
       .then((res) => {
         let startGamesData = res.data.pushData;
-        startGamesData.forEach((startGame, index) => {
-          console.log(startGame);
+        startGamesData.forEach((startGame) => {
           startGamesArray.push(
             <GameEntry
-              index={index}
+              index={startGame._id}
               title="empty"
               day={`Day ${startGame.playerState.day}`}
               player1={{
@@ -38,7 +38,10 @@ export const StartGames = () => {
         setData(startGamesArray);
         console.log(data);
       })
-      .catch((e) => console.error(e));
+      .catch((e) => {
+        console.error(e);
+        // window.location = "/login";
+      });
   }, []);
 
   return (
