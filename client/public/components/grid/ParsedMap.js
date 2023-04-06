@@ -222,22 +222,37 @@ export function ParsedMap() {
             unit: gameState[attackTile].tileUnit, terrain: gameState[attackTile].terrainType,
         })
         const tileMenu = <div className="forecast">
-            <div className="forecastRelative">
-                <div className="arrow arrowNormal"></div>
-                <div
-                    className={gameState[initialTile].tileUnit.country + gameState[initialTile].tileUnit.name}></div>
-                <div className={`HP${Math.ceil(gameState[initialTile].tileUnit.hp / 10)}Icon`}></div>
+            <div className={`forecastRelative ${gameState[initialTile].tileUnit.country}Background`}>
+                <div className={` arrow arrowNormal`}></div>
+                <div className={`${gameState[initialTile].tileUnit.country}Background`}>
+
+                    <div className={gameState[initialTile].tileUnit.country + gameState[initialTile].tileUnit.name}></div>
+                    <div className={`HP${Math.ceil(gameState[initialTile].tileUnit.hp / 10)}Icon`}></div>
+                </div>
+
             </div>
             <div>
-                <h2>{forecast[0][0]}% - {forecast[0][1]}%</h2>
-                <h2>{forecast[1][1]}% - {forecast[1][0]}%</h2>
+                <div className={`${gameState[initialTile].tileUnit.country}Background`}>
+                    <h2>{forecast[0][0]}% - {forecast[0][1]}%</h2>
+                </div>
+
+                <div className={`${gameState[attackTile].tileUnit.country}Background`}>
+                    <h2>{forecast[1][1]}% - {forecast[1][0]}%</h2>
+                </div>
+
+
             </div>
             <div className="forecastRelative">
                 <div className=" arrow  arrowRotate"></div>
-                <div
-                    className={gameState[attackTile].tileUnit.country + gameState[attackTile].tileUnit.name}></div>
-                <div className={`HP${Math.ceil(gameState[attackTile].tileUnit.hp / 10)}Icon`}></div>
-            </div>
+
+                <div className={`${gameState[attackTile].tileUnit.country}Background`}>
+                    <div
+                        className={gameState[attackTile].tileUnit.country + gameState[attackTile].tileUnit.name}></div>
+                    <div className={`HP${Math.ceil(gameState[attackTile].tileUnit.hp / 10)}Icon`}></div>
+                </div>
+                </div>
+
+
         </div>
         changeTile(attackTile, {
             tileUnit: <div
