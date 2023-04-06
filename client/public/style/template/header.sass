@@ -1,7 +1,7 @@
 @use '../abstracts/variables' as variables
   
 .header
-  padding: 11px 40px 11px 13px
+ 
   display: flex
   justify-content: space-between
   align-items: center
@@ -10,9 +10,10 @@
   color: white 
   width: 100vw
   margin: 0 auto
-
+  column-gap: 5vw
   display: grid
-  grid-template-columns: 28% 60% 12% 
+  grid-template-columns: max-content auto auto max-content
+  
   font-size: 1.6vw
   max-height: 7%
 
@@ -25,15 +26,15 @@
 .headerLogo
   max-width: 216px
   cursor: pointer
-  // grid-template-columns: min-content auto min-content
-  // padding-top: 3%
-  // max-height: 50%
-  // max-width: 60%
+  grid-template-columns: min-content auto min-content
+ 
 
 .headerMenu
   display: grid
-  grid-template-columns: 1fr 1fr 1fr 1fr
-  grid-gap: 50px
+  grid-template-columns: min-content auto auto auto auto min-content
+  column-gap: 4vw
+  padding-left: 4vw
+  
 
 
 .headerNav:hover

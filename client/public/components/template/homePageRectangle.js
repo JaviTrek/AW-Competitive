@@ -5,6 +5,7 @@ import "../../style/template/rectangle.sass";
 
 //The parameters are called.... uh.... give me a sec... props
 export const RectangleInfo = ({
+  className = "",
   title = "",
   paragraph = "",
   icon = { UnitPic },
@@ -13,7 +14,8 @@ export const RectangleInfo = ({
 
 
   return (
-    <div className= 'rectangle'>
+    <div className={className}>
+<div className= "rectangle">
       <div className="textHalf">
         <div className="titleImage">
           <h1 className="header1">Easy to play</h1>
@@ -34,5 +36,7 @@ export const RectangleInfo = ({
         <img className="image10" src={halfImage} alt="" />
       </div>
     </div>
+    </div>
+    
   );
 };

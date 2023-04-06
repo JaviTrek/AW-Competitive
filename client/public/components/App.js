@@ -7,7 +7,8 @@ import redditLogo from "../images/footerImages/Reddit.png";
 import ghLogo from "../images/footerImages/GitHub.png";
 import discordLogo from "../images/footerImages/Discord.png";
 import io from "socket.io-client";
-import { RectangleInfo } from "./template/homePageRect.js";
+import { RectangleInfo } from "./template/homePageRectangle.js";
+import { ScreenShotContainer } from "./template/ScreenshotContainer.js"; 
 
 // import UnitPic from '../images/homePageImages/lilDudeIm.png'
 
@@ -16,7 +17,7 @@ const socket = io.connect("http://localhost:4000");
 export function App() {
   //This is a dictionary (an object that looks like a dictionary)
   const firstBlock = {
-    className: "rectangle1",
+    className: "rectangleL",
     title: "Matchmaking",
     paragraph:
       "Blah blah text, blah blah blah, somehting ,something, something uhhh idk blah blah, hyper competitivee, blah blah esports, blah blah, we're literally making the next Dota/League",
@@ -24,7 +25,7 @@ export function App() {
     halfImage: "../images/homePageImages/rectangleImage1.png",
   };
   const secondBlock = {
-    className: "rectangle2",
+    className: "rectangleR",
     title: "Design Maps",
     paragraph:
       "Blah blah text, blah blah blah, somehting ,something, something uhhh idk blah blah, hyper competitivee, blah blah esports, blah blah, we're literally making the next Dota/League",
@@ -32,7 +33,7 @@ export function App() {
     halfImage: "../images/homePageImages/rectangleImage2.png",
   };
   const thirdBlock = {
-    className: "rectangle3",
+    className: "rectangleL",
     title: "Competitive Settings",
     paragraph:
       "Blah blah text, blah blah blah, somehting ,something, something uhhh idk blah blah, hyper competitivee, blah blah esports, blah blah, we're literally making the next Dota/League",
@@ -40,7 +41,7 @@ export function App() {
     halfImage: "../images/homePageImages/rectangleImage3.png",
   };
   const fourthBlock = {
-    className: "rectangle4",
+    className: "rectangleR",
     title: "Tournaments",
     paragraph:
       "Blah blah text, blah blah blah, somehting ,something, something uhhh idk blah blah, hyper competitivee, blah blah esports, blah blah, we're literally making the next Dota/League",
@@ -84,47 +85,48 @@ export function App() {
       </div>
 
       <div className="rectangleInfoContainer">
-        <div className = "rect1Container">
+        
         <RectangleInfo
-          
+          className={firstBlock["className"]}
           title={firstBlock["title"]}
           paragraph={firstBlock["paragraph"]}
           icon={firstBlock["icon"]}
           halfImage={firstBlock["halfImage"]}
         />
-        </div>
-        
-        <div className="rect2Container">
-          <RectangleInfo
-          
+
+        <RectangleInfo
+          className={secondBlock["className"]}
           title={secondBlock["title"]}
           paragraph={secondBlock["paragraph"]}
           icon={secondBlock["icon"]}
           halfImage={secondBlock["halfImage"]} 
-        ></RectangleInfo>
-        </div>
-        
-        <div className="rect3Container">
-          <RectangleInfo
-          
+        />
+      
+        <RectangleInfo
+          className={thirdBlock["className"]}
           title={thirdBlock["title"]}
           paragraph={thirdBlock["paragraph"]}
           icon={thirdBlock["icon"]}
           halfImage={thirdBlock["halfImage"]}
         />
-        </div>
-        
-        <div className="rect4Container">
-          <RectangleInfo
-          
+ 
+        <RectangleInfo
+          className={fourthBlock["className"]}
           title={fourthBlock["title"]}
           paragraph={fourthBlock["paragraph"]}
           icon={fourthBlock["icon"]}
           halfImage={fourthBlock["halfImage"]}
         />
-        </div>
-        
+
       </div>
+
+
+      <div className="screenshotCube">
+        <div>
+          <ScreenShotContainer/>
+        </div>
+      </div>
+
 
       <h2>Add a new User to MongoDB:</h2>
       <a href="/createNewGame">
