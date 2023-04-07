@@ -78,55 +78,87 @@
             transform: rotate(540deg)
             background: rgba(228, 67, 67, 0.25)
 
+//The battle forecast we see when two units are about to fight
 .forecast
   position: absolute
   z-index: 101
   display: grid
-  left: -200%
-  right: -200%
+  left: -300%
+  right: -300%
   top: 150%
   grid-template-columns: auto auto auto
-  background: rgba(255, 255, 255, 0.8)
+  background: rgba(255, 255, 255, 0.9)
   border: 0.1em solid black
   color: black
-  width: 600%
+  width: 800%
+  padding: 0.1em
   margin: 0 auto
   align-items: center
   justify-items: center
-  .arrow
-    background-image: url("images/UI/arrow.svg")
-    width: 30px
-    height: 30px
-    position: absolute
-    filter: drop-shadow(2px 0px 0 black) drop-shadow(-1px -1px 0 black)
-  .orangeStarBackground
-    background: rgba(194, 21, 0, 0.5)
-    background-size: cover
-    position: relative
-
-  .blueMoonBackground
-    background: rgba(0, 45, 194, 0.5)
-    background-size: cover
-    position: relative
-
-
-  .arrowNormal
-    top: -75%
-    left: 0
-  .arrowRotate
-    bottom: -75%
-    right: 0
-    rotate: 180deg
-
+  h1
+    font-size: 1rem
+    padding: 0
+    font-weight: 700
+    letter-spacing: 0.2em
+  .forecastUnit, .forecastValues
+    width: 100%
+    height: 100%
   .forecastRelative
     position: relative
 
+  .forecastValues
+    display: grid
+    grid-template-columns: auto
+    justify-items: center
+    align-items: center
+
+
+
   h2
-    font-size: 18px
-    font-weight: 500
+    font-size: 16px
+    //font-weight: 500
+    width: 100%
+  .orangeStarBackgroundUnit
+    background: rgba(232, 44, 22, 0.5)
+    background-size: cover
+    width: 100%
 
+  .blueMoonBackgroundUnit
+    background: rgba(17, 69, 225, 0.5)
+    background-size: cover
+    width: 100%
+  .orangeStarBackground
+    background: rgba(255, 50, 26, 0.25)
+    background-size: cover
+    width: 100%
 
+  .blueMoonBackground
+    background: rgba(21, 80, 255, 0.25)
+    background-size: cover
+    width: 100%
+  .hpBar
+    margin: 2px 0
+    text-align: center
+    justify-self: center
+    background: rgba(255, 255, 255, 0.75)
+    border: 2px solid black
+    height: 8px
+    width: 100%
 
+    .orangeStarBar
+      background: rgb(253, 48, 0)
+      background-size: cover
+      height: 4px
+    .blueMoonBar
+      background: rgb(0, 127, 253)
+      background-size: cover
+      height: 4px
+
+@for $i from 0 through 10
+  .hpBarWidth#{$i}
+    width: #{$i} + 0%
+    height: 4px
+    z-index: 999
 
 
 

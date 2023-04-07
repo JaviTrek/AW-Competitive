@@ -148,7 +148,7 @@ export function ParsedMap() {
             //there is an enemy in this tile!
             if (tile.hasEnemy) {
                 tileSquare = <div className='tileEnemy' onMouseEnter={() => {
-                    battleForecast(initialTile, tile.index)
+                    battleForecast(initialTile, tile.index, false)
                 }} onMouseLeave={() => {
                     changeTile(tile.index, {
                         tileUnit: <div
@@ -178,6 +178,7 @@ export function ParsedMap() {
         newMap = mapTiles.slice()
         setMap(newMap)
     }
+
     //this is the path we see before moving to a place
     function drawPath(blueTiles, targetTile, initialTile) {
         let newMap;
@@ -212,7 +213,7 @@ export function ParsedMap() {
         setMap(newMap)
     }
 
-    function battleForecast(initialTile, attackTile) {
+    function battleForecast(initialTile, attackTile, canAttack) {
         //default tile square
         let newTile = movePath[movePath.length - 1] ? movePath[movePath.length - 1] : movePath[0] ? movePath[0] : initialTile
         //lets show our battle forecast (damage we will do and receive)
@@ -221,49 +222,59 @@ export function ParsedMap() {
         }, {
             unit: gameState[attackTile].tileUnit, terrain: gameState[attackTile].terrainType,
         })
-        const tileMenu = <div className="forecast">
-            <div className={`forecastRelative ${gameState[initialTile].tileUnit.country}Background`}>
-                <div className={` arrow arrowNormal`}></div>
-                <div className={`${gameState[initialTile].tileUnit.country}Background`}>
-
-                    <div className={gameState[initialTile].tileUnit.country + gameState[initialTile].tileUnit.name}></div>
-                    <div className={`HP${Math.ceil(gameState[initialTile].tileUnit.hp / 10)}Icon`}></div>
+        //the little menu that shows our battle forecast
+        const tileMenu =
+            <div className="forecast">
+                <div className="column3">
+                    <h1>COMBAT DAMAGE</h1>
                 </div>
+                <div className={`${gameState[initialTile].tileUnit.country}Background forecastUnit`}>
+                    <div className="forecastRelative">
+                        <div
+                            className={gameState[initialTile].tileUnit.country + gameState[initialTile].tileUnit.name}></div>
+                        <div className={`HP${Math.ceil(gameState[initialTile].tileUnit.hp / 10)}Icon`}></div>
+                    </div>
 
+                    <div className={`hpBar`}>
+                        <div
+                            className={`hpBarWidth${Math.ceil(gameState[initialTile].tileUnit.hp / 10)}   ${gameState[initialTile].tileUnit.country}Bar`}></div>
+                    </div>
+                </div>
+                <div className="forecastValues">
+                    <div className={`${gameState[initialTile].tileUnit.country}Background`}>
+                        <h2>{`ATTACK ${forecast[0][0]}-${forecast[0][1]}`}%</h2>
+                    </div>
+
+                    <div className={`${gameState[attackTile].tileUnit.country}Background`}>
+                        <h2>{`${forecast[1][1]}-${forecast[1][0]}% COUNTER`}</h2>
+                    </div>
+                </div>
+                <div className={`${gameState[attackTile].tileUnit.country}Background forecastUnit`}>
+                    <div className="forecastRelative">
+                        <div
+                            className={gameState[attackTile].tileUnit.country + gameState[attackTile].tileUnit.name}></div>
+                        <div className={`HP${Math.ceil(gameState[attackTile].tileUnit.hp / 10)}Icon`}></div>
+                    </div>
+
+                    <div className={`hpBar`}>
+                        <div
+                            className={`hpBarWidth${Math.ceil(gameState[attackTile].tileUnit.hp / 10)}   ${gameState[attackTile].tileUnit.country}Bar`}></div>
+                    </div>
+                </div>
             </div>
-            <div>
-                <div className={`${gameState[initialTile].tileUnit.country}Background`}>
-                    <h2>{forecast[0][0]}% - {forecast[0][1]}%</h2>
-                </div>
 
-                <div className={`${gameState[attackTile].tileUnit.country}Background`}>
-                    <h2>{forecast[1][1]}% - {forecast[1][0]}%</h2>
-                </div>
-
-
-            </div>
-            <div className="forecastRelative">
-                <div className=" arrow  arrowRotate"></div>
-
-                <div className={`${gameState[attackTile].tileUnit.country}Background`}>
-                    <div
-                        className={gameState[attackTile].tileUnit.country + gameState[attackTile].tileUnit.name}></div>
-                    <div className={`HP${Math.ceil(gameState[attackTile].tileUnit.hp / 10)}Icon`}></div>
-                </div>
-                </div>
-
-
-        </div>
         changeTile(attackTile, {
             tileUnit: <div
                 className={gameState[attackTile].tileUnit.country + gameState[attackTile].tileUnit.name + " tileUnit"}></div>,
             tileSquare: <div className="tileAttack"
                 //Mouse Out!
                              onMouseLeave={() => {
-                                 console.log('i left')
                                  changeTile(attackTile, {
-                                     tileUnit: <div className={gameState[attackTile].tileUnit.country + gameState[attackTile].tileUnit.name + " tileUnit"}></div>,
-                                     tileSquare: <div className="tileAttack" onMouseEnter={() => {battleForecast(initialTile, attackTile) }}></div>,
+                                     tileUnit: <div
+                                         className={gameState[attackTile].tileUnit.country + gameState[attackTile].tileUnit.name + " tileUnit"}></div>,
+                                     tileSquare: <div className="tileAttack" onMouseEnter={() => {
+                                         battleForecast(initialTile, attackTile)
+                                     }}></div>,
                                      showMenu: null,
                                      useFunction: () => {
                                          checkActions(attackTile)
@@ -274,14 +285,12 @@ export function ParsedMap() {
                                  setMap(map)
                              }}></div>,
             showMenu: tileMenu,
-            useFunction: () => {
-                //TODO: fix the attack function to just take the unit itslef and not need a whole object with unit id and hp thats no bueno
-                attackAction(initialTile, newTile, attackTile,
-                    {
-                        unit: gameState[initialTile].tileUnit, terrain: gameState[newTile].terrainType,
-                    }, {
-                        unit: gameState[attackTile].tileUnit, terrain: gameState[attackTile].terrainType,
-                    })
+            useFunction: () => { if (canAttack) attackAction(initialTile, newTile, attackTile,
+                {
+                    unit: gameState[initialTile].tileUnit, terrain: gameState[newTile].terrainType,
+                }, {
+                    unit: gameState[attackTile].tileUnit, terrain: gameState[attackTile].terrainType,
+                })
             }
         })
         let newMap;
@@ -338,11 +347,7 @@ export function ParsedMap() {
         //------------------------
         //ITS AN UNIT
         if (await isUnit !== false) {
-            //lets make it so only the player whose's turn it is can move
-
-
             //lets check all the validTargets unit can attack and render them
-
             let validTargets = findTargets(newTile, gameState[initialTile].tileUnit, gameState)
 
             const unitID = gameState[initialTile].tileUnit.id
@@ -357,7 +362,9 @@ export function ParsedMap() {
                     changeTile(tile, {
                         tileUnit: <div
                             className={gameState[tile].tileUnit.country + gameState[tile].tileUnit.name + " tileUnit"}></div>,
-                        tileSquare: <div className="tileAttack" onMouseEnter={() => {battleForecast(initialTile, tile) }}></div>,
+                        tileSquare: <div className="tileAttack" onMouseEnter={() => {
+                            battleForecast(initialTile, tile, true)
+                        }}></div>,
                         showMenu: false,
                         capture: gameState[tile].tileUnit.capture, //lets put a confirm Attack option here
                         useFunction: () => {
@@ -370,7 +377,6 @@ export function ParsedMap() {
                     })
                 })
             }
-
 
 
             tileMenu.push(<div className="menuName"
