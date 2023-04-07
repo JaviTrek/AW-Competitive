@@ -19,6 +19,7 @@ const router = Router()
         //     ...parsedData 
         // }
 
+        // await collection.deleteMany({});
         //count amount of documents that have the _id value
         // CHANGED PARSEDMAP.JSON FILE, CHECK DATABASE FOR STRUCTURE OR ASK STEVEN OR REY
         const data =  fs.readFileSync('./scripts/parsedMap.json', 'utf8');

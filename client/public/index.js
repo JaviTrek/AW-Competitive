@@ -1,7 +1,18 @@
 import React, { StrictMode } from "react";
 
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { createRoot } from "react-dom/client";
+import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import {Template} from "./components/template/Template";
+import {App} from "./components/App";
+import {Grid} from "./components/grid/Grid";
+import {About} from "./components/About";
+
+import {CurrentGames} from "./components/CurrentGames";
+
+
+import {NewGame} from "./components/NewGame";
+import {createRoot} from "react-dom/client";
+import {Register} from "./components/RegisterForm";
+import {Login} from "./components/LoginForm";
 
 import { Template } from "./components/template/Template";
 import { App } from "./components/App";
