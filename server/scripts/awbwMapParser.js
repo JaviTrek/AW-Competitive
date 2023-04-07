@@ -152,17 +152,17 @@ module.exports = (columns, rows, name) => {
                 }
 // https://www.youtube.com/watch?v=sPWGBmcDR50
                 let countries = ["orangeStar", "blueMoon"]
-                if (j % 7 === 999)
+                if (j % 3 === 2)
                     parsedMap.push({
                         terrainImage: awbwMap[j][1],
                         terrainType: terrainType,
                         terrainOwner: ownerShip,
                         terrainCapture: 0,
                         tileUnit: {
-                            id: 0,
-                            name: "Infantry",
+                            id: 5,
+                            name: "Tank",
                             country: countries[Math.floor(Math.random() * 2)],
-                            hp: Math.floor(Math.random() * (101 - 1) + 1),
+                            hp: 100, //Math.floor(Math.random() * (101 - 1) + 1),
                             isUsed: false,
                             capture: false
                             //ammo
@@ -199,16 +199,12 @@ module.exports = (columns, rows, name) => {
 
             orangeStar: {
                 _id: 1, username: 'orangeStar',
-                CO: "Sami", color: 'orange',  armyValue: "0", timePlayed: "00:00:00",
+                CO: 'Sami', img: `../../images/CO/Sami-Full.png`, color: 'orange',  armyValue: "0", timePlayed: "00:00:00", unitCount: 0, properties: 3, gold: 3000,
+            },
 
-
-                unitCount: 0, properties: 3, gold: 3000,
-
-            }, blueMoon: {
+            blueMoon: {
                 _id: 2, username: 'blueMoon',
-                CO: "Max", color: 'blue',  armyValue: "0", timePlayed: "00:00:00",
-                unitCount: 0, properties: 3, gold: 0,
-
+                CO: 'Max', img: `../../images/CO/Max-Full.png`, color: 'blue',  armyValue: "0", timePlayed: "00:00:00", unitCount: 0, properties: 3, gold: 0,
             }
         },
 
