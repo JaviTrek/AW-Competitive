@@ -85,7 +85,6 @@ app.post("/loginUser", passport.authenticate("local"), (req, res) => {
   req.session.username = req.user.username;
   req.session._id = req.user._id;
 
-
   //we send 200 because that means we logged in correctly
   res.sendStatus(200);
 });
@@ -208,6 +207,11 @@ function loggedIn(req, res, next) {
   }
 }
 
+app.get("/authenticateUser", loggedIn, (req, res, next) => {
+  console.log("user is authenticated looool");
+  res.sendStatus(200);
+});
+
 app.get("/logout", function (req, res, next) {
   req.logout(function (err) {
     if (err) {
@@ -264,16 +268,20 @@ app.get("/userInfo", (req, res) => {
 });
 
 app.post("/joinGame", loggedIn, async (req, res) => {
-  
   // getting database
   let dbConnect = database.getDatabase();
   // getting startGame colleciton
   let startGameCollection = dbConnect.collection("startGame");
   // retrieving the game
-  let myDoc = await startGameCollection.findOne({ _id: new mongo.ObjectId(req.body.index) });
+  let myDoc = await startGameCollection.findOne({
+    _id: new mongo.ObjectId(req.body.index),
+  });
   // Checking if player is already in the game
-  if (myDoc.playerState.orangeStar.username == req.session.username) {
-    return
+  if (
+    myDoc.playerState.orangeStar.username == req.session.username ||
+    myDoc.playerState.blueMoon.username == req.session.username
+  ) {
+    return;
   }
   // deleting the game
   let result = await startGameCollection.deleteOne({
@@ -287,7 +295,7 @@ app.post("/joinGame", loggedIn, async (req, res) => {
   // moving the game from startGame to currentGame
   let currentGameCollection = dbConnect.collection("currentGame");
   // setting the id of the new currentGame
-  
+
   myDoc.playerState.blueMoon._id = req.session._id;
   try {
     await currentGameCollection.insertOne(myDoc);

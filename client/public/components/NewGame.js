@@ -1,8 +1,10 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { Container } from "./template/Container";
 import { NameBanner } from "./gameInterface/NameBanner";
 import "../style/NewGame.sass";
 import "../style/Animations.sass";
+import axios from "axios";
 
 // *Importing all the CO images to variable cos*
 // resources:
@@ -23,6 +25,19 @@ function importAll(r) {
 }
 
 export const NewGame = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    axios
+      .get("/authenticateUser")
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((e) => {
+        console.log(e);
+        navigate("/login");
+      });
+  }, []);
+
   const cos = importAll(
     // tells webpack to turn images (.png, .jpeg, .svg) from ../images/co into a dynamic list
     require.context("../images/CO", false, /\.(png|jpe?g|svg)$/)
@@ -244,7 +259,29 @@ export const NewGame = () => {
         an opponent to join.
       </p>
 
-      <div className="btn btn-big">PLAY</div>
+      <div
+        onClick={() => {
+          console.log(selectedCO);
+          console.log(selectedCountry);
+          console.log(selectedMap);
+          const data = {
+            selectedCO: selectedCO,
+            selectedCountry: selectedCountry,
+            selectedMap: selectedMap,
+          };
+          axios
+            .post("/createNewGame", data, null)
+            .then((res) => {
+              navigate("/startGames");
+            })
+            .catch((err) => {
+              console.error(err);
+            });
+        }}
+        className="btn btn-big"
+      >
+        PLAY
+      </div>
     </Container>
   );
 };

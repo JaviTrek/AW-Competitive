@@ -193,6 +193,7 @@ module.exports = (columns, rows, name) => {
 
     //TODO:this needs to be sent to database when creating a game
     let mapData = {
+        startDate: "",
         playerState: {
 
             turn: 0, day: 1,

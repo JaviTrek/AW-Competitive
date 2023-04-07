@@ -33,6 +33,7 @@ module.exports = merge(common, {
           "/getGameLog",
           "/userInfo",
           "/joinGame",
+          "/authenticateUser",
         ],
         target: "http://localhost:4000",
       },

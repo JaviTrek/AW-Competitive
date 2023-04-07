@@ -5,8 +5,12 @@ const router = Router()
 
     //Currently this just submits parsedMap.json to mongoDB.
 //TODO: Make this route take user input, a user creating a game needs to put down their id so when we check the game we can route it back to them.
-    router.get("/createNewGame", async (req, res) => {
-        console.log(req.session.username);
+    router.post("/createNewGame", async (req, res) => {
+        // console.log(req.session.username);
+        // console.log(req.body.selectedCO);
+        // console.log(req.body.selectedCountry);
+        // console.log(req.body.selectedMap);
+        // body has selectedCO, selectedCountry, selectedMap from /newgame page
 
         let dbConnect = database.getDatabase()
 
@@ -21,15 +25,26 @@ const router = Router()
 
         // await collection.deleteMany({});
         //count amount of documents that have the _id value
-        // CHANGED PARSEDMAP.JSON FILE, CHECK DATABASE FOR STRUCTURE OR ASK STEVEN OR REY
         const data =  fs.readFileSync('./scripts/parsedMap.json', 'utf8');
         const parsedData = await JSON.parse(data)
         let gameDocument = {
           ...parsedData,
         };
 
+        // get current day
+        const date = new Date();
+        let day = date.getDate();
+        let month = date.getMonth() + 1;
+        let year = date.getFullYear();
+        let currentDate = `${month}/${day}/${year}`;
+
+        gameDocument.startDate = currentDate;
         gameDocument.playerState.orangeStar.username = req.session.username;
-        gameDocument.playerState.orangeStar._id = req.session._id
+        gameDocument.playerState.orangeStar.CO = req.body.selectedCO;
+        gameDocument.playerState.orangeStar._id = req.session._id;
+        gameDocument.playerState.blueMoon.username = "...";
+        gameDocument.playerState.blueMoon.CO = "";
+        gameDocument.playerState.blueMoon._id = "";
         
         //insert the document
         await collection.insertOne(gameDocument);

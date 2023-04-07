@@ -14,12 +14,12 @@ export const GameEntry = ({
   day = "Day 13",
   player1 = {
     name: "Femboy",
-    CO: "blue",
+    color: "blue",
     character: "max",
   },
   player2 = {
     name: "Mipin",
-    CO: "orange",
+    color: "orange",
     character: "sami",
   },
   map = "Caustic Finale",
@@ -49,14 +49,14 @@ export const GameEntry = ({
       <div className="CGUsers">
         <NameCO
           name={player1.name}
-          color={player1.CO}
+          color={player1.color}
           character={player1.character}
           playerNumber="1"
         />
         <img className="VSImage" src="../../images/vs.png" />
         <NameCO
           name={player2.name}
-          color={player2.CO}
+          color={player2.color}
           character={player2.character}
           playerNumber="2"
         />
@@ -65,7 +65,7 @@ export const GameEntry = ({
       <div className="CGMap">
         <img
           className="CGMapImage"
-          src="../../images/mapTiles/full/Caustic-Finale-Small.png"
+          src={`../../images/mapTiles/full/${map.replace(/\s+/g, '-')}-Small.png`}
           alt="Current Game Map Image"
         />
         <h4 className="CGMapName">{map}</h4>

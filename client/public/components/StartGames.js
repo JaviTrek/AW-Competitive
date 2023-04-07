@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Container } from "./template/Container";
 import { GameEntry } from "./GameEntry";
+import { useNavigate } from "react-router-dom";
+import "../style/template/modal.sass"
 
 export const StartGames = () => {
+  const navigate = useNavigate();
   let startGamesArray = [];
   const [data, setData] = useState();
   useEffect(() => {
@@ -14,23 +17,24 @@ export const StartGames = () => {
         startGamesData.forEach((startGame) => {
           startGamesArray.push(
             <GameEntry
+              key={startGame._id}
               index={startGame._id}
-              title="empty"
+              title={`Game ${startGame._id}`}
               day={`Day ${startGame.playerState.day}`}
               player1={{
                 name: startGame.playerState.orangeStar.username, // change to player1 in the future
-                CO: startGame.playerState.orangeStar.color, // change to color in NameBanner
+                color: startGame.playerState.orangeStar.color, // change to color in NameBanner
                 character: startGame.playerState.orangeStar.CO,
               }}
               player2={{
                 name: startGame.playerState.blueMoon.username, // change to player1 in the future
-                CO: startGame.playerState.blueMoon.color, // change to color in NameBanner
+                color: startGame.playerState.blueMoon.color, // change to color in NameBanner
                 character: startGame.playerState.blueMoon.CO,
               }}
-              map="Map name here"
-              time="99:99:99 until Clock Expires"
-              startDate="04/20/1969"
-              ruleSet="RULE SET HERE IDK"
+              map={startGame.mapData.mapName}
+              time="Unlimited"
+              startDate={` ${startGame.startDate}`}
+              ruleSet="Standard"
             />
           );
         });
@@ -38,13 +42,18 @@ export const StartGames = () => {
       })
       .catch((e) => {
         console.error(e);
-        window.location = "/login";
+        navigate("/login");
       });
   }, []);
 
+  // Modal
+  const [modal, setModal] = useState(false);
+
   return (
-    <Container title="Pending Games">
-      {/* <GameEntry
+    <>
+      {/* <div className="myModal">yo</div> */}
+      <Container title="Pending Games">
+        {/* <GameEntry
         title="This is the title!!!"
         day="This is the Day of the game"
         player1={{
@@ -62,7 +71,8 @@ export const StartGames = () => {
         startDate="04/20/1969"
         ruleSet="RULE SET HERE IDK"
       /> */}
-      {data}
-    </Container>
+        {data}
+      </Container>
+    </>
   );
 };

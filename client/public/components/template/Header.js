@@ -31,7 +31,6 @@ export const Header = () => {
             </div>
           );
         }
-        console.log(username);
       })
       .catch((e) => console.error(e));
   }, []);
