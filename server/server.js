@@ -238,7 +238,7 @@ app.get("/getStartGames", loggedIn, async (req, res) => {
 
 app.get("/getCurrentGames", loggedIn, async (req, res) => {
   let dbConnect = database.getDatabase();
-  let collection = dbConnect.collection("currentGames");
+  let collection = dbConnect.collection("currentGame");
   let myDoc = await collection.find();
   let pushData = [];
   await myDoc.forEach((doc) => pushData.push(doc));

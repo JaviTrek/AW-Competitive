@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Container } from "./template/Container";
 import { GameEntry } from "./GameEntry";
-import { redirect } from "react-router-dom";
 
 export const StartGames = () => {
   let startGamesArray = [];
@@ -36,11 +35,10 @@ export const StartGames = () => {
           );
         });
         setData(startGamesArray);
-        console.log(data);
       })
       .catch((e) => {
         console.error(e);
-        // window.location = "/login";
+        window.location = "/login";
       });
   }, []);
 
