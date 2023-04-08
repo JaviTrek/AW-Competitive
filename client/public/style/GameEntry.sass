@@ -1,6 +1,10 @@
 @use 'abstracts/variables' as variables
 
+.currentGame:hover
+  filter: brightness(0.85)
+
 .currentGame
+  transition: variables.$transition
   width: 940px
   height: 225px
   margin: 20px 25px
