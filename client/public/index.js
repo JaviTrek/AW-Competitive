@@ -13,7 +13,7 @@ import {NewGame} from "./components/NewGame";
 import {createRoot} from "react-dom/client";
 import {Register} from "./components/RegisterForm";
 import {Login} from "./components/LoginForm";
-
+import {HowToPlay} from "./components/HowToPlay";
 
 const container = document.getElementById("app");
 const router = createBrowserRouter([
@@ -59,6 +59,11 @@ const router = createBrowserRouter([
             {
                 path: "login",
                 element: <Login/>,
+            },
+            {
+                name: "howtoplay",
+                path: "howtoplay",
+                element: <HowToPlay/>,
             },
         ]
     }
