@@ -9,7 +9,7 @@ import {battleProbabilities, damageCalculator} from "./gameLogic/damageCalculato
 import {CurrentPlayer} from "../CurrentPlayer";
 import {useNavigate} from "react-router-dom";
 import io from "socket.io-client";
-const socket = io.connect("http://localhost:4000")
+
 
 let countriesOrder = ['orangeStar', 'blueMoon']
 let gameState = []
@@ -20,6 +20,7 @@ let mapTiles = []
 export function ParsedMap() {
 
     let connectionURL = 'http://localhost:4000'
+    const socket = io.connect(connectionURL)
     const navigate = useNavigate();
     let [map, setMap] = useState([])
     let [players, setPlayers] = useState({
