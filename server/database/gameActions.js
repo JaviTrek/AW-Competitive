@@ -33,6 +33,53 @@ router.post("/moveUnit", async (req, res) => {
 
 })
 
+router.post("/saveGameAction", async (req, res) => {
+    let dbConnect = database.getDatabase()
+    let collection = await dbConnect.collection("currentGames")
+    //lets get our variables from the frontend
+    let {initialTile, newTile, attackedTile} = req.body
+    const query = {"_id": 0}
+
+
+
+    let tilesToUpdate = [initialTile, newTile]
+    //if attacked tile isnt true, that means that a tile wasnt attacked and therefore doesnt need to be updated
+    if (attackedTile) tilesToUpdate.push(attackedTile)
+    tilesToUpdate.forEach( (element, arrayIndex) => {
+        let tileIndex = `gameState.${element.index}`
+        let setNewTile = {$set: {[tileIndex]: element.gameState}};
+        collection.updateOne(query, setNewTile);
+    })
+
+
+    //lets add our new unit to the refresh array
+    let unitsToRefresh = `playerState.unitsToRefresh`
+    collection.updateOne(query, {$push: {[unitsToRefresh]: newTile.index }});
+    res.sendStatus(200)
+})
+
+
+router.post("/passTheTurn", async (req, res) => {
+    let dbConnect = database.getDatabase()
+    let collection = await dbConnect.collection("currentGames")
+    let {unitsToRefresh, turn, day, orangeStar, blueMoon} = req.body
+    const query = {"_id": 0}
+    //lets free every used unit
+    unitsToRefresh.forEach(tileIndex => {
+        let unit = `gameState.${tileIndex}.tileUnit.isUsed`
+        let refresh = {$set: {[unit]: false}};
+        collection.updateOne(query, refresh);
+    })
+
+    //lets update our playerstate
+    collection.updateOne(query, {$set: {playerState: req.body }});
+
+    //lets empty our units to refresh array
+    let objectRefresh = `playerState.unitsToRefresh`
+    collection.updateOne(query, {$set: {[objectRefresh]: [] }});
+    res.sendStatus(200)
+
+})
 
 module.exports = router;
 
