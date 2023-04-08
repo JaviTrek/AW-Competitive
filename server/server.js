@@ -268,35 +268,41 @@ app.get("/userInfo", (req, res) => {
 });
 
 app.post("/joinGame", loggedIn, async (req, res) => {
+  // console.log(req.session.username);
+  // console.log(req.session._id);
+  // console.log(req.body.selectedCO);
+  // console.log(req.body.gameId);
+
   // getting database
   let dbConnect = database.getDatabase();
   // getting startGame colleciton
   let startGameCollection = dbConnect.collection("startGame");
   // retrieving the game
   let myDoc = await startGameCollection.findOne({
-    _id: new mongo.ObjectId(req.body.index),
+    _id: new mongo.ObjectId(req.body.gameId),
   });
   // Checking if player is already in the game
   if (
     myDoc.playerState.orangeStar.username == req.session.username ||
-    myDoc.playerState.blueMoon.username == req.session.username
+    myDoc.playerState.blueMoon.username == req.session.username 
+    // or because of current game entries still going to this api
   ) {
     return;
   }
   // deleting the game
   let result = await startGameCollection.deleteOne({
-    _id: new mongo.ObjectId(req.body.index),
+    _id: new mongo.ObjectId(req.body.gameId),
   });
   result.deletedCount === 1
     ? console.log("Deleted one document")
     : console.log("No documents deleted");
-  // setting the username of blueMoon to the player
+  // setting the settings of blueMoon to the player
   myDoc.playerState.blueMoon.username = req.session.username;
+  myDoc.playerState.blueMoon._id = req.session._id;
+  myDoc.playerState.blueMoon.CO = req.body.selectedCO;
   // moving the game from startGame to currentGame
   let currentGameCollection = dbConnect.collection("currentGame");
-  // setting the id of the new currentGame
 
-  myDoc.playerState.blueMoon._id = req.session._id;
   try {
     await currentGameCollection.insertOne(myDoc);
     console.log("Game Created");

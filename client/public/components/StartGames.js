@@ -3,7 +3,8 @@ import axios from "axios";
 import { Container } from "./template/Container";
 import { GameEntry } from "./GameEntry";
 import { useNavigate } from "react-router-dom";
-import "../style/template/modal.sass"
+import "../style/template/modal.sass";
+import { SelectCharacter } from "./SelectCharacter";
 
 export const StartGames = () => {
   const navigate = useNavigate();
@@ -14,11 +15,10 @@ export const StartGames = () => {
       .get("/getStartGames")
       .then((res) => {
         let startGamesData = res.data.pushData;
-        startGamesData.forEach((startGame) => {
+        startGamesData.forEach((startGame, index) => {
           startGamesArray.push(
             <GameEntry
               key={startGame._id}
-              index={startGame._id}
               title={`Game ${startGame._id}`}
               day={`Day ${startGame.playerState.day}`}
               player1={{
@@ -35,6 +35,13 @@ export const StartGames = () => {
               time="Unlimited"
               startDate={` ${startGame.startDate}`}
               ruleSet="Standard"
+              onClick={() => {
+                setIsOpen(true);
+                setGameSelected({
+                  index: index,
+                  gameId: startGame._id,
+                });
+              }}
             />
           );
         });
@@ -47,11 +54,51 @@ export const StartGames = () => {
   }, []);
 
   // Modal
-  const [modal, setModal] = useState(false);
+  const [selectedCO, setSelectedCO] = useState("Max");
+  const [isOpen, setIsOpen] = useState(false);
+  const [gameSelected, setGameSelected] = useState({
+    index: null,
+    gameId: null,
+  });
 
   return (
     <>
-      {/* <div className="myModal">yo</div> */}
+      {isOpen && (
+        <>
+          <div
+            className="darkBG"
+            onClick={() => {
+              setIsOpen(false);
+            }}
+          />
+          <div className="myModal">
+            <h3>Joining Game</h3>
+            {data[gameSelected.index]}
+            <div className="myModalSection">
+              <SelectCharacter
+                selectedCO={selectedCO}
+                setSelectedCO={setSelectedCO}
+              />
+            </div>
+            <button
+              className="btn"
+              style={{ width: "200px", "font-size": "24px" }}
+              onClick={() => {
+                const data = {
+                  gameId: gameSelected.gameId,
+                  selectedCO: selectedCO,
+                };
+                axios.post("/joinGame", data, null).then((res) => {
+                  console.log(res);
+                  navigate("/currentgames");
+                });
+              }}
+            >
+              Join
+            </button>
+          </div>
+        </>
+      )}
       <Container title="Pending Games">
         {/* <GameEntry
         title="This is the title!!!"

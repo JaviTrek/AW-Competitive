@@ -1,10 +1,8 @@
 import React from "react";
 import "../style/GameEntry.sass";
 import { NameCO } from "./gameInterface/NameCO";
-import axios from "axios";
 
 export const GameEntry = ({
-  index,
   title = (
     <>
       GL STD [T1]: Femboy <span>vs</span> Mipin
@@ -26,19 +24,13 @@ export const GameEntry = ({
   time = "06:23:22 until Clock Expires",
   startDate = "01/28/2023",
   ruleSet = "Standard (STD) Tier 2",
+  onClick,
 }) => {
-  // for turning the title into html
 
   return (
     <article
       className="currentGame"
-      onClick={() => {
-        console.log(index);
-        const data = { index: index };
-        axios.post("/joinGame", data, null).then((res) => {
-          console.log(res);
-        });
-      }}
+      onClick={onClick}
     >
       {/* CG = currentGame */}
       <div className="CGTopBar">

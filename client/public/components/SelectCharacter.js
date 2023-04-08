@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+import "../style/SelectCharacter.sass";
 import { importAll } from "./util";
 
-export const SelectCharacter = () => {
+export const SelectCharacter = ({selectedCO, setSelectedCO}) => {
   const cos = importAll(
     // tells webpack to turn images (.png, .jpeg, .svg) from ../images/co into a dynamic list
     require.context("../images/CO", false, /\.(png|jpe?g|svg)$/)
@@ -43,17 +44,16 @@ export const SelectCharacter = () => {
   );
 
   // Hooks
-  const [selectedCO, setSelectedCO] = useState("Max");
   const tempCO = useRef();
   const [hoveredCO, setHoveredCO] = useState("");
 
   return (
-    <div className="newGameSection characterSection">
+    <div className="characterSection">
       <div className="characterSectionLeft">
-        <h2 className="newGameSectionTitle">
+        <h2 className="characterSectionTitle">
           Choose your Commanding Officer (CO):
         </h2>
-        <p className="newGameSectionSubtitle">
+        <p className="characterSectionSubtitle">
           Depending on the character you choose, you will have varying
           abilities/stats. Tier 0 are the strongest while tier 4 are the
           weakest.
