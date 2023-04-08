@@ -30,9 +30,9 @@ const io = new Server(server, {
 // websocket event, when someone connects
 io.on('connection', (socket) => {
     //when we receive the sendAction
-
+    console.log(socket.id)
     socket.on("sendAction", (data) => {
-
+        console.log('action received')
         socket.broadcast.emit("receiveAction", data)
     })
 });

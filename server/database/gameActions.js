@@ -37,7 +37,7 @@ router.post("/saveGameAction", async (req, res) => {
     let dbConnect = database.getDatabase()
     let collection = await dbConnect.collection("currentGames")
     //lets get our variables from the frontend
-    let {initialTile, newTile, attackedTile} = req.body
+    let {initialTile, newTile, attackedTile, playerState} = req.body
     const query = {"_id": 0}
 
 
@@ -51,6 +51,8 @@ router.post("/saveGameAction", async (req, res) => {
         collection.updateOne(query, setNewTile);
     })
 
+    //lets update our playerstate(income, property, etc)
+    collection.updateOne(query, {$set: {playerState: playerState }});
 
     //lets add our new unit to the refresh array
     let unitsToRefresh = `playerState.unitsToRefresh`

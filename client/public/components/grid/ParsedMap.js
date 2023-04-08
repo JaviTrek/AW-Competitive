@@ -10,7 +10,8 @@ import {CurrentPlayer} from "../CurrentPlayer";
 import {useNavigate} from "react-router-dom";
 import io from "socket.io-client";
 
-
+let connectionURL = 'http://localhost:4000'
+let socket = io.connect(connectionURL)
 let countriesOrder = ['orangeStar', 'blueMoon']
 let gameState = []
 let playerState = {}
@@ -19,8 +20,8 @@ let mapTiles = []
 
 export function ParsedMap() {
 
-    let connectionURL = 'http://localhost:4000'
-    const socket = io.connect(connectionURL)
+
+
     const navigate = useNavigate();
     let [map, setMap] = useState([])
     let [players, setPlayers] = useState({
@@ -438,15 +439,15 @@ export function ParsedMap() {
         if (!attackedTile) attackedTile = false
         else attackedTile ={index: attackedTile, gameState: gameState[attackedTile]}
         playerState.unitsToRefresh.push(newTile)
-        axios.post('http://localhost:4000/saveGameAction',
+        axios.post(`${connectionURL}/saveGameAction`,
             {initialTile: {index: initialTile, gameState: gameState[initialTile]},
                 newTile: {index: newTile, gameState: gameState[newTile]},
-                attackedTile: attackedTile}, null)
+                attackedTile: attackedTile, playerState: playerState},  null)
             .then(res=>{
             console.log(res)
                 socket.emit('sendAction', {gameState: gameState, playerState: playerState})
         }).catch(e => {
-            navigate('/')
+            navigate('/game')
         })
 
         resetGrid()
@@ -455,6 +456,7 @@ export function ParsedMap() {
 
 
     function passTurn() {
+        console.log('turn being passed')
         gameState.forEach(tile => {
             if (tile.tileUnit) tile.tileUnit.isUsed = false;
         });
@@ -473,11 +475,12 @@ export function ParsedMap() {
                 playerState.unitsToRefresh = []
                 socket.emit('sendAction', {gameState: gameState, playerState: playerState})
             }).catch(e => {
-                navigate('/')
+                navigate('/game')
         })
         resetGrid()
     }
 
+useEffect(() => {
     //we listen for actions being sent
     socket.on("receiveAction", res => {
         console.log('emited')
@@ -485,6 +488,10 @@ export function ParsedMap() {
         gameState = res.gameState
         resetGrid()
     })
+}, [socket])
+
+
+
 
     function attackAction(initialTile, newTile, attackedTile, atk, def) {
         if (countriesOrder[playerState.turn] !== gameState[initialTile].tileUnit.country) return null
@@ -494,7 +501,6 @@ export function ParsedMap() {
         gameState[attackedTile].tileUnit.hp = results.defHP
         if (results.atkHP <= 0) gameState[initialTile].tileUnit = false
         if (results.defHP <= 0) gameState[attackedTile].tileUnit = false
-        console.log(initialTile, newTile)
         moveAction(initialTile, newTile, attackedTile)
     }
 
@@ -502,7 +508,6 @@ export function ParsedMap() {
 
     function moveAction(initialTile, newTile, attackedTile) {
         //lets update our local copy of mapdata (instead of issuing a new get request everytime we move, we just update the local variable)
-        console.log(initialTile, newTile)
         if (initialTile !== newTile) {
             gameState[initialTile].terrainCapture = 0
             gameState[newTile].tileUnit = gameState[initialTile]?.tileUnit
