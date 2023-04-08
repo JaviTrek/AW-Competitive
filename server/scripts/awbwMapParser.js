@@ -152,16 +152,17 @@ module.exports = (columns, rows, name) => {
                 }
 // https://www.youtube.com/watch?v=sPWGBmcDR50
                 let countries = ["orangeStar", "blueMoon"]
-                if (j % 3 === 2)
+
+                if (i === 163)
                     parsedMap.push({
                         terrainImage: awbwMap[j][1],
                         terrainType: terrainType,
                         terrainOwner: ownerShip,
                         terrainCapture: 0,
                         tileUnit: {
-                            id: 5,
-                            name: "Tank",
-                            country: countries[Math.floor(Math.random() * 2)],
+                            id: 0,
+                            name: "Infantry",
+                            country: countries[1],//countries[Math.floor(Math.random() * 2)],
                             hp: 100, //Math.floor(Math.random() * (101 - 1) + 1),
                             isUsed: false,
                             capture: false
@@ -197,7 +198,7 @@ module.exports = (columns, rows, name) => {
         playerState: {
 
             turn: 0, day: 1,
-
+            unitsToRefresh: [],
             orangeStar: {
                 _id: 1, username: 'orangeStar',
                 CO: 'Sami', img: `../../images/CO/Sami-Full.png`, color: 'orange',  armyValue: "0", timePlayed: "00:00:00", unitCount: 0, properties: 3, gold: 3000,
@@ -208,6 +209,8 @@ module.exports = (columns, rows, name) => {
                 CO: 'Max', img: `../../images/CO/Max-Full.png`, color: 'blue',  armyValue: "0", timePlayed: "00:00:00", unitCount: 0, properties: 3, gold: 0,
             }
         },
+
+
 
         mapData: {
             mapName: "Caustic Finale",
