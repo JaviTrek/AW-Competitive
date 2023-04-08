@@ -21,8 +21,6 @@ function findTargets(newTile, unit, gameState) {
     })
 
     } else if(unit.id === 8 || unit.id === 7) {
-     console.log('its rocket or missile'
-     )
         //its a rocket/missile, lets use an arty movement and delete the initial tile plus every 2 movement tile
         let targets = pathFinding(18, 18, 4, newTile, gameState, true)
         for (let i = 0; i < 9; i++) {
@@ -32,7 +30,6 @@ function findTargets(newTile, unit, gameState) {
             indexTargets.push(tile.index)
         })
     } else {
-     console.log('neither')
         //not an arty or missile
         for (let i = 0; i < 4; i++) {
             let addX = x + xMove[i]
