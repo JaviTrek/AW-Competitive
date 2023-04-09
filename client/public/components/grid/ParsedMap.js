@@ -585,7 +585,7 @@ export function ParsedMap() {
             <div className={`playerBox ${playerState.turn === 0 ? "activePlayer" : "inactivePlayer"}`}>
 
                 <CurrentPlayer
-                    selectedCharacter={players[countriesOrder[0]].img}
+                    selectedCharacter={players[countriesOrder[0]].CO}
                     userName={players[countriesOrder[0]].username}
                     bannerColor={players[countriesOrder[0]].color}
                     timePlayed={players[countriesOrder[0]].timePlayed}
@@ -604,7 +604,7 @@ export function ParsedMap() {
 
             <div className={`playerBox ${playerState.turn === 1 ? "activePlayer" : "inactivePlayer"}`}>
                 <CurrentPlayer
-                    selectedCharacter={players[countriesOrder[1]].img}
+                    selectedCharacter={players[countriesOrder[1]].CO}
                     userName={players[countriesOrder[1]].username}
                     bannerColor={players[countriesOrder[1]].color}
                     timePlayed={players[countriesOrder[1]].timePlayed}

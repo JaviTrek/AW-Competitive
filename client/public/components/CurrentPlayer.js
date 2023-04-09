@@ -20,7 +20,7 @@ export const CurrentPlayer = ({
                               }) => {
     return (<div className="current-player">
             <div className="current-player-header">
-                <img className={`character-image-${bannerColor}`} src={selectedCharacter}/>
+                <div className={`character-image-${bannerColor} ${selectedCharacter}Player`}></div>
                 <div className={`character-background-${bannerColor}`}></div>
             </div>
             <div className="player-name">
