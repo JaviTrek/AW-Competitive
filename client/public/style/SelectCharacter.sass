@@ -21,8 +21,16 @@
         width: 44px
         height: 44px
         border: 2px solid #000000
-      .selectedCO, img:hover
-        border: 2px solid #fff
+      .notSelected
+        filter: brightness(0.8) contrast(0.8)
+        &:hover
+          filter: brightness(1) contrast(1)
+      .selectedCO
+        filter: brightness(1.1)
+        img:hover
+          border: 2px solid #fff
+          filter: brightness(1) contrast(1)
+
 
 .characterDisplay
   display: flex

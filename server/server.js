@@ -13,7 +13,13 @@ const database = require("./database/connection.js");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors({
+
+  origin:process.env.CORS_ORIGIN,
+  credentials:true,            //access-control-allow-credentials:true
+  optionSuccessStatus:200
+
+}));
 app.use(express.json());
 
 const server = http.createServer(app);
@@ -29,7 +35,7 @@ const io = new Server(server, {
 // websocket event, when someone connects
 io.on('connection', (socket) => {
     //when we receive the sendAction
-    console.log(socket.id)
+    //console.log(socket.id)
     socket.on("sendAction", (data) => {
         console.log('action received')
         socket.broadcast.emit("receiveAction", data)
@@ -42,6 +48,12 @@ server.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
 
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', process.env.CORS_ORIGIN);
+  res.header('Access-Control-Allow-Credentials', true);
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, X-PINGOTHER');
+  next();
+});
 //The map parser simply parses our map with different input values inside the file, this is what determines what units or terrain are placed in which tiles inside our /game page
 const mapParser = require("./scripts/awbwMapParser");
 mapParser(18, 18, "parsedMap");

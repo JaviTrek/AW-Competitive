@@ -14,7 +14,7 @@ export const NameCO = ({
       {/* If the character pulled from the database if empty(""), replace with Rachel. */}
       { character == "" ? <img
         className="NameCOImage"
-        src={`../../images/CO/Rachel-Full.png`}
+        src={`../../images/CO/Sami-Full.png`}
         alt={`character ${playerNumber}`}
         style={{ filter: "brightness(0%)" }}
       /> :

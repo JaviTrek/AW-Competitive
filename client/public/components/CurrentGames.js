@@ -18,7 +18,7 @@ export const CurrentGames = () => {
             <GameEntry
               key={currentGame._id}
               index={currentGame._id}
-              title={`Game ${currentGame._id}`}
+              title={`Standard 1 vs 1 Match`}
               day={`Day ${currentGame.playerState.day}`}
               player1={{
                 name: currentGame.playerState.orangeStar.username, // change to player1 in the future
@@ -35,6 +35,7 @@ export const CurrentGames = () => {
               startDate={` ${currentGame.startDate}`}
               ruleSet="Standard"
               onClick={`/game?id=${currentGame._id}`}
+              gameID={`${currentGame._id}`}
             />
           );
         });

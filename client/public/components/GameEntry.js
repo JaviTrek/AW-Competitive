@@ -25,16 +25,19 @@ export const GameEntry = ({
   startDate = "01/28/2023",
   ruleSet = "Standard (STD) Tier 2",
   onClick,
+    gameID,
+    joinGame
 }) => {
 
   return (
       <a href={onClick}>
       <article
       className="currentGame"
+      onClick={joinGame}
     >
 
       <div className="CGTopBar">
-        <h2 className="CGTitle">{title}</h2>
+        <h2 className="CGTitle">{"Standard 1 vs 1 Match"}</h2>
         <h3 className="CGDay">{day}</h3>
       </div>
 
@@ -72,6 +75,9 @@ export const GameEntry = ({
         </p>
         <p className="CGRuleset">
           <span className="CGSpan">Ruleset</span>: {ruleSet}
+        </p>
+        <p className="CGRuleset">
+          <span className="CGSpan">Game ID: </span>: {gameID}
         </p>
       </div>
 

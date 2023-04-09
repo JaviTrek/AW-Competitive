@@ -35,7 +35,8 @@ export const StartGames = () => {
               time="Unlimited"
               startDate={` ${startGame.startDate}`}
               ruleSet="Standard"
-              onClick={() => {
+              gameID={startGame._id}
+              joinGame={() => {
                 setIsOpen(true);
                 setGameSelected({
                   index: index,
@@ -99,7 +100,8 @@ export const StartGames = () => {
           </div>
         </>
       )}
-      <Container title="Pending Games">
+      <Container title="Pending Games" subtitle={"Join a game by clicking on it!"}>
+
         {/* <GameEntry
         title="This is the title!!!"
         day="This is the Day of the game"

@@ -9,7 +9,9 @@ import {battleProbabilities, damageCalculator} from "./gameLogic/damageCalculato
 import {CurrentPlayer} from "../CurrentPlayer";
 import {useNavigate} from "react-router-dom";
 import io from "socket.io-client";
+import {repairUnit} from "./gameLogic/repairUnit";
 
+axios.defaults.withCredentials = true
 let connectionURL = 'http://localhost:4000'
 let socket = io.connect(connectionURL)
 let countriesOrder = ['orangeStar', 'blueMoon']
@@ -20,7 +22,6 @@ let mapTiles = []
 let gameID = window.location.search.substring(1)
 
 export function ParsedMap() {
-
 
 
     const navigate = useNavigate();
@@ -100,9 +101,6 @@ export function ParsedMap() {
                 setPlayers(playerState)
             }).catch(e => console.log(e));
     }, [])
-
-
-
 
 
     //function used to resetGrid to original state
@@ -292,12 +290,13 @@ export function ParsedMap() {
                                  setMap(map)
                              }}></div>,
             showMenu: tileMenu,
-            useFunction: () => { if (canAttack) attackAction(initialTile, newTile, attackTile,
-                {
-                    unit: gameState[initialTile].tileUnit, terrain: gameState[newTile].terrainType,
-                }, {
-                    unit: gameState[attackTile].tileUnit, terrain: gameState[attackTile].terrainType,
-                })
+            useFunction: () => {
+                if (canAttack) attackAction(initialTile, newTile, attackTile,
+                    {
+                        unit: gameState[initialTile].tileUnit, terrain: gameState[newTile].terrainType,
+                    }, {
+                        unit: gameState[attackTile].tileUnit, terrain: gameState[attackTile].terrainType,
+                    })
             }
         })
         let newMap;
@@ -438,29 +437,30 @@ export function ParsedMap() {
     //this is the function that we run after any action
     function confirmAction(initialTile, newTile, attackedTile) {
         if (!attackedTile) attackedTile = false
-        else attackedTile ={index: attackedTile, gameState: gameState[attackedTile]}
+        else attackedTile = {index: attackedTile, gameState: gameState[attackedTile]}
         playerState.unitsToRefresh.push(newTile)
-        axios.post(`${connectionURL}/saveGameAction`,
-            {initialTile: {index: initialTile, gameState: gameState[initialTile]},
+        axios.post(`${connectionURL}/saveGameAction?${gameID}`,
+
+            {
+                initialTile: {index: initialTile, gameState: gameState[initialTile]},
                 newTile: {index: newTile, gameState: gameState[newTile]},
-                attackedTile: attackedTile, playerState: playerState},  null)
-            .then(res=>{
-            console.log(res)
+                attackedTile: attackedTile, playerState: playerState
+            },
+        )
+            .then(res => {
+                console.log(res)
                 socket.emit('sendAction', {gameState: gameState, playerState: playerState})
-        }).catch(e => {
-            navigate('/game')
+            }).catch(e => {
+            console.log(e)
+            navigate(`/game?${gameID}`)
         })
 
         resetGrid()
     }
 
 
-
     function passTurn() {
-        console.log('turn being passed')
-        gameState.forEach(tile => {
-            if (tile.tileUnit) tile.tileUnit.isUsed = false;
-        });
+        //lets update the day and whose turn it is
         playerState.day++
         if (playerState.turn === 1) {
             playerState.turn--
@@ -469,29 +469,37 @@ export function ParsedMap() {
             playerState.turn++
             playerState[countriesOrder[1]].gold += playerState[countriesOrder[1]].properties * 1000
         }
-        axios.post(`${connectionURL}/passTheTurn`,
-            playerState, null)
-            .then(res=>{
+        //lets repair and charge for repairs!
+        let repairBill = 0;
+        gameState.forEach(tile => {
+            let unit = tile.tileUnit
+            if (unit) unit.isUsed = false;
+            if (tile.terrainOwner === tile?.tileUnit.country && tile?.tileUnit.country === countriesOrder[playerState.turn] && tile?.tileUnit.hp !== 100) {
+                repairBill += repairUnit(tile)
+            }
+        });
+        playerState[countriesOrder[playerState.turn]].gold -= repairBill
+        axios.post(`${connectionURL}/passTheTurn?${gameID}`,
+            {playerState: playerState, gameState: gameState}, null)
+            .then(res => {
                 console.log(res)
                 playerState.unitsToRefresh = []
                 socket.emit('sendAction', {gameState: gameState, playerState: playerState})
             }).catch(e => {
-                navigate('/game')
+            navigate(`/game?${gameID}`)
         })
         resetGrid()
     }
 
-useEffect(() => {
-    //we listen for actions being sent
-    socket.on("receiveAction", res => {
-        console.log('emited')
-        playerState = res.playerState
-        gameState = res.gameState
-        resetGrid()
-    })
-}, [socket])
-
-
+    useEffect(() => {
+        //we listen for actions being sent
+        socket.on("receiveAction", res => {
+            console.log('emited')
+            playerState = res.playerState
+            gameState = res.gameState
+            resetGrid()
+        })
+    }, [socket])
 
 
     function attackAction(initialTile, newTile, attackedTile, atk, def) {
@@ -578,7 +586,6 @@ useEffect(() => {
     }
 
 
-
     return (<div>
         <div className="gameBox">
             <div className="gameTitle column3">
@@ -600,10 +607,7 @@ useEffect(() => {
                     income={players[countriesOrder[0]].properties * 1000}
                 />
             </div>
-
-
             <div className={`gridSize18 mapGrid`}>
-
                 {map}
             </div>
 
@@ -620,6 +624,7 @@ useEffect(() => {
                 />
             </div>
         </div>
+
     </div>)
 
 }
