@@ -1,6 +1,12 @@
 @use 'abstracts/variables' as variables
 
+.currentGame:hover
+  filter:  contrast(1.15)
+  transform: scale(1.025)
+
 .currentGame
+  transition: variables.$transition
+  width: 940px
   height: 225px
   margin: 20px 25px
   // box-shadow: inset 0px 250px 170px rgba(0, 0, 0, 0.8)
@@ -60,6 +66,10 @@
     display: flex
     flex-direction: column
     align-items: center
+    .CGMapImage
+      padding: 7px
+      width: 100%
+      aspect-ratio: 1 / 1
     .CGMapName
       text-align: center
       font-weight: 400

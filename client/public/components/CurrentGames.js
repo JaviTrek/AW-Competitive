@@ -1,48 +1,75 @@
-import React from "react";
-import "../style/CurrentGames.sass";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { Container } from "./template/Container";
-import { NameCO } from "./gameInterface/NameCO";
+import { GameEntry } from "./GameEntry";
+import { useNavigate } from "react-router-dom";
 
 export const CurrentGames = () => {
+  const navigate = useNavigate();
+  let currentGamesArray = [];
+  const [data, setData] = useState();
+  useEffect(() => {
+    axios
+      .get("/getCurrentGames")
+      .then((res) => {
+        let currentGamesData = res.data.pushData;
+        currentGamesData.forEach((currentGame) => {
+          currentGamesArray.push(
+            <GameEntry
+              key={currentGame._id}
+              index={currentGame._id}
+              title={`Game ${currentGame._id}`}
+              day={`Day ${currentGame.playerState.day}`}
+              player1={{
+                name: currentGame.playerState.orangeStar.username, // change to player1 in the future
+                color: currentGame.playerState.orangeStar.color, // change to color in NameBanner
+                character: currentGame.playerState.orangeStar.CO,
+              }}
+              player2={{
+                name: currentGame.playerState.blueMoon.username, // change to player1 in the future
+                color: currentGame.playerState.blueMoon.color, // change to color in NameBanner
+                character: currentGame.playerState.blueMoon.CO,
+              }}
+              map={currentGame.mapData.mapName}
+              time="Unlimited"
+              startDate={` ${currentGame.startDate}`}
+              ruleSet="Standard"
+              onClick={`/game?id=${currentGame._id}`}
+            />
+          );
+        });
+        setData(currentGamesArray);
+      })
+      .catch((e) => {
+        console.error(e);
+        navigate("/login");
+      });
+  }, []);
   return (
     <Container title="Current Games">
-      <article className="currentGame">
-        {/* CG = currentGame */}
-        <div className="CGTopBar">
-          <h2 className="CGTitle">
+      {/* <GameEntry
+        title={
+          <>
             GL STD [T1]: Femboy <span>vs</span> Mipin
-          </h2>
-          <h3 className="CGDay">Day 13</h3>
-        </div>
-
-        <div className="CGUsers">
-          <NameCO name="Femboy" color="blue" character="max" playerNumber="1" />
-          <img className="VSImage" src="../../images/vs.png" />
-          <NameCO name="Mipin" color="orange" character="sami" playerNumber="2" />
-        </div>
-
-        <div className="CGMap">
-          <div className="CGMapImage">
-            <img
-              src="../../images/causticFinale.png"
-              alt="Current Game Map Image"
-            />
-          </div>
-          <h4 className="CGMapName">Caustic Finale</h4>
-        </div>
-
-        <div className="CGInfo">
-          <p className="CGTime">
-            <span className="CGSpan">Time</span>: 06:23:22 until Clock Expires
-          </p>
-          <p className="CGStartDate">
-            <span className="CGSpan">Start Date</span>: 01/28/2023
-          </p>
-          <p className="CGRuleset">
-            <span className="CGSpan">Ruleset</span>: Standard (STD) Tier 2
-          </p>
-        </div>
-      </article>
+          </>
+        }
+        day="Day 13"
+        player1={{
+          name: "Femboy",
+          CO: "blue",
+          character: "max",
+        }}
+        player2={{
+          name: "Mipin",
+          CO: "orange",
+          character: "sami",
+        }}
+        map="Caustic Finale"
+        time="06:23:22 until Clock Expires"
+        startDate="01/28/2023"
+        ruleSet="Standard (STD) Tier 2"
+      /> */}
+      {data}
     </Container>
   );
 };

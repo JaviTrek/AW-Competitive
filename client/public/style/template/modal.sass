@@ -1,0 +1,41 @@
+@use '../abstracts/variables' as variables
+
+.myModal
+  padding: 20px
+  z-index: 1000
+  position: fixed
+  top: 50%,
+  left: 50%,
+  transform: translate(-50%, -50%),
+  border: 2px solid #000,
+  background-color: variables.$container-color
+  animation: fade-in 0.2s 1 linear both
+  display: flex
+  flex-direction: column 
+  > h3
+    margin: 10px 
+  > article, > div
+    margin: 10px 0  
+  > button
+    margin-left: auto
+
+.myModalSection
+  @include variables.section()
+
+.darkBG 
+  z-index: 900
+  background-color: rgba(0, 0, 0, 0.6)
+  width: 100vw
+  height: 100vh
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
+  position: fixed
+  animation: fade-in 0.2s 1 linear both
+
+@keyframes fade-in
+  0% 
+    opacity: 0
+  100% 
+    opacity: 1
+

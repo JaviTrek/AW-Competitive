@@ -17,6 +17,7 @@ let gameState = []
 let playerState = {}
 let movePath = []
 let mapTiles = []
+let gameID = window.location.search.substring(1)
 
 export function ParsedMap() {
 
@@ -80,7 +81,7 @@ export function ParsedMap() {
 
 // this function will request our server for a json file, read it and create tiles depending on the json file information
     useEffect(() => {
-        axios.get(`${connectionURL}/getGameState`)
+        axios.get(`${connectionURL}/getGameState?${gameID}`)
             .then(res => {
                 playerState = res.data.playerState
                 gameState = res.data.gameState
@@ -589,7 +590,7 @@ useEffect(() => {
             <div className={`playerBox ${playerState.turn === 0 ? "activePlayer" : "inactivePlayer"}`}>
 
                 <CurrentPlayer
-                    selectedCharacter={players[countriesOrder[0]].img}
+                    selectedCharacter={players[countriesOrder[0]].CO}
                     userName={players[countriesOrder[0]].username}
                     bannerColor={players[countriesOrder[0]].color}
                     timePlayed={players[countriesOrder[0]].timePlayed}
@@ -608,7 +609,7 @@ useEffect(() => {
 
             <div className={`playerBox ${playerState.turn === 1 ? "activePlayer" : "inactivePlayer"}`}>
                 <CurrentPlayer
-                    selectedCharacter={players[countriesOrder[1]].img}
+                    selectedCharacter={players[countriesOrder[1]].CO}
                     userName={players[countriesOrder[1]].username}
                     bannerColor={players[countriesOrder[1]].color}
                     timePlayed={players[countriesOrder[1]].timePlayed}

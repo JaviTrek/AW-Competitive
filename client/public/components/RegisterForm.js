@@ -9,9 +9,9 @@ export function Register() {
   const navigate = useNavigate();
   const { register, handleSubmit, watch } = useForm({
     defaultValues: {
-      username: "JaviJavi",
-      password: "123",
-      confirmPassword: "123",
+      username: "",
+      password: "",
+      confirmPassword: "",
     },
   });
   const watchPassword = watch("password");
@@ -52,7 +52,7 @@ export function Register() {
                     //give the user some time to read success message
                     setTimeout(() => {
                         navigate("/login")
-                    }, 3000)
+                    }, 1500)
                 })
                 .catch((err) => {
                     console.error(err)

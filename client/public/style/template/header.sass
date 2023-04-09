@@ -44,4 +44,23 @@ a
   color: variables.$color-primary  
   cursor: pointer
   
+// login and user display; needs to be reviewed
+.usernameTitle
+  position: relative
 
+  .dropdownMenu
+    display: none
+    position: absolute
+
+    background-color: #000000
+    top: 1.25em
+    margin: 0 auto
+  &:hover
+    .dropdownMenu
+      width: 100%
+      display: block
+      text-align: center
+
+      a
+        display: block
+        padding: 0.5em 0.25em

@@ -136,53 +136,17 @@ $countryName: orangeStar, blueMoon
   .tileUnit
     filter: brightness(0.65)
 
-
-
-//let our units be displayed correctly in the battlefield/grid
-//@each $country in $countryName
-  @each $unit in $imageName
-    .#{$country}#{$unit}
-      background: url("images/units/#{$country}/#{$unit}-0.png") no-repeat
-      background-size: contain
-      position: absolute
-      z-index: 9
-      bottom: 0px
-      height: 32px
-      width: 32px
-      image-rendering: pixelated
-
-
-
-
-
-
 h1
   padding: 0.5em
 
-
-
-
-
-//.playerBoxGrid
-  position: absolute
-  top: 0
-  left: 0px
-  display: grid
-  grid-template-columns: max-content max-content min-content
-  justify-content: left
-  justify-items: left
-  z-index: 1000
-  color: variables.$text-main
-  gap: 4em
 .playerBox
   width: 100%
-
   z-index: 25
 
 .activePlayer
-  filter: brightness(1.2) contrast(1.1)
+  filter: brightness(1.1) contrast(1.05)
 .inactivePlayer
-  filter: brightness(0.8) contrast(0.7)
+  filter: brightness(0.8) contrast(0.8)
 
 .gameTitle
   color: variables.$text-main

@@ -67,11 +67,14 @@ router.post("/passTheTurn", async (req, res) => {
     let {unitsToRefresh, turn, day, orangeStar, blueMoon} = req.body
     const query = {"_id": 0}
     //lets free every used unit
-    unitsToRefresh.forEach(tileIndex => {
-        let unit = `gameState.${tileIndex}.tileUnit.isUsed`
-        let refresh = {$set: {[unit]: false}};
-        collection.updateOne(query, refresh);
-    })
+    if (unitsToRefresh) {
+        unitsToRefresh.forEach(tileIndex => {
+            let unit = `gameState.${tileIndex}.tileUnit.isUsed`
+            let refresh = {$set: {[unit]: false}};
+            collection.updateOne(query, refresh);
+        })
+    }
+
 
     //lets update our playerstate
     collection.updateOne(query, {$set: {playerState: req.body }});

@@ -12,11 +12,6 @@ export function App() {
     return (<div>
 
             <br/>
-            <a href="/createNewGame">
-                <button> Delete current /game and recreate it</button>
-                <br/>
-                <br/>
-            </a>
             <a href="/game">
                 <button> See game</button>
             </a>
