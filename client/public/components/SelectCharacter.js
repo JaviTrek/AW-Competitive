@@ -27,9 +27,7 @@ export const SelectCharacter = ({selectedCO, setSelectedCO}) => {
     <img
       key={img}
       className={`
-      ${selectedCO == img ? "selectedCO" : ""} 
-      ${img == "Sami" || img == "Max" ? "" : "unavailable"}
-      `}
+      ${selectedCO == img ? "selectedCO" : ""} notSelected`}
       onClick={() => setSelectedCO(img)}
       src={cos[`${img}-Small.png`]}
       onMouseEnter={() => {
@@ -54,9 +52,8 @@ export const SelectCharacter = ({selectedCO, setSelectedCO}) => {
           Choose your Commanding Officer (CO):
         </h2>
         <p className="characterSectionSubtitle">
-          Depending on the character you choose, you will have varying
-          abilities/stats. Tier 0 are the strongest while tier 4 are the
-          weakest.
+          Currently characters don't have any skills/impact in gameplay so feel free to pick by who you think looks cooler!
+
         </p>
         <div className="characterSectionGrid">
           <div className="characterTier">
