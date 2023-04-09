@@ -85,7 +85,7 @@ export function App() {
       </div>
 
       <div className="rectangleInfoContainer">
-        
+
         <RectangleInfo
           className={firstBlock["className"]}
           title={firstBlock["title"]}
@@ -117,7 +117,6 @@ export function App() {
           icon={fourthBlock["icon"]}
           halfImage={fourthBlock["halfImage"]}
         />
-
       </div>
 
 
