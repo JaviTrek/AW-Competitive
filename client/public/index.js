@@ -13,6 +13,7 @@ import {NewGame} from "./components/NewGame";
 import {createRoot} from "react-dom/client";
 import {Register} from "./components/RegisterForm";
 import {Login} from "./components/LoginForm";
+import {GameHeader} from './components/gameHeader/GameHeader';
 
 
 const container = document.getElementById("app");
@@ -60,6 +61,10 @@ const router = createBrowserRouter([
                 path: "login",
                 element: <Login/>,
             },
+            {
+                path: "gameHeader",
+                element: <GameHeader/>,
+            }
         ]
     }
 ]);
