@@ -34,6 +34,7 @@ export const CurrentGames = () => {
               time="Unlimited"
               startDate={` ${currentGame.startDate}`}
               ruleSet="Standard"
+              onClick={`/game?id=${currentGame._id}`}
             />
           );
         });

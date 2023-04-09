@@ -1,6 +1,7 @@
 const database = require("./connection")
 const fs = require('fs');
 const {Router} = require('express');
+const mongo = require("mongodb");
 const router = Router()
 
     //Currently this just submits parsedMap.json to mongoDB.
@@ -60,11 +61,12 @@ const router = Router()
 //This route is used so an user can get a game they are playing in
 router.get('/getGameState', async (req,res)=>{
     let dbConnect = database.getDatabase();
+    console.log(req.query.id)
 
-    let collection = dbConnect.collection("currentGames");
+    let collection = dbConnect.collection("currentGame");
 
     //TODO: Find game id by user id, make id check for the user attributes when we log in OR Save gamestate id in the user data so then we can just check the user's games and find our game through that
-    let findGame = await collection.findOne({_id: 0})
+    let findGame = await collection.findOne({_id: new mongo.ObjectId(req.query.id)})
 
     res.json({
 

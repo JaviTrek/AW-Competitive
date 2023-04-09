@@ -175,21 +175,6 @@ app.post("/registerUser", async (req, res) => {
   }
 });
 
-//Discord
-/*
-const discordStrategy = require('./authStrategy/discordStrategy');
-
-app.get('/routes/auth', passport.authenticate('discord123'));
-app.get('/routes/auth/redirect', passport.authenticate('discord123', {
-    failureRedirect: '/forbidden'
-}), (req,res) => {
-    console.log(req.user)
-    res.send(req.user);
-
-    console.log("discord authenticate");
-});
-
-*/
 
 //TODO: Create our own folders for our account routes
 //Protected route, it checks if user is authenticated, if so, you can access the protectRoute, otherwise, you get redirected to login

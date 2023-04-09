@@ -28,11 +28,11 @@ export const GameEntry = ({
 }) => {
 
   return (
-    <article
+      <a href={onClick}>
+      <article
       className="currentGame"
-      onClick={onClick}
     >
-      {/* CG = currentGame */}
+
       <div className="CGTopBar">
         <h2 className="CGTitle">{title}</h2>
         <h3 className="CGDay">{day}</h3>
@@ -74,6 +74,8 @@ export const GameEntry = ({
           <span className="CGSpan">Ruleset</span>: {ruleSet}
         </p>
       </div>
+
     </article>
+      </a>
   );
 };

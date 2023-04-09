@@ -16,6 +16,7 @@ let gameState = []
 let playerState = {}
 let movePath = []
 let mapTiles = []
+let gameID = window.location.search.substring(1)
 
 export function ParsedMap() {
 
@@ -79,7 +80,7 @@ export function ParsedMap() {
 
 // this function will request our server for a json file, read it and create tiles depending on the json file information
     useEffect(() => {
-        axios.get(`${connectionURL}/getGameState`)
+        axios.get(`${connectionURL}/getGameState?${gameID}`)
             .then(res => {
                 playerState = res.data.playerState
                 gameState = res.data.gameState

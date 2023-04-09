@@ -57,7 +57,7 @@ export function Login() {
               //give the user some time to read success message
               setTimeout(() => {
                 navigate("/");
-              }, 3000);
+              }, 1500);
             })
             .catch((err) => {
               console.error(err);
