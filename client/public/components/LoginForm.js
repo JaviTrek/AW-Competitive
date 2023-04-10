@@ -21,10 +21,10 @@ export function Login() {
   });
 
   // <form method='post' action="/loginUser" className="authenticationForm">
-  return (
-    <SmallContainer title="Log In">
-      <div className={`flashMessage ${flash.class}Flash`}>{flash.message}</div>
-      <form method="get" action="/routes/auth">
+
+
+  /*
+  <form method="get" action="/routes/auth">
         <button
           tabIndex={0}
           className={`btn ${styles.discordButton}`}
@@ -39,6 +39,12 @@ export function Login() {
         <p>Or</p>
         <div className={styles.orLine} />
       </div>
+   */
+
+  return (
+    <SmallContainer title="Log In">
+      <div className={`flashMessage ${flash.class}Flash`}>{flash.message}</div>
+
 
       <form
         className="authenticationForm"
