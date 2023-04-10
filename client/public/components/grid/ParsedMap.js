@@ -21,8 +21,12 @@ let movePath = []
 let mapTiles = []
 let gameID = window.location.search.substring(1)
 
+
 export function ParsedMap() {
 
+useEffect(()=> {
+    socket.emit("joinRoom", {gameID})
+}, [socket])
 
     const navigate = useNavigate();
     let [map, setMap] = useState([])
@@ -449,7 +453,12 @@ export function ParsedMap() {
         )
             .then(res => {
                 console.log(res)
-                socket.emit('sendAction', {gameState: gameState, playerState: playerState})
+                if (res.data.error === 'error') {
+                    console.log('error')
+                    navigate('/')
+                    throw new Error()
+                }
+                socket.emit('sendAction', {gameState: gameState, playerState: playerState, room: gameID})
             }).catch(e => {
             console.log(e)
             navigate(`/game?${gameID}`)
@@ -483,8 +492,14 @@ export function ParsedMap() {
             {playerState: playerState, gameState: gameState}, null)
             .then(res => {
                 console.log(res)
+                console.log(res.data.error === 'error')
+                if (res.data.error === 'error') {
+                    console.log('error')
+                    navigate('/')
+                    throw new Error()
+                }
                 playerState.unitsToRefresh = []
-                socket.emit('sendAction', {gameState: gameState, playerState: playerState})
+                socket.emit('sendAction', {gameState: gameState, playerState: playerState, room: gameID})
             }).catch(e => {
             navigate(`/game?${gameID}`)
         })

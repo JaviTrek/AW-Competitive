@@ -37,12 +37,18 @@ io.on('connection', (socket) => {
     //when we receive the sendAction
     //console.log(socket.id)
     socket.on("sendAction", (data) => {
-        console.log('action received')
-        socket.broadcast.emit("receiveAction", data)
+        //console.log('action received')
+        socket.to(data.room).emit("receiveAction", data)
+    })
+
+    socket.on("joinRoom", data => {
+      //console.log('joined the room ' + '' + data.gameID)
+      socket.join(data.gameID)
+
     })
 });
 
-//get connected to the mongo database and websocket at the same time?
+//get connected to the mongo database and websocket at the same time
 server.listen(port, () => {
   database.connectToServer("users");
   console.log(`Server running on port ${port}`);
@@ -95,7 +101,7 @@ app.use(passport.initialize());
 const LocalStrategy = require("passport-local").Strategy;
 //login post request using passport local
 app.post("/loginUser", passport.authenticate("local"), (req, res) => {
-  console.log("logged in");
+  //console.log("logged in");
   req.session.username = req.user.username;
   req.session._id = req.user._id;
 
@@ -124,11 +130,11 @@ passport.use(
 
         const isValid = comparePassword(password, userDB.password);
         if (isValid) {
-          console.log("Authenticated Successfully!");
+          //console.log("Authenticated Successfully!");
           // req.session.user = userDB;
           done(null, userDB);
         } else {
-          console.log("Failed to Authenticate");
+          //console.log("Failed to Authenticate");
           // return res.sendStatus(401);
           done(null, null);
         }
@@ -141,12 +147,12 @@ passport.use(
 
 //serializing
 passport.serializeUser((user, done) => {
-  console.log("Serializing user local");
+  //console.log("Serializing user local");
   done(null, user._id);
 });
 
 passport.deserializeUser(async (_id, done) => {
-  console.log("Deserializing user local strategy");
+  //console.log("Deserializing user local strategy");
   let dbConnect = database.getDatabase();
   let collection = dbConnect.collection("learn");
   try {
@@ -167,7 +173,7 @@ app.post("/registerUser", async (req, res) => {
   const { username, password } = req.body;
   const userDB = await collection.findOne({ $or: [{ username }] });
   if (userDB) {
-    console.log("user already exist!");
+    //console.log("user already exist!");
     res.sendStatus(400);
   } else {
     const hashedPassword = hashPassword(password);
@@ -191,17 +197,17 @@ app.post("/registerUser", async (req, res) => {
 //TODO: Create our own folders for our account routes
 //Protected route, it checks if user is authenticated, if so, you can access the protectRoute, otherwise, you get redirected to login
 app.get("/protectRoute", loggedIn, (req, res) => {
-  console.log("you accessed our route");
+  //console.log("you accessed our route");
   res.redirect("/game");
 });
 
 function loggedIn(req, res, next) {
   if (req.isAuthenticated()) {
-    console.log(req.isAuthenticated());
-    console.log("user is logged In, access granted");
+  //console.log(req.isAuthenticated());
+    //console.log("user is logged In, access granted");
     next();
   } else {
-    console.log("not logged, cant access protectRoute");
+   // nsole.log("not logged, cant access protectRoute");
     res.redirect("/login");
   }
 }

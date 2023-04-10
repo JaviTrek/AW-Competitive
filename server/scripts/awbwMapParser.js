@@ -201,12 +201,12 @@ module.exports = (columns, rows, name) => {
             unitsToRefresh: [],
             orangeStar: {
                 _id: 1, username: 'orangeStar',
-                CO: 'Sami', img: `../../images/CO/Sami-Full.png`, color: 'orange',  armyValue: "0", timePlayed: "00:00:00", unitCount: 0, properties: 3, gold: 3000,
+                CO: 'Sami', color: 'orange',  armyValue: "0", timePlayed: "00:00:00", unitCount: 0, properties: 3, gold: 3000,
             },
 
             blueMoon: {
                 _id: 2, username: 'blueMoon',
-                CO: 'Max', img: `../../images/CO/Max-Full.png`, color: 'blue',  armyValue: "0", timePlayed: "00:00:00", unitCount: 0, properties: 3, gold: 0,
+                CO: 'Rachel', color: 'blue',  armyValue: "0", timePlayed: "00:00:00", unitCount: 0, properties: 3, gold: 0,
             }
         },
 
