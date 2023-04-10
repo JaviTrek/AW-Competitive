@@ -80,6 +80,7 @@ export function Login() {
           {...register("username")}
           type="text"
           placeholder="Username"
+          maxLength={14}
           required
         />
         <input
@@ -87,6 +88,7 @@ export function Login() {
           {...register("password")}
           type="password"
           placeholder="Password"
+          maxLength={14}
           required
         />
         <p className={styles.subtext}>

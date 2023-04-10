@@ -35,14 +35,11 @@ const io = new Server(server, {
 // websocket event, when someone connects
 io.on('connection', (socket) => {
     //when we receive the sendAction
-    //console.log(socket.id)
     socket.on("sendAction", (data) => {
-        //console.log('action received')
         socket.to(data.room).emit("receiveAction", data)
     })
 
     socket.on("joinRoom", data => {
-      //console.log('joined the room ' + '' + data.gameID)
       socket.join(data.gameID)
 
     })
@@ -182,6 +179,7 @@ app.post("/registerUser", async (req, res) => {
       _id: myDoc + 1,
       username: username,
       password: hashedPassword,
+      games: [],
     };
     try {
       await collection.insertOne(userDocument);
@@ -245,7 +243,7 @@ app.get("/getStartGames", loggedIn, async (req, res) => {
   });
 });
 
-app.get("/getCurrentGames", loggedIn, async (req, res) => {
+app.get("/getCurrentGames", async (req, res) => {
   let dbConnect = database.getDatabase();
   let collection = dbConnect.collection("currentGame");
   let myDoc = await collection.find();
@@ -273,11 +271,7 @@ app.get("/userInfo", (req, res) => {
 });
 
 app.post("/joinGame", loggedIn, async (req, res) => {
-  // console.log(req.session.username);
-  // console.log(req.session._id);
-  // console.log(req.body.selectedCO);
-  // console.log(req.body.gameId);
-
+  try {
   // getting database
   let dbConnect = database.getDatabase();
   // getting startGame colleciton
@@ -287,14 +281,11 @@ app.post("/joinGame", loggedIn, async (req, res) => {
     _id: new mongo.ObjectId(req.body.gameId),
   });
   // Checking if player is already in the game
-  if (
-    myDoc.playerState.orangeStar.username == req.session.username ||
-    myDoc.playerState.blueMoon.username == req.session.username 
-    // or because of current game entries still going to this api
-  ) {
+  // or because of current game entries still going to this api
+  if (myDoc.playerState.orangeStar.username == req.session.username || myDoc.playerState.blueMoon.username == req.session.username) {
     return;
   }
-  // deleting the game
+  // deleting the non-started game
   let result = await startGameCollection.deleteOne({
     _id: new mongo.ObjectId(req.body.gameId),
   });
@@ -308,9 +299,14 @@ app.post("/joinGame", loggedIn, async (req, res) => {
   // moving the game from startGame to currentGame
   let currentGameCollection = dbConnect.collection("currentGame");
 
-  try {
+
     await currentGameCollection.insertOne(myDoc);
     console.log("Game Created");
+
+    //lets find our user and add them to this game
+    let userColl = dbConnect.collection("learn")
+    await userColl.updateOne({_id: req.session._id}, {$push: {games: new mongo.ObjectId(req.body.gameId)}})
+
     res.sendStatus(200);
   } catch (e) {
     console.log(e);
