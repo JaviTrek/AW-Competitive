@@ -19,14 +19,10 @@ export const Header = () => {
             <div className={"usernameTitle"}>
               {username}
               <div className="dropdownMenu">
-                <a href="/settings" type="GET">
-                  User Settings
-                </a>
-                <a
-                  href="/logout"
-                >
+                <a href="/logout">
                   Log Out
                 </a>
+
               </div>
             </div>
           );

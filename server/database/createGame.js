@@ -7,37 +7,47 @@ const router = Router()
     router.post("/createNewGame", async (req, res) => {
         try {
             let dbConnect = database.getDatabase()
-            //use the collection
-            let collection = dbConnect.collection("startGame")
-            const data =  fs.readFileSync('./scripts/parsedMap.json', 'utf8');
-            const parsedData = await JSON.parse(data)
-            let gameDocument = {
-                ...parsedData,
-            };
-            // get current day
-            const date = new Date();
-            let day = date.getDate();
-            let month = date.getMonth() + 1;
-            let year = date.getFullYear();
-            let currentDate = `${month}/${day}/${year}`;
-            gameDocument.startDate = currentDate;
-
-
-            let {orangeStar, blueMoon} = gameDocument.playerState
-            orangeStar.username = req.session.username;
-            orangeStar.CO = req.body.selectedCO;
-            orangeStar._id = req.session._id;
-            blueMoon.username = "...";
-            blueMoon.CO = "";
-            blueMoon._id = "";
-            //insert the document
-            await collection.insertOne(gameDocument);
-
-            let findGame = await collection.findOne({["playerState.orangeStar._id"]: req.session._id})
-            //lets find our user and add them to this game
+            //lets make sure our player doesnt have more than 3 games, 3 games is the limit!
             let userColl = dbConnect.collection("learn")
-            await userColl.updateOne({_id: req.session._id}, {$push: {games: findGame._id }})
-            res.redirect('/')
+            const currentUser = await userColl.findOne({_id: req.session._id})
+            if (currentUser.games.length > 3) {
+                res.json({
+                    flash: "error"
+                })
+            }
+            //doesnt have more than 3 games so they can make a game!
+            else {
+                let collection = dbConnect.collection("startGame")
+                const data =  fs.readFileSync('./scripts/parsedMap.json', 'utf8');
+                const parsedData = await JSON.parse(data)
+                let gameDocument = {
+                    ...parsedData,
+                };
+                // get current day
+                const date = new Date();
+                let day = date.getDate();
+                let month = date.getMonth() + 1;
+                let year = date.getFullYear();
+                let currentDate = `${month}/${day}/${year}`;
+                gameDocument.startDate = currentDate;
+
+
+                let {orangeStar, blueMoon} = gameDocument.playerState
+                orangeStar.username = req.session.username;
+                orangeStar.CO = req.body.selectedCO;
+                orangeStar._id = req.session._id;
+                blueMoon.username = "...";
+                blueMoon.CO = "";
+                blueMoon._id = "";
+                //insert the document
+                await collection.insertOne(gameDocument);
+
+                let findGame = await collection.findOne({["playerState.orangeStar._id"]: req.session._id})
+                //lets find our user and add them to this game
+                await userColl.updateOne({_id: req.session._id}, {$push: {games: findGame._id }})
+                res.redirect('/')
+            }
+
         } catch (e) {
             console.log(e)
             res.sendStatus(401)
