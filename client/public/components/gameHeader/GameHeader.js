@@ -32,17 +32,22 @@ export const GameHeader = () => {
   return (
     <>
       <div className="matchInfo">
+        <div className="vs-container">Femboy vs Mipin</div>
+        <div className="date-tracker">
+          <p className="ui-label">Game Started: </p> 02/15/2023 -{" "}
+          <p className="ui-label">Last Updated: </p> 02/18/2023
+        </div>
         <div className="turn-counter">
           <div className="time-value-container">
-            <p className="time-label">Turn: </p>
+            <p className="ui-label">Turn: </p>
             <p className="time-value">00:00:00</p>
           </div>
           <div className="day-container">
-            <p className="time-label">Day: </p>
+            <p className="ui-label">Day: </p>
             <p className="time-value">0</p>
           </div>
           <div className="time-value-container">
-            <p className="time-label">Turn: </p>
+            <p className="ui-label">Turn: </p>
             <p className="time-value">00:00:00</p>
           </div>
           <div className="buttons-container">

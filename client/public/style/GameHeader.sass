@@ -15,20 +15,33 @@ $label-text-color: #9EBC9F
   font-size: 1.5rem
   align-items: center
 
-  .time-label
+  .ui-label
     color: $label-text-color
     display: inline
 
   .time-value
     display: inline  
 
-    
+  .vs-container
+    // border: 1px solid white
+    // background-color: black
+    font-size: 2.5rem
+    padding-top: 2%
+    padding-bottom: 2%
+  
+  .date-tracker
+    // border: 1px solid white
+    // background-color: black
+    font-size: 1.75rem
+    padding-top: 1%
+    padding-bottom: 1%
 
   .turn-counter 
       
       color: white
       display: grid 
       grid-template-columns: 3fr 2fr 3fr
+      row-gap: 5%
       
       .time-value-container
           padding-top: 4%
@@ -46,7 +59,8 @@ $label-text-color: #9EBC9F
         margin: auto
         display: grid     
         grid-template-columns: 1fr
-        border-top: none
+        
+        
         
         //THESE STYLING VALUES WILL BE IMPLEMENTED WHEN THE OTHER BUTTONS ARE ADDED IN THE FINAL BUILD OF THE SITE     
         //width: 60%  
