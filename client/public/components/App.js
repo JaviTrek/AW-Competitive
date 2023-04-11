@@ -80,7 +80,6 @@ export function App() {
         </div>
 
         <div className="s3">
-          {" "}
           <p1>
             Play Advance Wars Competitively Join thousands on the nostalgia!
           </p1>
