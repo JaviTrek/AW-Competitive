@@ -127,13 +127,6 @@ export function App() {
         </div>
       </div>
 
-      <h2>Add a new User to MongoDB:</h2>
-      <a href="/createNewGame">
-        <button> Try creating New Game</button>
-      </a>
-      <a href="/game">
-        <button> See game</button>
-      </a>
       <div>
         <br />
         <h1>Hello and welcome to the project</h1>
