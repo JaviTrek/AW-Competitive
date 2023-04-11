@@ -10,7 +10,7 @@ const hoveredTextColor = "#E47220";
 const buttonBackgroundColor = "black";
 const hoveredBackgroundColor = "white";
 
-export const GameHeader = ({player1Name, player2Name, gameStartDate, lastUpdatedDate, onClick}) => {
+export const GameHeader = ({player1Name, player2Name, gameStartDate, lastUpdatedDate, onClick, day}) => {
   const [buttonBackground, setButtonBackground] = useState(
     buttonBackgroundColor
   );
@@ -44,7 +44,7 @@ export const GameHeader = ({player1Name, player2Name, gameStartDate, lastUpdated
           </div>
           <div className="day-container">
             <p className="ui-label">Day: </p>
-            <p className="time-value">0</p>
+            <p className="time-value">{day}</p>
           </div>
           <div className="time-value-container">
             <p className="ui-label">Turn: </p>

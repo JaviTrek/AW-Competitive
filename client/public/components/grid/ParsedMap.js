@@ -550,6 +550,7 @@ export function ParsedMap() {
         player2Name={matchInfo[0].player2Name}
         gameStartDate={matchInfo[0].gameStartDate}
         lastUpdatedDate={matchInfo[0].lastUpdatedDate}
+        day = {players.day}
         onClick={passTurn}
       />
 
