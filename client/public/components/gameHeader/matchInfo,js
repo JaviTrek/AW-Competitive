@@ -1,0 +1,6 @@
+export const matchInfo = [{
+    gameStartDate :" 04/06/2023",
+    lastUpdatedDate : "04/10/2023",
+    player1Name : "Femboy",
+    player2Name : "Mipin",
+}]
