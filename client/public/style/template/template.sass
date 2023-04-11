@@ -20,8 +20,12 @@ html
 ::-webkit-scrollbar 
   display: none
 
+input, button
+  font-family: 'Poppins', sans-serif
+
 body
-  background: url("../../images/template/Background.png"), #000
+  background: #282828
+  background: url("../../images/template/Background.jpg"), #000
   color: white
   font-family: 'Poppins', sans-serif
   font-weight: 400
@@ -29,9 +33,17 @@ body
   // will need to change this in the future for making the website responsive
   line-height: 26px
 
-input, button
-  display: block
-  margin: 1em
+input[type="text"], input[type="password"]
+  padding: 5px
+  background-color: #1F1F1F
+  color: white
+  -webkit-box-sizing: border-box /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box    /* Firefox, other Gecko */
+  box-sizing: border-box         /* Opera/IE 8+ */
+  font-style: normal
+  font-weight: 400
+  font-size: 14px
+  line-height: 21px
 
 /* ==================== GENERAL STYLES ==================== */
 
@@ -63,8 +75,7 @@ section > h2
   font-size: 3rem
   color: variables.$color-primary
 
-.template
-  padding: 40px 50px
+
 
 // possible hover effect we could use
 // a 
@@ -79,7 +90,8 @@ section > h2
 .btn 
   width: max-content
   display: inline-block
-  color: variables.$color-primary
+  background: variables.$color-primary
+  color: white
   padding: 0.75rem 1.2rem
   border-radius: 0.4rem
   cursor: pointer
@@ -88,17 +100,16 @@ section > h2
   text-align: center
 
 .btn:hover 
-  background: variables.$color-primary
-  color: variables.$color-bg
+  background: darken(variables.$color-primary, 5%)
+  color: darken(white, 5%)
   border-color: transparent
 
-.btn-primary 
-  background: variables.$color-primary
-  color: white
+/* ==================== ACCESSABILITY STYLES ==================== */
 
-.btn-primary:hover 
-  background: darken(variables.$color-primary, 15%)
-  color: darken(white, 15%)
+.btn:focus-visible,
+a:focus-visible,
+img:focus-visible
+  outline: 1px solid white
 
 /* ==================== IMG STYLES ==================== */
 

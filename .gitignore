@@ -2,3 +2,5 @@
 /client/node_modules/
 /server/setup.env
 /server/scripts/*.json
+.DS_Store
+/client/dist/

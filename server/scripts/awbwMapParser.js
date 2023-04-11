@@ -132,6 +132,10 @@ module.exports = (columns, rows, name) => {
                     case "se":
                         terrainType = "sea"
                         break;
+                    case "br":
+                        terrainType = "road"
+                        break;
+
                     default:
                         terrainType = "property"
                 }
@@ -146,20 +150,23 @@ module.exports = (columns, rows, name) => {
                     default:
                         ownerShip = false
                 }
+// https://www.youtube.com/watch?v=sPWGBmcDR50
+                let countries = ["orangeStar", "blueMoon"]
 
-
-                if (j % 7 === 4)
+                if (i === 163)
                     parsedMap.push({
                         terrainImage: awbwMap[j][1],
                         terrainType: terrainType,
                         terrainOwner: ownerShip,
-                        hasUnit: {
-                            id: 5,
-                            name: "Tank",
-                            country: "orangeStar",
-                            hp: 100,
-                            status: "free"
-                            //bullets
+                        terrainCapture: 0,
+                        tileUnit: {
+                            id: 0,
+                            name: "Infantry",
+                            country: countries[1],//countries[Math.floor(Math.random() * 2)],
+                            hp: 100, //Math.floor(Math.random() * (101 - 1) + 1),
+                            isUsed: false,
+                            capture: false
+                            //ammo
                             //gas
 
                         }
@@ -170,7 +177,8 @@ module.exports = (columns, rows, name) => {
                         terrainImage: awbwMap[j][1],
                         terrainType: terrainType,
                         terrainOwner: ownerShip,
-                        hasUnit: false
+                        terrainCapture: 0,
+                        tileUnit: false
                     })
 
                 break
@@ -186,6 +194,24 @@ module.exports = (columns, rows, name) => {
 
     //TODO:this needs to be sent to database when creating a game
     let mapData = {
+        startDate: "",
+        playerState: {
+
+            turn: 0, day: 1,
+            unitsToRefresh: [],
+            orangeStar: {
+                _id: 1, username: 'orangeStar',
+                CO: 'Sami', color: 'orange',  armyValue: "0", timePlayed: "00:00:00", unitCount: 0, properties: 3, gold: 3000,
+            },
+
+            blueMoon: {
+                _id: 2, username: 'blueMoon',
+                CO: 'Rachel', color: 'blue',  armyValue: "0", timePlayed: "00:00:00", unitCount: 0, properties: 3, gold: 0,
+            }
+        },
+
+
+
         mapData: {
             mapName: "Caustic Finale",
             columns: 18,

@@ -1,36 +1,9 @@
 @use "../abstracts/mixins"
 
 .gameBox
-  display: grid
-  grid-template-columns: min-content
-  text-align: center
-  padding: 2vw
-  margin: 5vw
-  align-items: center
-  align-content: center
-  justify-items: center
-  justify-content: center
-  color: black
-  text-align: center
-  button
-    padding: 2em
-    background-color: black
-    color: white
-  // our main grid where we have our map tiles
   .mapGrid
-    display: grid
-    margin: 0
-    border: 1em solid #333b54
     // our individual tiles
     .mapTile
-      width: 100%
-      background-color: #bfdd33
-      aspect-ratio: 1
-      position: relative
-      &:hover
-        .tileCursor
-          display: block
-
       //the cursor we see over tiles
       //TODO: Fix the tile cursor, currently it looks centered but it really isn't centered
       .tileCursor
@@ -56,7 +29,137 @@
         top: 0
         height: 31px
         width: 31px
-      //the menu we see when an unit moves or a factory is cliecked
+      .tilePath
+        background: rgba(0, 62, 133, 0.65)
+        border: 2px solid rgb(0, 55, 117)
+        z-index: 6
+        position: absolute
+        top: 0
+        height: 31px
+        width: 31px
+
+      //the red square on enemy units
+      .tileEnemy
+        background: rgba(228, 67, 67, 0.25)
+        border: 2px solid rgb(184, 22, 22)
+        z-index: 20
+        position: absolute
+        top: 0
+        margin: 0 auto
+        height: 31px
+        width: 31px
+        &:hover
+          cursor: pointer
+          animation: selectTarget 3s linear infinite
+      //the red square on enemy units
+      .tileAttack
+        animation: selectTarget 4s linear infinite
+        background: rgba(228, 67, 67, 0.25)
+        border: 2px solid rgb(184, 22, 22)
+        z-index: 20
+        position: absolute
+        left: 0
+        right: 0
+        top: 0
+        bottom: 0
+        margin: auto
+        height: 31px
+        width: 31px
+        @keyframes selectTarget
+          from
+            transform: rotate(0)
+            background: rgba(228, 67, 67, 0.25)
+
+
+          50%
+            transform: rotate(270deg)
+            background: rgba(228, 67, 67, 0.85)
+          to
+            transform: rotate(540deg)
+            background: rgba(228, 67, 67, 0.25)
+
+//The battle forecast we see when two units are about to fight
+.forecast
+  position: absolute
+  z-index: 101
+  display: grid
+  left: -300%
+  right: -300%
+  top: 150%
+  grid-template-columns: auto auto auto
+  background: rgba(255, 255, 255, 0.9)
+  border: 0.1em solid black
+  color: black
+  width: 800%
+  padding: 0.1em
+  margin: 0 auto
+  align-items: center
+  justify-items: center
+  h1
+    font-size: 1rem
+    padding: 0
+    font-weight: 700
+    letter-spacing: 0.2em
+  .forecastUnit, .forecastValues
+    width: 100%
+    height: 100%
+  .forecastRelative
+    position: relative
+
+  .forecastValues
+    display: grid
+    grid-template-columns: auto
+    justify-items: center
+    align-items: center
+
+
+
+  h2
+    font-size: 16px
+    //font-weight: 500
+    width: 100%
+  .orangeStarBackgroundUnit
+    background: rgba(232, 44, 22, 0.5)
+    background-size: cover
+    width: 100%
+
+  .blueMoonBackgroundUnit
+    background: rgba(17, 69, 225, 0.5)
+    background-size: cover
+    width: 100%
+  .orangeStarBackground
+    background: rgba(255, 50, 26, 0.25)
+    background-size: cover
+    width: 100%
+
+  .blueMoonBackground
+    background: rgba(21, 80, 255, 0.25)
+    background-size: cover
+    width: 100%
+  .hpBar
+    margin: 2px 0
+    text-align: center
+    justify-self: center
+    background: rgba(255, 255, 255, 0.75)
+    border: 2px solid black
+    height: 8px
+    width: 100%
+
+    .orangeStarBar
+      background: rgb(253, 48, 0)
+      background-size: cover
+      height: 4px
+    .blueMoonBar
+      background: rgb(0, 127, 253)
+      background-size: cover
+      height: 4px
+
+@for $i from 0 through 10
+  .hpBarWidth#{$i}
+    width: #{$i} + 0%
+    height: 4px
+    z-index: 999
+
 
 
 
