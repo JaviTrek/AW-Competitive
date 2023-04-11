@@ -1,5 +1,6 @@
 import React from "react";
 import "../style/App.sass";
+import "../style/template/template.sass";
 import awLogo from "../images/awLogo.webp";
 import bannerMap from "../images/homePageImages/backgroundMap.png";
 import charactersGroupshot from "../images/homePageImages/charactersGroup.png";
@@ -8,9 +9,11 @@ import ghLogo from "../images/footerImages/GitHub.png";
 import discordLogo from "../images/footerImages/Discord.png";
 import io from "socket.io-client";
 import { RectangleInfo } from "./template/homePageRectangle.js";
-import { ScreenShotContainer } from "./template/ScreenshotContainer.js"; 
+import { ScreenShotContainer } from "./template/ScreenshotContainer.js";
 
 // import UnitPic from '../images/homePageImages/lilDudeIm.png'
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const socket = io.connect("http://localhost:4000");
 
@@ -85,7 +88,6 @@ export function App() {
       </div>
 
       <div className="rectangleInfoContainer">
-
         <RectangleInfo
           className={firstBlock["className"]}
           title={firstBlock["title"]}
@@ -99,9 +101,9 @@ export function App() {
           title={secondBlock["title"]}
           paragraph={secondBlock["paragraph"]}
           icon={secondBlock["icon"]}
-          halfImage={secondBlock["halfImage"]} 
+          halfImage={secondBlock["halfImage"]}
         />
-      
+
         <RectangleInfo
           className={thirdBlock["className"]}
           title={thirdBlock["title"]}
@@ -109,7 +111,7 @@ export function App() {
           icon={thirdBlock["icon"]}
           halfImage={thirdBlock["halfImage"]}
         />
- 
+
         <RectangleInfo
           className={fourthBlock["className"]}
           title={fourthBlock["title"]}
@@ -119,13 +121,11 @@ export function App() {
         />
       </div>
 
-
       <div className="screenshotCube">
         <div>
-          <ScreenShotContainer/>
+          <ScreenShotContainer />
         </div>
       </div>
-
 
       <h2>Add a new User to MongoDB:</h2>
       <a href="/createNewGame">
@@ -134,6 +134,51 @@ export function App() {
       <a href="/game">
         <button> See game</button>
       </a>
+      <div>
+        <br />
+        <h1>Hello and welcome to the project</h1>
+        <p>
+          Right now you can make an account, start a game on CF and/or
+          join/watch other CF games
+        </p>
+        <br />
+
+        <h2>Please register to play</h2>
+        <p>
+          Recommended to not use your real password but something simple like
+          "123" or "pass" <br /> (even thou we do hash our passwords/do not save
+          anything as plain text)
+        </p>
+        <a href="/register">
+          <span className="btn">Go to registration</span>
+        </a>
+        <br />
+        <br />
+        <a href="/login">
+          <span className="btn">Go to login</span>
+        </a>
+        <br />
+        <br />
+        <h2>Start Playing!</h2>
+        <p>
+          You can see current matches, join a match or start your own match!
+        </p>
+        <br />
+        <a href="/currentgames">
+          <span className="btn">Matches already started</span>
+        </a>
+        <br />
+        <br />
+        <a href="/startGames">
+          <span className="btn">Join a match</span>
+        </a>
+        <br />
+        <br />
+        <a href="/newGame">
+          <span className="btn">Create your own match</span>
+        </a>
+        <br />
+      </div>
     </React.Fragment>
   );
 }

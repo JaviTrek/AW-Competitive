@@ -7,21 +7,11 @@
   filter: brightness(50%)
 
 .newGameSection
-  padding: 15px 20px 20px
-  margin: 20px 30px
-  background-color: #1f1f1f
-  border: 5px solid #000
+  @include variables.section()
   .newGameSectionTitle, .mapPreviewTitle
-    color: variables.$color-primary-variant
-    font-style: normal
-    font-weight: 400
-    line-height: 36px
+    @include variables.sectionTitle()
   .newGameSectionSubtitle
-    color: #B4B4B4
-    font-weight: 400
-    font-size: 14px
-    line-height: 21px
-    margin-bottom: 15px
+    @include variables.sectionSubtitle()
   
 .characterSection
   display: flex
@@ -53,6 +43,13 @@
     text-align: center
   img 
     max-width: 144px
+
+.gameUnitsContainer
+  background-color: #131313
+  display: flex
+  padding: 15px
+  margin-top: 20px
+  justify-content: space-evenly
 
 .countryGrid
   display: flex
@@ -108,7 +105,7 @@
   color: #B4B4B4
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25)
 
-.btn
+.btn-big
   display: block
   margin-left: auto
   margin-right: auto

@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/JaviTrek/AW-Competitive/issues"
   },
-  "homepage": "https://github.com/JaviTrek/AW-Competitive#readme"
+  "homepage": "https://github.com/JaviTrek/AW-Competitive#readme",
+  "dependencies": {
+    "docker": "^1.0.0"
+  }
 }

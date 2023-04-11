@@ -33,7 +33,6 @@
   right: 0
   left: 0
   margin-bottom: 3%
-  font-family: Inter
   background-color: #E47220
   text-align: center
   width: 20%
@@ -78,8 +77,16 @@
   padding-bottom: 6%
 
 .rectangleInfoContainer
-  display: grid
-  align-content: end
+  display: flex
+  flex-direction: column
+
+.rectangleR
+  align-self: end
+  // margin-right: 10px
+
+.rectangleL
+  align-self: start
+  // margin-left: 10px
 
 
 

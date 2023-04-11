@@ -4,11 +4,13 @@ import {unitType} from "./unitType";
 import {checkTerrain} from "./checkTerrain";
 
 
-function pathFinding(maxX, maxY, unit, startIndex, gameState) {
+function pathFinding(maxX, maxY, unitID, initialTile, gameState, ignoreTerrain) {
 
 
     //Our function goes and check what ID is the unit we have
-    const unitData = unitType(unit.hasUnit.id)
+    const unitData = unitType(unitID)
+
+
 
     //we set unitMove to 0 and unitMoveType to P because these are default values that will stop movement
     //The movement points a unit has (3, 6, etc)
@@ -21,10 +23,10 @@ function pathFinding(maxX, maxY, unit, startIndex, gameState) {
         unitMoveType = unitData.moveType
     }
 
-    // startIndex / 18 will give us a number without a decimal (thanks to Math.trunc), this tells us the current column we are in
-    const startY = Math.trunc(startIndex / 18)
-    // the remainder of startIndex / 18 is equal to our current row
-    const startX = (startIndex) % 18
+    // initialTile / 18 will give us a number without a decimal (thanks to Math.trunc), this tells us the current column we are in
+    const startY = Math.trunc(initialTile / 18)
+    // the remainder of initialTile / 18 is equal to our current row
+    const startX = (initialTile) % 18
 
     //maxX maxY = rows columns, multiply together and get all tiles in grid
     const nodeAmount = maxX * maxY
@@ -126,15 +128,38 @@ function pathFinding(maxX, maxY, unit, startIndex, gameState) {
             if (visitedNodes[nextNodeIndex]) continue;
 
             //lets check the terrain cost of our next index/tile
-            let costToMove = checkTerrain(unitMoveType, gameState[nextNodeIndex])
-            //lets setup the movement cost of our new tile
-            movementCost[nextNodeIndex] = costToMove
+            let costToMove;
+            let hasEnemy;
+            //we use ignoreTerrain to calculate the range of indirect units since their range ignores terrain
+            if (ignoreTerrain === true) {
+                movementCost[nextNodeIndex] = 1
+                costToMove = 1
+            }
+            //if we dont ignore the terrain, then we actually go check it out
+            else  {
+                costToMove = checkTerrain(unitMoveType, gameState[nextNodeIndex], gameState[initialTile] )
+
+                //if an enemy unit is in range, we deliver "A"
+                if (costToMove === "A") {
+                    movementCost[nextNodeIndex] = 9
+                    //is it an indirect? if so, it doesnt show enemy tiles since it would be misleading since arty can only hit stuff if it doesnt move
+                    if (unitID !== 4 && unitID !== 8 && unitID !==7) {
+                        hasEnemy = true
+                    }
+
+                    //lets setup the movement cost of our new tile
+                } else movementCost[nextNodeIndex] = costToMove
+            }
+
+
 
             //The new distance from our initial tile to the new tile
             let newDistance = overallDistance + costToMove
 
             //if new distance is less than the distance of the next node AND the new distance isn't bigger than what the unit can move, then we add this tile to ou
-            if (newDistance < distance[nextNodeIndex] && newDistance <= unitMove) {
+
+            //Check that its an enemy then mark as red, but only if its not more than move points + 1
+            if (hasEnemy  && overallDistance < unitMove + 1|| newDistance < distance[nextNodeIndex] && newDistance <= unitMove) {
                 previous[nextNodeIndex] = index
                 distance[nextNodeIndex] = newDistance
                 // if we havent verified this tile
@@ -150,6 +175,7 @@ function pathFinding(maxX, maxY, unit, startIndex, gameState) {
                     tilesToDraw.push({
                         distance: newDistance,
                         index: nextNodeIndex,
+                        hasEnemy: hasEnemy,
                         x: addX,
                         y: addY
                     });
@@ -164,7 +190,6 @@ function pathFinding(maxX, maxY, unit, startIndex, gameState) {
             }
         }
     }
-
     // we return the tiles to draw so the component can "draw" them unto the map
     return {
         tilesToDraw: tilesToDraw,

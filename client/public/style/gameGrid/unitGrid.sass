@@ -1,22 +1,43 @@
-$imageName: Infantry, Mech, Recon, APC, Artillery, Tank, Anti-Air, Missile, Rocket, MdTank, PipeRunner, Neotank, MegaTank
+
+
+@use "../abstracts/variables"
+
+$imageName: Infantry, Mech, Recon, APC, Artillery, Tank, Anti-Air, Missile, Rocket, MdTank, PipeRunner, NeoTank, MegaTank
+
+
 $countryName: orangeStar, blueMoon
 
 .gameBox
   display: grid
-  grid-template-columns: min-content
+  position: relative
+  padding: 0
+  margin: 0
+  grid-template-columns: auto max-content auto
   text-align: center
-  padding: 2vw
-  margin: 5vw
-  align-items: center
+  align-items: start
   align-content: center
   justify-items: center
   justify-content: center
+  image-rendering: pixelated
+  color: black
+  button
+    cursor: pointer
+    background-color: variables.$color-primary
+    color: black
+    padding: 0.5em
+    font-size: 24px
+    font-weight: 500
+    transition: 0.4s
+    &:hover
+      background-color: variables.$color-primary-variant
+      color: black
+
 
   // our main grid where we have our map tiles
   .mapGrid
-    display: grid
+
     margin: 0
-    border: 1em solid #333b54
+    border: 1em solid #091a4f
     // our individual tiles
 
     .mapTile
@@ -31,31 +52,36 @@ $countryName: orangeStar, blueMoon
         display: grid
         grid-template-columns: 1fr
         gap: 4px
-        background: rgba(116, 116, 116, 0.8)
-        border: 2px solid rgba(59, 59, 59, 0.8)
-        z-index: 10
+        text-align: left
+        background: rgba(155, 155, 155, 0.8)
+        border: 2px solid rgba(91, 91, 91, 0.8)
+        z-index: 100
         position: absolute
         top: 0
         left: 100%
         .menuName
-          background-color: #eaeaea
+          background-color: #d3d3d3
           cursor: pointer
           font-size: 14px
           padding: 0 6px
-
           display: inline-block
+          &:hover
+            filter: contrast(1.5)
         .menuOptions
           padding: 0 6px
-          background-color: #eaeaea
+          background-color: #d3d3d3
           display: grid
           grid-template-columns: auto auto auto
           justify-items: left
           align-items: center
+          cursor: pointer
+          &:hover
+            filter: contrast(1.5)
 
           .menuCost
             justify-self: right
             display: inline-block
-            cursor: pointer
+
             font-size: 14px
           //let our units be displayed correctly in the menu
           @each $country in $countryName
@@ -65,31 +91,70 @@ $countryName: orangeStar, blueMoon
                 display: inline-block
                 width: 16px
                 height: 16px
+        .menuNoBuy
+          filter: brightness(0.5)
+          cursor: not-allowed
+          pointer-events: none
 
 
 
 
-
-
-//let our units be displayed correctly in the battlefield/grid
-@each $country in $countryName
-  @each $unit in $imageName
-    .#{$country}#{$unit}
-      background: url("images/units/#{$country}/#{$unit}-0.png") no-repeat
-      background-size: contain
-      position: absolute
-      z-index: 9
-      //currently adding 3px from the bottom to make them not step so much on the border of moveTile
-      bottom: 0px
-      height: 32px
-      width: 32px
-      image-rendering: pixelated
-
+//unit HP icons
+//
+@for $i from 1 through 9
+  .HP#{$i}Icon
+    position: absolute
+    right: 0px
+    bottom: 0px
+    width: 16px
+    height: 14px
+    background: url("images/UI/hp/#{$i}.png") no-repeat
+    z-index: 9
+    image-rendering: pixelated
+    background-size: contain
 
 
 
+.captureIcon
+  position: absolute
+  left: 0px
+  bottom: 0px
+  width: 16px
+  height: 14px
+  background: url("images/UI/capture.png") no-repeat
+  z-index: 9
+  image-rendering: pixelated
+  background-size: contain
 
 
+//this allows us to make units wait
+.tileUnit
+  position: absolute
+  bottom: 0
+.stateUsed
+
+  .tileUnit
+    filter: brightness(0.65)
+
+h1
+  padding: 0.5em
+
+.playerBox
+  width: 100%
+  z-index: 25
+
+.activePlayer
+  filter: brightness(1.1) contrast(1.05)
+.inactivePlayer
+  filter: brightness(0.8) contrast(0.8)
+
+.gameTitle
+  color: variables.$text-main
+  padding: 0.25em 0
+
+.column2
+  grid-column: span 2
 
 
-
+.column3
+  grid-column: span 3

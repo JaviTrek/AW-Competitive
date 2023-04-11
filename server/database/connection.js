@@ -26,14 +26,3 @@ module.exports = {
     }
 
 }
-
-/*
-            //use the collection
-
-
-            // find he documents in our collection and iterate through every one of them
-            myDoc = await collection.find()
-            myDoc.forEach(doc => console.log(doc));
-
-
- */
