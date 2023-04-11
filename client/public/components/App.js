@@ -77,7 +77,6 @@ export function App() {
         </div>
 
         <div className="s3">
-          {" "}
           <p1>
             Play Advance Wars Competitively Join thousands on the nostalgia!
           </p1>
@@ -85,7 +84,6 @@ export function App() {
       </div>
 
       <div className="rectangleInfoContainer">
-
         <RectangleInfo
           className={firstBlock["className"]}
           title={firstBlock["title"]}
@@ -127,13 +125,7 @@ export function App() {
       </div>
 
 
-      <h2>Add a new User to MongoDB:</h2>
-      <a href="/createNewGame">
-        <button> Try creating New Game</button>
-      </a>
-      <a href="/game">
-        <button> See game</button>
-      </a>
+     
     </React.Fragment>
   );
 }

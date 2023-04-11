@@ -14,8 +14,8 @@ export const RectangleInfo = ({
 
 
   return (
-    <div className={className}>
-<div className= "rectangle">
+    <div className={`rectangle ${className}`}>
+
       <div className="textHalf">
         <div className="titleImage">
           <h1 className="header1">Easy to play</h1>
@@ -36,7 +36,7 @@ export const RectangleInfo = ({
         <img className="image10" src={halfImage} alt="" />
       </div>
     </div>
-    </div>
+    
     
   );
 };
