@@ -10,7 +10,7 @@ const hoveredTextColor = "#E47220";
 const buttonBackgroundColor = "black";
 const hoveredBackgroundColor = "white";
 
-export const GameHeader = () => {
+export const GameHeader = ({player1Name, player2Name, gameStartDate, lastUpdatedDate, onClick}) => {
   const [buttonBackground, setButtonBackground] = useState(
     buttonBackgroundColor
   );
@@ -32,10 +32,10 @@ export const GameHeader = () => {
   return (
     <>
       <div className="matchInfo">
-        <div className="vs-container">Femboy vs Mipin</div>
+        <div className="vs-container">{player1Name} vs {player2Name}</div>
         <div className="date-tracker">
-          <p className="ui-label">Game Started: </p> 02/15/2023 -{" "}
-          <p className="ui-label">Last Updated: </p> 02/18/2023
+          <p className="ui-label">Game Started: </p> {gameStartDate} -{" "}
+          <p className="ui-label">Last Updated: </p> {lastUpdatedDate}
         </div>
         <div className="turn-counter">
           <div className="time-value-container">
@@ -77,6 +77,7 @@ export const GameHeader = () => {
                 }}
                 onMouseOver={buttonHover}
                 onMouseOut={buttonNotHovered}
+                onClick={onClick}
               >
                 End Turn
               </button>
