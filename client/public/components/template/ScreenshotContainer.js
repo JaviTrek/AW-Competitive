@@ -25,6 +25,7 @@ export const ScreenShotContainer = () =>{
     const [hovered4, setHovered4] = useState(false);
 
     let screenShots = [sh1, sh2, sh3, sh4, sh5];
+    let dot = [dotIndicator, dotIndicator2]
 
     const length = screenShots.length;
     
@@ -133,7 +134,7 @@ export const ScreenShotContainer = () =>{
                     
                     <img className = 'rightSlider' src = {sliderR} alt ="" onClick={nextPic}/>    
                 </div>
-            </div>
+            </div>  
             
         </div>  
     )

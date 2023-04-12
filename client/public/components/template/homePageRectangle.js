@@ -24,10 +24,7 @@ export const RectangleInfo = ({
         <h2 className="header2">{title}</h2>
         <p className="paragraph">{paragraph}</p>
 
-        <div className="buttonsContainer">
-          <div className="but1">Button</div>
-          <div className="but2">Button</div>
-        </div>
+        
       </div>
       <div className="imageHalf">
         <img className="image10" src={halfImage} alt="" />

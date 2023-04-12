@@ -23,7 +23,7 @@ export function App() {
     className: "rectangleL",
     title: "Matchmaking",
     paragraph:
-      "Blah blah text, blah blah blah, somehting ,something, something uhhh idk blah blah, hyper competitivee, blah blah esports, blah blah, we're literally making the next Dota/League",
+      "Online matchmaking allows players to connect with each other over the internet and play the game against each other in a competitive environment. It enables players to find opponents of similar skill levels, set up matches, and compete against each other in real-time, either one-on-one or in teams.",
     icon: "../images/homePageImages/rectangleIcon1.png", // should be the path from homePageRect
     halfImage: "../images/homePageImages/rectangleImage1.png",
   };
@@ -31,7 +31,7 @@ export function App() {
     className: "rectangleR",
     title: "Design Maps",
     paragraph:
-      "Blah blah text, blah blah blah, somehting ,something, something uhhh idk blah blah, hyper competitivee, blah blah esports, blah blah, we're literally making the next Dota/League",
+      "Players can use the in-game map editor to design their own maps, selecting terrain types, adding buildings and other structures, and placing units strategically. ",
     icon: "../images/homePageImages/rectangleIcon2.png", // should be the path from homePageRect
     halfImage: "../images/homePageImages/rectangleImage2.png",
   };
@@ -39,7 +39,7 @@ export function App() {
     className: "rectangleL",
     title: "Competitive Settings",
     paragraph:
-      "Blah blah text, blah blah blah, somehting ,something, something uhhh idk blah blah, hyper competitivee, blah blah esports, blah blah, we're literally making the next Dota/League",
+      "Competitive mode offers a structured, high-stakes gameplay experience for players looking to test their skills against others. Competitive mode features matchmaking systems that pair players of similar skill levels, ranking systems that track player progress and determine rewards, and rulesets that enforce fair play and balance.",
     icon: "../images/homePageImages/rectangleIcon3.png", // should be the path from homePageRect
     halfImage: "../images/homePageImages/rectangleImage3.png",
   };
@@ -47,7 +47,7 @@ export function App() {
     className: "rectangleR",
     title: "Tournaments",
     paragraph:
-      "Blah blah text, blah blah blah, somehting ,something, something uhhh idk blah blah, hyper competitivee, blah blah esports, blah blah, we're literally making the next Dota/League",
+      "Tournaments are organized events that offer players the opportunity to compete against each other for prizes and recognition. Tournaments can be structured in a variety of formats, such as single-elimination, double-elimination, round-robin, or Swiss. ",
     icon: "../images/homePageImages/rectangleIcon4.png", // should be the path from homePageRect
     halfImage: "../images/homePageImages/rectangleImage4.png",
   };
