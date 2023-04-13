@@ -17,64 +17,60 @@ import { Login } from "./components/LoginForm";
 
 const container = document.getElementById("app");
 const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Template />,
-    children: [
-      {
-        name: "App",
+    {
         path: "/",
-
         element: <Template/>,
         children: [
-            {
-                name: "App",
-                path: "/",
-                element: <App/>,
-            },
-            {
-                name: "children",
-                path: "children",
-                element: <AppChildren/>,
-            },
-            {
-                name: "about",
-                path: "about",
-                element: <About/>,
-            },
-            {
-                name: "game",
-                path: "game",
-                element: <Grid/>,
-            },
-            {
-                name: "currentgames",
-                path: "currentgames",
-                element: <CurrentGames/>,
-            },
 
-            {
-                name: "newgame",
-                path: "newgame",
-                element: <NewGame/>,
-            },
-            {
-                path: "register",
-                element: <Register/>,
-            },
-            {
-                path: "login",
-                element: <Login/>,
-            },
-            {
-                name: "howtoplay",
-                path: "howtoplay",
-                element: <HowToPlay/>,
-            },
-        ]
-    }
+                    {
+                        name: "App",
+                        path: "/",
+                        element: <App/>,
+                    },
 
-]);
+                    {
+                        name: "about",
+                        path: "about",
+                        element: <About/>,
+                    },
+                    {
+                        name: "game",
+                        path: "game",
+                        element: <Grid/>,
+                    },
+                    {
+                        name: "currentgames",
+                        path: "currentgames",
+                        element: <CurrentGames/>,
+                    },
+
+                    {
+                        name: "newgame",
+                        path: "newgame",
+                        element: <NewGame/>,
+                    },
+                    {
+                        name: "startGames",
+                        path: "startGames",
+                        element: <StartGames/>,
+                    },
+                    {
+                        path: "register",
+                        element: <Register/>,
+                    },
+                    {
+                        path: "login",
+                        element: <Login/>,
+                    },
+                    {
+                        name: "howtoplay",
+                        path: "howtoplay",
+                        element: <HowToPlay/>,
+                    },
+                ]
+
+
+    }]);
 
 const root = createRoot(container);
 root.render(<RouterProvider router={router} />);
