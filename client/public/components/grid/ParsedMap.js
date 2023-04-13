@@ -546,8 +546,8 @@ export function ParsedMap() {
     <div>
       {/* ADDED GameHeader Component HERE! */}
       <GameHeader
-        player1Name={matchInfo[0].player1Name}
-        player2Name={matchInfo[0].player2Name}
+        player1Name={players[countriesOrder[0]].username}
+        player2Name={players[countriesOrder[1]].username}
         gameStartDate={matchInfo[0].gameStartDate}
         lastUpdatedDate={matchInfo[0].lastUpdatedDate}
         day = {players.day}
