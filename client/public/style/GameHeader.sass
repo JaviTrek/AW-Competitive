@@ -7,10 +7,10 @@ $label-text-color: #9EBC9F
 .matchInfo
   // border: 1px solid white
   text-align: center
-  width: 40%
   margin: auto
-  display: grid
-  grid-template-rows: 1fr
+  display: flex
+  flex-direction: column
+  // grid-template-rows: 1fr
   font-family: 'VT323', monospace
   font-size: 1.5rem
   align-items: center
@@ -28,8 +28,8 @@ $label-text-color: #9EBC9F
     // background-color: black
     font-size: 2.5rem
     padding-top: 2%
-    padding-bottom: 2%
-  
+    // padding-bottom: 2%
+    
   .date-tracker
     // border: 1px solid white
     // background-color: black
@@ -38,8 +38,8 @@ $label-text-color: #9EBC9F
     padding-bottom: 1%
 
   .turn-counter 
-      
       color: white
+      width: 40%
       display: grid 
       grid-template-columns: 3fr 2fr 3fr
       row-gap: 5%
