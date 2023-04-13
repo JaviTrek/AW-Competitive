@@ -1,29 +1,48 @@
+@use '../abstracts/variables' as variables
+
 .rectangle
   display: grid
   margin: 20px
   grid-template-columns: 60% 40% 
-  margin: 20px
   max-width: 1080px
   filter: drop-shadow(20px 20px 10px rgba(0, 0, 0, 0.5))
   background: linear-gradient(-90deg, #304478 43.23%, #152B62 63.54%, #162754 84.9%) 
-
+  @media (max-width: 800px)
+    display: block
 
 .textHalf
-  padding-top: 10%
-  display: grid
-  grid-template-columns: 100% 
-  padding-right: 4%
-  padding-left: 4%
-  padding-bottom: 7%
+  padding: 30px
+  padding-top: 70px
+  display: flex
+  position: relative
+  flex-direction: column
+  @media (max-width: 800px)
+    padding-top: 30px
+
+.rectangleUnitImage
+  position: absolute
+  width: 84px
+  top: 30px
+  right: 30px
   
-.header1
-  font-size: 30px
-  margin-top: 11%
-  color: #9EBC9F
-.header2
-  font-size: 50px
-  padding-top: 8%
-  padding-bottom: 10%
+.rectangleSubtitleHeader
+  font-size: 2rem
+  line-height: 30px
+  color: variables.$color-primary-variant
+  @media (max-width: 800px)
+    margin-top: 40px
+    font-size: 1.25rem
+
+.rectangleTitleHeader
+  line-height: 50px
+  margin-right: 100px
+  @media (max-width: 800px)
+    padding: 0.5rem 0
+    font-size: 1.5rem
+
+.rectangleParagraph
+  @media (max-width: 800px)
+    font-size: 0.85rem
 
 .titleImage
   display: grid
@@ -31,14 +50,10 @@
   grid-column-end: 2 
 
 .image10
-  height: 100%
   width: 100%
-
-.unitImag
-  display: grid
-  height: 75%
-  margin-right: 0
-  margin-left: 57%
+  height: 100%
+  @media (max-width: 800px)
+    height: 200px
 
 .buttonsContainer
   display: grid

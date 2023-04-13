@@ -7,15 +7,8 @@ import charactersGroupshot from "../images/homePageImages/charactersGroup.png";
 import redditLogo from "../images/footerImages/Reddit.png";
 import ghLogo from "../images/footerImages/GitHub.png";
 import discordLogo from "../images/footerImages/Discord.png";
-import io from "socket.io-client";
 import { RectangleInfo } from "./template/homePageRectangle.js";
 import { ScreenShotContainer } from "./template/ScreenshotContainer.js";
-
-// import UnitPic from '../images/homePageImages/lilDudeIm.png'
-import { useState, useEffect } from "react";
-import axios from "axios";
-
-const socket = io.connect("http://localhost:4000");
 
 export function App() {
   //This is a dictionary (an object that looks like a dictionary)
@@ -54,36 +47,36 @@ export function App() {
 
   return (
     <React.Fragment>
-      <div className="backgroundMapTiles">
-        <img className="tile" src={bannerMap} alt="" />
+      <div className="homePageBanner">
+        <img className="tile" src={bannerMap} />
         <img className="charactersLined" src={charactersGroupshot} alt="" />
         <img className="logo" src={awLogo} alt="" />
       </div>
 
-      <div className="playNowBtn">
-        <p1> Play Now</p1>
+      <div className="btn playNowBtn">
+        <a href="/login">
+          <p1> Play Now</p1>
+        </a>
       </div>
 
       <div className="logosGrid">
-        <img className="ghLogo" src={redditLogo} alt="" />
+        <a href="https://github.com/FemboyDeveloper/AW-Competitive">
+          <img className="ghLogo" src={ghLogo} />
+        </a>
         <img className="redditLogo" src={discordLogo} alt="" />
-        <img className="discordLogo" src={ghLogo} alt="" />
+        <img className="discordLogo" src={redditLogo} alt="" />
       </div>
 
       <div className="remasteredElement">
-        <div className="s1">
-          <p1>The Ultimate Turn-Based Strategy Game</p1>
-        </div>
+        <p className="remasteredElementSubtitle">
+          The Ultimate Turn-Based Strategy Game
+        </p>
 
-        <div className="s2">
-          <p1>Remastered</p1>
-        </div>
+        <p className="remasteredElementTitle">Remastered</p>
 
-        <div className="s3">
-          <p1>
-            Play Advance Wars Competitively Join thousands on the nostalgia!
-          </p1>
-        </div>
+        <p className="remasteredElementText">
+          Play Advance Wars Competitively Join thousands on the nostalgia!
+        </p>
       </div>
 
       <div className="rectangleInfoContainer">
@@ -93,15 +86,30 @@ export function App() {
           paragraph={firstBlock["paragraph"]}
           icon={firstBlock["icon"]}
           halfImage={firstBlock["halfImage"]}
-        />
-
+        >
+          <div className="btnContainer">
+            <a className="btn" href="/newGame">
+              Create your own match
+            </a>
+            <a className="btn" href="/startGames">
+              Join a match
+            </a>
+            <a className="btn" href="/currentgames">
+              Matches already started
+            </a>
+          </div>
+        </RectangleInfo>
         <RectangleInfo
           className={secondBlock["className"]}
           title={secondBlock["title"]}
           paragraph={secondBlock["paragraph"]}
           icon={secondBlock["icon"]}
           halfImage={secondBlock["halfImage"]}
-        />
+        >
+          <div className="btnContainer">
+            <div className="btn btn-disabled">Coming Soon!</div>
+          </div>
+        </RectangleInfo>
 
         <RectangleInfo
           className={thirdBlock["className"]}
@@ -109,7 +117,11 @@ export function App() {
           paragraph={thirdBlock["paragraph"]}
           icon={thirdBlock["icon"]}
           halfImage={thirdBlock["halfImage"]}
-        />
+        >
+          <div className="btnContainer">
+            <div className="btn btn-disabled">Coming Soon!</div>
+          </div>
+        </RectangleInfo>
 
         <RectangleInfo
           className={fourthBlock["className"]}
@@ -117,16 +129,18 @@ export function App() {
           paragraph={fourthBlock["paragraph"]}
           icon={fourthBlock["icon"]}
           halfImage={fourthBlock["halfImage"]}
-        />
+        >
+          <div className="btnContainer">
+            <div className="btn btn-disabled">Coming Soon!</div>
+          </div>
+        </RectangleInfo>
       </div>
 
-      <div className="screenshotCube">
-        <div>
-          <ScreenShotContainer />
-        </div>
-      </div>
+      {/* <div className="screenshotCube">
+        <ScreenShotContainer />
+      </div> */}
 
-      <div>
+      {/* <div>
         <br />
         <h1>Hello and welcome to the project</h1>
         <p>
@@ -170,7 +184,7 @@ export function App() {
           <span className="btn">Create your own match</span>
         </a>
         <br />
-      </div>
+      </div> */}
     </React.Fragment>
   );
 }

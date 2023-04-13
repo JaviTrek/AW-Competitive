@@ -10,21 +10,16 @@ export const RectangleInfo = ({
   paragraph = "",
   icon = { UnitPic },
   halfImage = { reactImage },
+  children
 }) => {
   return (
     <div className={`rectangle ${className}`}>
       <div className="textHalf">
-        <div className="titleImage">
-          <h1 className="header1">Easy to play</h1>
-          <div className="unitImgGrid">
-            <img className="unitImag" src={icon} alt="" />
-          </div>
-        </div>
-
-        <h2 className="header2">{title}</h2>
-        <p className="paragraph">{paragraph}</p>
-
-        
+        <img className="rectangleUnitImage" src={icon} alt="" />
+        <h2 className="rectangleSubtitleHeader">Easy to play</h2>
+        <h1 className="rectangleTitleHeader">{title}</h1>
+        <p className="rectangleParagraph">{paragraph}</p>
+        {children}
       </div>
       <div className="imageHalf">
         <img className="image10" src={halfImage} alt="" />
