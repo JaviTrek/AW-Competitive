@@ -14,11 +14,20 @@ export const Footer = () => {
            <img className ='imageLogo' src ={awLogo} alt=""/>
         </div>
 
-        <nav className = 'menuElementGridF'>  
-          <div className = 'menuButtonElementGridF'> Home </div>
+        <nav className = 'menuElementGridF'>
+          <a href="/">
+            <div className = 'menuButtonElementGridF'> Home </div>
+          </a>
+
+
+          <a href="/about">
           <div className = 'menuButtonElementGridF'> About us </div>
-          <div className = 'menuButtonElementGridF'> Terms of Use </div>
-          <div className = 'menuButtonElementGridF'> Rules </div>
+          </a>
+
+          <a href="/howtoplay">
+            <div className = 'menuButtonElementGridF'> How to play </div>
+          </a>
+
         </nav>
 
         <nav className = 'iconElements'>

@@ -1,6 +1,7 @@
 import React from "react";
 import { NameBanner } from "./NameBanner";
 import '../../style/gameInterface/NameCO.sass'
+import '../../style/currentPlayer.sass'
 
 export const NameCO = ({
   name = "name",
@@ -10,11 +11,17 @@ export const NameCO = ({
 }) => {
   return (
     <div className={`NameCO playerNumber${playerNumber}`}>
-      <img
+      {/* If the character pulled from the database if empty(""), replace with Rachel. */}
+      { character == "" ? <img
         className="NameCOImage"
-        src={`../../images/CO/${character}-Full.png`}
+        src={`../../images/CO/Sami-Full.png`}
         alt={`character ${playerNumber}`}
-      />
+        style={{ filter: "brightness(0%)" }}
+      /> :
+      <div
+        className={`NameCOImage ${character}Player`}
+        //src={`../../images/CO/${character}-Full.png`}
+        alt={`character ${playerNumber}`}> </div>}
       <NameBanner name={name} color={color} />
     </div>
   );

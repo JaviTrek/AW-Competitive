@@ -21,10 +21,10 @@ export function Login() {
   });
 
   // <form method='post' action="/loginUser" className="authenticationForm">
-  return (
-    <SmallContainer title="Log In">
-      <div className={`flashMessage ${flash.class}Flash`}>{flash.message}</div>
-      <form method="get" action="/routes/auth">
+
+
+  /*
+  <form method="get" action="/routes/auth">
         <button
           tabIndex={0}
           className={`btn ${styles.discordButton}`}
@@ -39,6 +39,12 @@ export function Login() {
         <p>Or</p>
         <div className={styles.orLine} />
       </div>
+   */
+
+  return (
+    <SmallContainer title="Log In">
+      <div className={`flashMessage ${flash.class}Flash`}>{flash.message}</div>
+
 
       <form
         className="authenticationForm"
@@ -48,6 +54,8 @@ export function Login() {
               params: data,
             })
             .then((res) => {
+              localStorage.clear();
+              localStorage.setItem("user", JSON.stringify(res.data));
               setFlash({
                 class: "success",
                 message: "You have logged in correctly! Redirecting...",
@@ -55,7 +63,7 @@ export function Login() {
               //give the user some time to read success message
               setTimeout(() => {
                 navigate("/");
-              }, 3000);
+              }, 1500);
             })
             .catch((err) => {
               console.error(err);
@@ -72,6 +80,7 @@ export function Login() {
           {...register("username")}
           type="text"
           placeholder="Username"
+          maxLength={14}
           required
         />
         <input
@@ -79,6 +88,7 @@ export function Login() {
           {...register("password")}
           type="password"
           placeholder="Password"
+          maxLength={14}
           required
         />
         <p className={styles.subtext}>
