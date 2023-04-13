@@ -9,9 +9,9 @@ export function Register() {
   const navigate = useNavigate();
   const { register, handleSubmit, watch } = useForm({
     defaultValues: {
-      username: "JaviJavi",
-      password: "123",
-      confirmPassword: "123",
+      username: "",
+      password: "",
+      confirmPassword: "",
     },
   });
   const watchPassword = watch("password");
@@ -20,25 +20,11 @@ export function Register() {
         class: "none", message: "",
     })
   return (
-    <SmallContainer title="Sign In">
+    <SmallContainer title="Register to play">
         <div className={`flashMessage ${flash.class}Flash`}>
             {flash.message}
         </div>
-      <form method="get" action="/routes/auth">
-        <button
-          tabIndex={0}
-          className={`btn ${styles.discordButton}`}
-          type="submit"
-        >
-          Continue with Discord
-        </button>
-      </form>
 
-      <div className={styles.orDivider}>
-        <div className={styles.orLine} />
-        <p>Or</p>
-        <div className={styles.orLine} />
-      </div>
 
       <form
         className="authenticationForm"
@@ -52,7 +38,7 @@ export function Register() {
                     //give the user some time to read success message
                     setTimeout(() => {
                         navigate("/login")
-                    }, 3000)
+                    }, 1500)
                 })
                 .catch((err) => {
                     console.error(err)
@@ -69,6 +55,7 @@ export function Register() {
           {...register("username")}
           type="text"
           placeholder="Username"
+          maxLength={14}
           required
         />
         <input
@@ -76,6 +63,7 @@ export function Register() {
           {...register("password")}
           type="password"
           placeholder="Password"
+          maxLength={14}
           required
         />
         <input
@@ -87,6 +75,7 @@ export function Register() {
             },
           })}
           placeholder="Confirm Password"
+          maxLength={14}
           required
         />
         {watchPassword != watchConfirmPassword &&

@@ -2,9 +2,16 @@
 $player2-color: linear-gradient(90.04deg, rgba(0, 0, 0, 0) 0.08%, #2342BA 72.38%, #0E1A47 95.82%)
 $player1-color: linear-gradient( 270.04deg, rgba(0, 0, 0, 0) 0.08%, #E61F1F 79.61%, #470E0E 99.23%)
 @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap')
-div
-    // border: 1px solid black    
+$CO-Names: Andy, Hachi, Jake, Max, Nell, Rachel, Sami, Colin, Grit, Olaf, Sasha, Drake, Eagle, Javier, Jess, Grimm, Kanbei, Sensei, Sonja, Adder, Flak, Hawke, Jugger, Kindle, Koal, Lash, Sturm, Bolt
 
+@each $CO in $CO-Names
+    .#{$CO}Player
+
+        @if $CO == 'Bolt'
+            background: url("../images/CO/Von Bolt-Full.png") no-repeat
+        @else
+            background: url("../images/CO/#{$CO}-Full.png") no-repeat
+        background-position: top right
 
 .current-player
     // background: #eee
@@ -27,27 +34,20 @@ div
         // grid-template-columns: 1fr 1fr
 
         .character-image-orange
-            min-width: 25%
-            width: 25%
-            max-width: 25%
-            object-position: 100% 0%
+            width: 100%
+            left: 0
             height: 100%
-            max-height: 100%
             position: absolute
             z-index: 1
-
             transform: scaleX(-1)
-
         .character-image-blue
-            min-width: 25%
-            width: 25%
-            max-width: 25%
-            object-position: 100% 0%
+            width: 100%
+            top: 0
             height: 100%
-            max-height: 100%
             position: absolute
-            right: 0
             z-index: 1
+
+
 
             
         .character-background-blue
