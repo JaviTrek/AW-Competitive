@@ -40,7 +40,7 @@ export const Header = () => {
         <a className="headerNav headerMenuButton" href={'/currentgames'}> Current games</a>
         <a className="headerNav headerMenuButton" href={'/newGame'}> Start a game</a>
           <a className="headerNav headerMenuButton" href={'/startGames'}> Join a game</a>
-        <a className="headerNav headerMenuButton"> How to play</a>
+        <a className="headerNav headerMenuButton" href={'/howtoplay'}> How to play</a>
       </nav>
 
       {login}
