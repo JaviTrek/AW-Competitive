@@ -7,13 +7,13 @@ const { hashPassword, comparePassword } = require('./hashing_password');
 
 //serializing 
 passport.serializeUser((user, done)=> {
-    console.log("Serializing user local");
+    //console.log("Serializing user local");
     // console.log(user)
     // console.log(user._id)
     done(null, user._id)});
 
 passport.deserializeUser(async (_id, done)=> {
-    console.log("Deserializing user local strategy");
+   // console.log("Deserializing user local strategy");
     let dbConnect = database.getDatabase();
     let collection = dbConnect.collection("learn");
     try{

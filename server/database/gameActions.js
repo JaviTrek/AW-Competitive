@@ -26,8 +26,6 @@ router.post("/saveGameAction", loggedIn, async (req, res) => {
         if (!req.user || req.user._id !== countryOrder[data.playerState.turn]) {
             res.json({error: 'error'})
         } else {
-
-
             //let findGame = await collection.findOne({_id: new mongo.ObjectId(req.query.id)})
             let tilesToUpdate = [initialTile, newTile]
             //if attacked tile isnt true, that means that a tile wasnt attacked and therefore doesnt need to be updated
@@ -97,8 +95,3 @@ router.post("/passTheTurn", loggedIn, async (req, res) => {
 })
 
 module.exports = router;
-
-
-
-// if (req.user._id !== countryOrder[turn]) {
-//res.sendStatus(401)

@@ -19,14 +19,10 @@ export const Header = () => {
             <div className={"usernameTitle"}>
               {username}
               <div className="dropdownMenu">
-                <a href="/settings" type="GET">
-                  User Settings
-                </a>
-                <a
-                  href="/logout"
-                >
+                <a href="/logout">
                   Log Out
                 </a>
+
               </div>
             </div>
           );
@@ -44,7 +40,7 @@ export const Header = () => {
         <a className="headerNav headerMenuButton" href={'/currentgames'}> Current games</a>
         <a className="headerNav headerMenuButton" href={'/newGame'}> Start a game</a>
           <a className="headerNav headerMenuButton" href={'/startGames'}> Join a game</a>
-        <a className="headerNav headerMenuButton"> How to play</a>
+        <a className="headerNav headerMenuButton" href={'/howtoplay'}> How to play</a>
       </nav>
 
       {login}
