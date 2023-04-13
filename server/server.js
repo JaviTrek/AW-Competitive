@@ -204,11 +204,16 @@ app.get("/protectRoute", loggedIn, (req, res) => {
 });
 
 function loggedIn(req, res, next) {
-    if (req.isAuthenticated()) {
-        next();
-    } else {
-        res.redirect("/login");
+    try {
+        if (req.isAuthenticated()) {
+            next();
+        } else {
+            res.redirect("/login");
+        }
+    } catch (e) {
+        console.log(e)
     }
+
 }
 
 app.get("/authenticateUser", loggedIn, (req, res) => {
