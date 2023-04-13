@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap')
+$label-text-color: #9EBC9F
+
+
+
+
+.matchInfo
+  // border: 1px solid white
+  text-align: center
+  margin: auto
+  display: flex
+  flex-direction: column
+  // grid-template-rows: 1fr
+  font-family: 'VT323', monospace
+  font-size: 1.5rem
+  align-items: center
+  padding-bottom: 3%
+
+  .ui-label
+    color: $label-text-color
+    display: inline
+
+  .time-value
+    display: inline
+
+  .vs-container
+    // border: 1px solid white
+    // background-color: black
+    font-size: 2.5rem
+    padding-top: 2%
+  // padding-bottom: 2%
+
+  .date-tracker
+    // border: 1px solid white
+    // background-color: black
+    font-size: 1.75rem
+    padding: 0.25em
+    margin: 0.5em
+
+  .turn-counter
+    color: white
+
+    display: grid
+    grid-template-columns: 3fr 2fr 3fr
+    row-gap: 5%
+
+    .time-value-container
+      padding: 0.5em
+
+    .day-container
+
+      padding: 0.5em
+
+
+    .buttons-container
+      grid-column: 1 / span 4
+      width: 40%
+      text-align: center
+      margin: auto
+      display: grid
+      grid-template-columns: 1fr
+
+
+
+      //THESE STYLING VALUES WILL BE IMPLEMENTED WHEN THE OTHER BUTTONS ARE ADDED IN THE FINAL BUILD OF THE SITE
+      //width: 60%
+      //grid-template-columns: 2fr 1fr 1fr 1fr 2fr
+
+      .container-item
+        border-top: none
+        border-bottom: none
+        padding: 0
+
+
+      .ui-button
+        font-family: 'VT323', monospace
+        font-size: 1.6rem
+        padding-top: 2.5%
+        padding-bottom: 2.5%
+        color: white
+        // background-color: black
+        width: 100%
+        height: 100%
+
+
+
+
+    div
+      border: 1px solid white
+      background-color: black
