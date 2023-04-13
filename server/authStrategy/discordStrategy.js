@@ -6,24 +6,30 @@ require("dotenv").config();
 
 //Serializing user
 passport.serializeUser((user, done) => {
-    console.log("Serializing user Discord strategy");
-    console.log(user);
+try {
     done(null, user);
+} catch (e) {
+    console.log(e)
+}
+
 });
 
 //Decerializing user
 passport.deserializeUser(async (user, done) => {
-    console.log("Deserializing user discord user");
-    console.log(user._id)
-    let dbConnect = database.getDatabase()
-    //use the collection
+    try {
+        let dbConnect = database.getDatabase()
+        //use the collection
 
-    let collection = dbConnect.collection("learn")
-   
-    const userS = await collection.findOne({_id : {$eq: user._id}});
-    if(userS) 
-        console.log("userS found")
+        let collection = dbConnect.collection("learn")
+
+        const userS = await collection.findOne({_id : {$eq: user._id}});
+        if(userS)
+            console.log("userS found")
         done(null, userS);
+    } catch (e) {
+        console.log(e)
+    }
+
 });
 
 // //Getting the discord token
