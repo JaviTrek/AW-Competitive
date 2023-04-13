@@ -10,84 +10,84 @@ export const About = () => {
             role: "Lead Dev",
             description:
                 " Working on Dev of the full game doing all kinds of coding. Generally working on every part of AW.",
-            picture: "../images/Javi-pfp.png",
-            discord: "../images/discord.png",
+            picture: "../images/about/Javi-pfp.png",
+            discord: "../images/about/discord.png",
             discordNum: "#6116",
-            github: "../images/github.png",
+            github: "../images/about/github.png",
             githubLink: "https://github.com/JaviTrek",
-            resume: "../images/cv.png",
+            resume: "../images/about/cv.png",
         },
         {
             name: "Rey",
             role: "Full Stack Dev",
             description:
                 " Working on Dev of the full game doing all kinds of coding. Generally working on every part of AW.",
-            picture: "../images/Rey-pfp.png",
-            discord: "../images/discord.png",
+            picture: "../images/about/Rey-pfp.png",
+            discord: "../images/about/discord.png",
             discordNum: "#7444",
-            github: "../images/github.png",
+            github: "../images/about/github.png",
             githubLink: "https://github.com/rjam13",
-            resume: "../images/cv.png",
+            resume: "../images/about/cv.png",
         },
         {
             name: "Stepan",
             role: "Back-end Dev",
             description:
                 " Working on Dev of the full game doing all kinds of coding. Generally working on every part of AW.",
-            picture: "../images/Steven-pfp.png",
-            discord: "../images/discord.png",
+            picture: "../images/about/Steven-pfp.png",
+            discord: "../images/about/discord.png",
             discordNum: "#1791",
-            github: "../images/github.png",
+            github: "../images/about/github.png",
             githubLink: "https://github.com/spopo003",
-            resume: "../images/cv.png",
+            resume: "../images/about/cv.png",
         },
         {
             name: "Victor",
             role: "Front-end Dev",
             description:
                 " Working on Dev of the full game doing all kinds of coding. Generally working on every part of AW.",
-            picture: "../images/Victor-pfp.png",
-            discord: "../images/discord.png",
+            picture: "../images/about/Victor-pfp.png",
+            discord: "../images/about/discord.png",
             discordNum: "#7211",
-            github: "../images/github.png",
+            github: "../images/about/github.png",
             githubLink: "https://github.com/VAlva8",
-            resume: "../images/cv.png",
+            resume: "../images/about/cv.png",
         },
         {
             name: "Zach",
             role: "Front-end Dev",
             description:
                 " Working on Dev of the full game doing all kinds of coding. Generally working on every part of AW.",
-            picture: "../images/Zach-pfp.png",
-            discord: "../images/discord.png",
+            picture: "../images/about/Zach-pfp.png",
+            discord: "../images/about/discord.png",
             discordNum: "#4541",
-            github: "../images/github.png",
+            github: "../images/about/github.png",
             githubLink: "https://github.com/Zack-29",
-            resume: "../images/cv.png",
+            resume: "../images/about/cv.png",
         },
         {
             name: "Miguel",
             role: "Front-end Dev",
             description:
                 " Working on Dev of the full game doing all kinds of coding. Generally working on every part of AW.",
-            picture: "../images/Miguel-pfp.png",
-            discord: "../images/discord.png",
+            picture: "../images/about/Miguel-pfp.png",
+            discord: "../images/about/discord.png",
             discordNum: "#1054",
-            github: "../images/github.png",
+            github: "../images/about/github.png",
             githubLink: "https://github.com/MiguelGarcia2002",
-            resume: "../images/cv.png",
+            resume: "../images/about/cv.png",
         },
         {
             name: "Emanuel",
             role: "Front-end Dev",
             description:
                 " Working on Dev of the full game doing all kinds of coding. Generally working on every part of AW.",
-            picture: "../images/Emiliano-pfp.png",
-            discord: "../images/discord.png",
+            picture: "../images/about/Emiliano-pfp.png",
+            discord: "../images/about/discord.png",
             discordNum: "#5569",
-            github: "../images/github.png",
+            github: "../images/about/github.png",
             githubLink: "https://github.com/ERivas-786",
-            resume: "../images/cv.png",
+            resume: "../images/about/cv.png",
         },
     ];
 
@@ -187,7 +187,7 @@ export const About = () => {
                         </a>
                     </div>
                 </div>
-                <img src="../images/AW-about.png" className="image1"></img>
+                <img src="../images/about/AW-about.png" className="image1"></img>
             </div>
 
             <div className="profile-container">
