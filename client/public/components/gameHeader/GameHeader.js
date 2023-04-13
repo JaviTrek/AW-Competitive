@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import "../../style/GameHeader.sass";
 
-const borderColor = "#E47220";
+const borderColor = "black";
 const hoveredBordercolor = "black";
 
-const textColor = "white";
-const hoveredTextColor = "#E47220";
+const textColor = "#E47220";
+const hoveredTextColor = "black";
 
 const buttonBackgroundColor = "black";
-const hoveredBackgroundColor = "white";
+const hoveredBackgroundColor = "#E47220";
 
 export const GameHeader = ({player1Name, player2Name, gameStartDate, lastUpdatedDate, onClick, day}) => {
   const [buttonBackground, setButtonBackground] = useState(
