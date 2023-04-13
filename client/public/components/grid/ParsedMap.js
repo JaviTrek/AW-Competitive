@@ -10,6 +10,7 @@ import {CurrentPlayer} from "../CurrentPlayer";
 import {useNavigate} from "react-router-dom";
 import io from "socket.io-client";
 import {repairUnit} from "./gameLogic/repairUnit";
+import {GameHeader} from "../GameHeader";
 
 axios.defaults.withCredentials = true
 let connectionURL = 'http://localhost:4000'
@@ -604,9 +605,15 @@ useEffect(()=> {
     return (<div>
         <div className="gameBox">
             <div className="gameTitle column3">
-                <h1>Caustic Finale</h1>
-                <h1>Day: {players.day}</h1>
-                <button onClick={passTurn}> Pass Turn</button>
+                <GameHeader
+                    player1Name={players[countriesOrder[0]].username}
+                    player2Name={players[countriesOrder[1]].username}
+                    gameStartDate={'04/14/2023'}
+                    lastUpdatedDate={'04/14/2023'}
+                    day = {players.day}
+                    onClick={passTurn}
+                />
+
             </div>
 
             <div className={`playerBox ${playerState.turn === 0 ? "activePlayer" : "inactivePlayer"}`}>
