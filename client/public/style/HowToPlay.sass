@@ -1,0 +1,44 @@
+// This is so the container is slightly disconnected from the header
+.howToContainer
+  margin-top: 1rem
+
+// This is for the large overall container that holds all the instructions
+.container
+  width: 55%
+
+// This is the style for the entire instruction chunk - heading, text, and image
+li
+  margin: 1.5rem
+  margin-bottom: 4rem
+
+// This is so the last instruction does not have a margin of 4rem
+#lastInstruction
+  margin-bottom: 0
+
+h2
+  margin-bottom: 0.5rem
+  font-weight: bold
+
+// This is for the chunk that contains the text and image
+.instructionSection
+  background-color: rgba(0,0,0,0.75)
+  display: flex
+  min-height: 5rem
+  max-height: 20rem
+  padding: 1rem
+  gap: 1rem
+  border-radius: 0.3rem
+
+// This is so that every odd numbered instruction gets the text and image order flipped
+.inverted
+  flex-direction: row-reverse
+
+// This is for the actual instruction text itself
+.instructionInformation
+  font-size: 1.25rem
+  padding: 0.75rem
+
+.instructionImage
+  max-width: 50%
+  user-select: none
+  border-radius: 0.2rem
