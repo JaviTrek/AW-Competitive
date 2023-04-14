@@ -1,26 +1,37 @@
 @use 'abstracts/variables' as variables
   
+.homepage
+  overflow-x: hidden
+
 .homePageBanner
   position: relative
   margin-bottom: 100px
   // @media (max-width: 550px)
   //   margin-top: 80px
 
-// @keyframes slidein 
-//   from 
-//     width: 100%
-//   to 
-//     width: 0%
+@keyframes slideIn
+  from 
+    margin-left: 0
+  to 
+    margin-left: -1600px
   
 .tile
+  background-image: url("../images/homePageImages/backgroundMap.png")
+  overflow: hidden
+  // background-repeat: repeat-x
   margin-top: 30px
-  width: 100%
+  // width: 1600px
   height: 363px
+
+  width: 4800px
+  @media (max-width: 1600px)
+    width: 3200px
   @media (max-width: 550px)
     height: 300px
-  // animation-duration: 10s
-  // animation-name: slidein
-  // animation-iteration-count: infinite
+  animation-duration: 90s
+  animation-name: slideIn
+  animation-iteration-count: infinite
+  animation-timing-function: linear
 .charactersLined
   position: absolute
   margin-left: auto
@@ -55,8 +66,8 @@
   right: 0
   left: 0
   margin-bottom: 35px
-  font-size: 50px
-  padding-top: 20px
+  font-size: 3rem
+  padding: 0
   @media (max-width: 813px)
     transform: scale(0.7)
 

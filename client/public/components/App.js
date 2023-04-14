@@ -2,7 +2,6 @@ import React from "react";
 import "../style/App.sass";
 import "../style/template/template.sass";
 import awLogo from "../images/awLogo.webp";
-import bannerMap from "../images/homePageImages/backgroundMap.png";
 import charactersGroupshot from "../images/homePageImages/charactersGroup.png";
 import redditLogo from "../images/footerImages/Reddit.png";
 import ghLogo from "../images/footerImages/GitHub.png";
@@ -17,7 +16,7 @@ export function App() {
     title: "Matchmaking",
     paragraph:
       "Online matchmaking allows players to connect with each other over the internet and play the game against each other in a competitive environment. It enables players to set up matches, and compete against each other in real-time, either one-on-one or in teams.",
-    icon: "../images/homePageImages/rectangleIcon1.png", // should be the path from homePageRect
+    icon: "orangeStarTank", // should be the path from homePageRect
     halfImage: "../images/homePageImages/rectangleImage1.png",
   };
   const secondBlock = {
@@ -25,7 +24,7 @@ export function App() {
     title: "Design Maps",
     paragraph:
       "Players can use the in-game map editor to design their own maps, selecting terrain types, adding buildings and other structures. ",
-    icon: "../images/homePageImages/rectangleIcon2.png", // should be the path from homePageRect
+    icon: "blueMoonInfantry", // should be the path from homePageRect
     halfImage: "../images/homePageImages/rectangleImage2.png",
   };
   const thirdBlock = {
@@ -33,7 +32,7 @@ export function App() {
     title: "Competitive Settings",
     paragraph:
       "Competitive mode offers a structured, high-stakes gameplay experience for players looking to test their skills against others. Competitive mode features matchmaking systems that pair players of similar skill levels, ranking systems that track player progress and determine rewards, and rulesets that enforce fair play and balance.",
-    icon: "../images/homePageImages/rectangleIcon3.png", // should be the path from homePageRect
+    icon: "yellowCometSub", // should be the path from homePageRect
     halfImage: "../images/homePageImages/rectangleImage3.png",
   };
   const fourthBlock = {
@@ -41,14 +40,15 @@ export function App() {
     title: "Tournaments",
     paragraph:
       "Tournaments are organized events that offer players the opportunity to compete against each other for prizes and recognition. Tournaments can be structured in a variety of formats, such as single-elimination, double-elimination, round-robin, or Swiss. ",
-    icon: "../images/homePageImages/rectangleIcon4.png", // should be the path from homePageRect
+    icon: "greenEarthFighter", // should be the path from homePageRect
     halfImage: "../images/homePageImages/rectangleImage4.png",
   };
 
   return (
     <React.Fragment>
+      <div></div>
       <div className="homePageBanner">
-        <img className="tile" src={bannerMap} />
+        <div className="tile" />
         <img className="charactersLined" src={charactersGroupshot} alt="" />
         <img className="logo" src={awLogo} alt="" />
       </div>
@@ -134,9 +134,9 @@ export function App() {
         </RectangleInfo>
       </div>
 
-      {/* <div className="screenshotCube">
+      <div className="screenshotCube">
         <ScreenShotContainer />
-      </div> */}
+      </div>
 
       {/* <div>
         <br />

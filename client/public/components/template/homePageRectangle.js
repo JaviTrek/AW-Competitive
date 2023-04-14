@@ -1,5 +1,6 @@
 import React from "react";
 import "../../style/template/rectangle.sass";
+import "../../style/Animations.sass";
 //import RectImage from '../../images/homePageImages/rectangleImage1.png'
 //import UnitPic from '../../images/homePageImages/lilDudeIm.png'
 
@@ -15,7 +16,7 @@ export const RectangleInfo = ({
   return (
     <div className={`rectangle ${className}`}>
       <div className="textHalf">
-        <img className="rectangleUnitImage" src={icon} alt="" />
+        <div className={`rectangleUnitImage ${icon}`} />
         <h2 className="rectangleSubtitleHeader">Easy to play</h2>
         <h1 className="rectangleTitleHeader">{title}</h1>
         <p className="rectangleParagraph">{paragraph}</p>

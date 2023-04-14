@@ -6,22 +6,14 @@ import axios from "axios";
 export const Header = () => {
   // header drawer for smaller screens
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
-  const toggleDrawer = (open) => (event) => {
-    if (
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
-    setIsDrawerOpen(open);
-  };
+
   let [login, setLogin] = useState({
     usernameText: (
       <a href="/login" className="headerNav loginButton">
         Login
       </a>
     ),
-    drawerLogoutButton: <></>,
+    drawerLogoutButton: null,
   });
   useEffect(() => {
     axios
@@ -40,33 +32,64 @@ export const Header = () => {
                 </div>
               </div>
             ),
+            drawerLogoutButton: (
+              <a
+                className="headerNav headerMenuButton drawerLogoutButton"
+                href={"/logout"}
+              >
+                Log Out
+              </a>
+            ),
           });
         }
       })
       .catch((e) => console.error(e));
   }, []);
   return (
-    <header className="header">
-      <a className="headerLogo" href="/">
-        <img src={logo} alt="header logo" />
-      </a>
-
-      <div className="headerMenu">
-        <a className="headerNav headerMenuButton" href={"/newGame"}>
-          Start a game
+    <>
+      {isDrawerOpen ? (
+        <div
+          className="headerDarkBG"
+          onClick={() => {
+            setIsDrawerOpen(false);
+          }}
+        />
+      ) : (
+        <></>
+      )}
+      <header className="header">
+        <a className="headerLogo" href="/">
+          <img src={logo} alt="header logo" />
         </a>
-        <a className="headerNav headerMenuButton" href={"/startGames"}>
-          Join a game
-        </a>
-        <a className="headerNav headerMenuButton" href={"/currentgames"}>
-          Current games
-        </a>
-        <a className="headerNav headerMenuButton" href={"/howtoplay"}>
-          How to play
-        </a>
-      </div>
-
-      {login["usernameText"]}
-    </header>
+        <div
+          className={`headerMenu ${
+            isDrawerOpen ? "headerMenuOpened" : "headerMenuClosed"
+          }`}
+        >
+          <a className="headerNav" href={"/newGame"}>
+            Start a game
+          </a>
+          <a className="headerNav" href={"/startGames"}>
+            Join a game
+          </a>
+          <a className="headerNav" href={"/currentgames"}>
+            Current games
+          </a>
+          <a className="headerNav" href={"/howtoplay"}>
+            How to play
+          </a>
+          {login["drawerLogoutButton"]}
+        </div>
+        {login["usernameText"]}
+        <div
+          className="headerDrawerButton"
+          onClick={() => {
+            setIsDrawerOpen(!isDrawerOpen);
+          }}
+        >
+          |||
+        </div>
+      </header>
+    </>
   );
 };

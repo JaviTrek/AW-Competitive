@@ -9,6 +9,9 @@
   background: linear-gradient(-90deg, #304478 43.23%, #152B62 63.54%, #162754 84.9%) 
   @media (max-width: 800px)
     display: block
+  &:hover
+    .image10
+      transform: rotate(1deg) scale(1.01)
 
 .textHalf
   padding: 30px
@@ -21,7 +24,11 @@
 
 .rectangleUnitImage
   position: absolute
-  width: 84px
+  width: 84px !important
+  height: 84px !important
+  @media (max-width: 800px)
+    width: 50px !important
+    height: 50px !important
   top: 30px
   right: 30px
   
@@ -31,7 +38,6 @@
   color: variables.$color-primary-variant
   @media (max-width: 800px)
     margin-top: 40px
-    font-size: 1.25rem
 
 .rectangleTitleHeader
   padding-left: 0
@@ -39,11 +45,6 @@
   margin-right: 100px
   @media (max-width: 800px)
     padding: 0.5rem 0
-    font-size: 1.5rem
-
-.rectangleParagraph
-  @media (max-width: 800px)
-    font-size: 0.85rem
 
 .titleImage
   display: grid
@@ -53,6 +54,7 @@
 .image10
   width: 100%
   height: 100%
+  transition: transform 0.1s ease-in-out
   @media (max-width: 800px)
     height: 200px
 

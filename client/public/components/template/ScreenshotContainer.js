@@ -24,9 +24,7 @@ export const ScreenShotContainer = () => {
     images.forEach(function (image) {
       tmp.push(image === length - 1 ? 0 : image + 1);
     });
-    console.log(images);
     setImages(tmp);
-    console.log(images);
   };
 
   const prevPic = () => {
@@ -55,9 +53,7 @@ export const ScreenShotContainer = () => {
 
   return (
     <div className="scrnShotBox">
-      <div className="ssbTitleContainer">
-        <h1 className="ssbTitle"> Screenshots </h1>
-      </div>
+      <h1 className="ssbTitle"> Screenshots </h1>
 
       <div className="screenshotContainer">
         <img className="centerImage" src={screenShots[images[0]]} alt="" />
@@ -67,52 +63,50 @@ export const ScreenShotContainer = () => {
         <img className="left2Image" src={screenShots[images[4]]} alt="" />
       </div>
 
-      <div className="sliderContainer">
-        <div className="slider">
-          <img className="leftSlider" src={sliderL} onClick={prevPic} />
+      <div className="slider">
+        <img className="leftSlider" src={sliderL} onClick={prevPic} />
 
-          <img
-            className="dotIndic"
-            src={hovered == 0 || images[0] == 0 ? dotIndicator : dotIndicator2}
-            onMouseEnter={() => setHovered(0)}
-            onMouseLeave={() => setHovered(-1)}
-            onClick={setImage}
-          />
+        <img
+          className="dotIndic"
+          src={hovered == 0 || images[0] == 0 ? dotIndicator : dotIndicator2}
+          onMouseEnter={() => setHovered(0)}
+          onMouseLeave={() => setHovered(-1)}
+          onClick={setImage}
+        />
 
-          <img
-            className="dotIndic"
-            src={hovered == 1 || images[0] == 1 ? dotIndicator : dotIndicator2}
-            onMouseEnter={() => setHovered(1)}
-            onMouseLeave={() => setHovered(-1)}
-            onClick={setImage1}
-          />
+        <img
+          className="dotIndic"
+          src={hovered == 1 || images[0] == 1 ? dotIndicator : dotIndicator2}
+          onMouseEnter={() => setHovered(1)}
+          onMouseLeave={() => setHovered(-1)}
+          onClick={setImage1}
+        />
 
-          <img
-            className="dotIndic"
-            src={hovered == 2 || images[0] == 2 ? dotIndicator : dotIndicator2}
-            onMouseEnter={() => setHovered(2)}
-            onMouseLeave={() => setHovered(-1)}
-            onClick={setImage2}
-          />
+        <img
+          className="dotIndic"
+          src={hovered == 2 || images[0] == 2 ? dotIndicator : dotIndicator2}
+          onMouseEnter={() => setHovered(2)}
+          onMouseLeave={() => setHovered(-1)}
+          onClick={setImage2}
+        />
 
-          <img
-            className="dotIndic"
-            src={hovered == 3 || images[0] == 3 ? dotIndicator : dotIndicator2}
-            onMouseEnter={() => setHovered(3)}
-            onMouseLeave={() => setHovered(-1)}
-            onClick={setImage3}
-          />
+        <img
+          className="dotIndic"
+          src={hovered == 3 || images[0] == 3 ? dotIndicator : dotIndicator2}
+          onMouseEnter={() => setHovered(3)}
+          onMouseLeave={() => setHovered(-1)}
+          onClick={setImage3}
+        />
 
-          <img
-            className="dotIndic"
-            src={hovered == 4 || images[0] == 4 ? dotIndicator : dotIndicator2}
-            onMouseEnter={() => setHovered(4)}
-            onMouseLeave={() => setHovered(-1)}
-            onClick={setImage4}
-          />
+        <img
+          className="dotIndic"
+          src={hovered == 4 || images[0] == 4 ? dotIndicator : dotIndicator2}
+          onMouseEnter={() => setHovered(4)}
+          onMouseLeave={() => setHovered(-1)}
+          onClick={setImage4}
+        />
 
-          <img className="rightSlider" src={sliderR} alt="" onClick={nextPic} />
-        </div>
+        <img className="rightSlider" src={sliderR} alt="" onClick={nextPic} />
       </div>
     </div>
   );

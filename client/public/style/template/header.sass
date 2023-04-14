@@ -13,6 +13,7 @@ a
   background: rgba(0, 0, 0, 0.5)
   color: white 
   width: 100vw
+  z-index: 500
   font-size: 1.25rem
   font-weight: 500px
 
@@ -20,17 +21,22 @@ a
   display: block
   width: 216px
   cursor: pointer
+  margin-bottom: 10px
   > img
     width: 100%
+  @media (max-width: 1200px) 
+    width: 150px
  
 .headerMenu
   display: flex
+  .drawerLogoutButton
+    display: none
   
 .headerNav
   margin: 0 20px
   transition: .1s ease-in-out
-  @media (max-width: 1200px) 
-    margin: 0 10px
+  @media (max-width: 1100px) 
+    margin: 5px 0
 
 .headerNav:hover
   color: variables.$color-primary  
@@ -49,16 +55,18 @@ a
   line-height: 0
   float: left
 
-.usernameHeader
+.usernameHeader, .loginButton
   height: 30px
-  position: relative
+
+.usernameHeader
   display: flex
   align-items: center
+  position: relative
   gap: 5px
   color: variables.$color-primary
   .dropdownMenu
     display: none
-    z-index: 500
+    z-index: 501
     position: absolute
     text-align: center
     right: 0
@@ -77,28 +85,96 @@ a
     .dropdownMenu
       display: block
 
+.headerDrawerButton
+  display: none
+
 @media only screen and (max-width: 1100px)
+  .headerMenuClosed
+    backface-visibility: hidden
+    transform-origin: top
+    transform: scale(1, 0)
+    transition: transform 0.3s ease-out
+  .headerMenuOpened
+    backface-visibility: hidden
+    transform-origin: top
+    transform: scale(1, 1)
+    transition: transform 0.3s ease-out
   .header
+    min-height: 65px
     padding-top: 10px
     padding-left: 20px
     height: auto 
     position: relative
     display: block
     align-items: start
+    .headerMenu
+      position: absolute
+      top: 55px
+      left: 0
+      width: 100vw
+      background: rgba(0, 0, 0, 0.8)
+      flex-direction: column
+      .drawerLogoutButton
+        display: block
+
   .headerMenu
-    flex-direction: column
-    > a
-      line-height: 50px
+    margin: 10px 0 0
+  .headerNav
+    margin: 5px 20px
   .headerNav:hover
     color: variables.$color-primary  
     cursor: pointer
     transform: none
-  .usernameHeader
+  .usernameHeader, .loginButton
     position: absolute
-    top: 10px
-    right: 20px
+    right: 75px
+  .loginButton
+    top: 15px
+  .usernameHeader
+    top: 18px
   .triangleDown
     display: none
   .usernameHeader:hover
     .dropdownMenu
       display: none
+
+  .headerDrawerButton
+    display: block 
+    position: absolute
+    top: 10px
+    right: 20px 
+    font-size: 30px
+    text-align: center
+    width: 40px
+    transform: rotate(90deg)
+    -webkit-touch-callout: none /* iOS Safari */
+    -webkit-user-select: none /* Safari */
+     -khtml-user-select: none /* Konqueror HTML */
+       -moz-user-select: none /* Old versions of Firefox */
+        -ms-user-select: none /* Internet Explorer/Edge */
+            user-select: none
+
+  .headerDarkBG 
+    z-index: 499
+    background-color: rgba(0, 0, 0, 0.6)
+    width: 100vw
+    height: 100vh
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -50%)
+    position: fixed
+    animation: fade-in 0.2s 1 linear both
+
+@media only screen and (max-width: 650px)
+  .header
+    font-size: 1rem
+  .headerLogo
+    margin-top: 5px 
+    width: 125px
+  .headerNav
+    font-size: 1.25rem
+
+  .usernameHeader, .loginButton
+    right: 65px
+  .headerDrawerButton
+    right: 15px

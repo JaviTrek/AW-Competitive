@@ -31,7 +31,6 @@ body
   font-weight: 400
   // line-height: 1.7
   // will need to change this in the future for making the website responsive
-  line-height: 26px
 
 input[type="text"], input[type="password"]
   padding: 5px
@@ -53,12 +52,20 @@ h1, h2, h3, h4, h5
 
 h1 
   font-size: 2.5rem
+  @media (max-width: 800px)
+    font-size: 1.5rem
 
 h2
   font-size: 1.5rem
+  @media (max-width: 800px)
+    font-size: 1.25rem
 
 h3
   font-size: 1.25rem
+
+p 
+  @media (max-width: 800px)
+    font-size: 0.85rem
 
 
 
