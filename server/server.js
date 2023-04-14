@@ -301,9 +301,10 @@ app.post("/joinGame", loggedIn, async (req, res) => {
     try {
 // getting database
         let dbConnect = database.getDatabase();
+        let userColl = dbConnect.collection("learn")
+
 
         //doesnt have more than 3 games so they can make a game!
-
 
             // getting startGame colleciton
             let startGameCollection = dbConnect.collection("startGame");
