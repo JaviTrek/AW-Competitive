@@ -14,7 +14,7 @@ function loggedIn(req, res, next) {
     }
 }
 
-router.post("/saveGameAction", loggedIn, async (req, res) => {
+router.post("/saveGameAction", loggedIn,  async (req, res) => {
     try {
         let {initialTile, newTile, attackedTile, playerState} = req.body
         let dbConnect = database.getDatabase()
@@ -24,7 +24,7 @@ router.post("/saveGameAction", loggedIn, async (req, res) => {
         let data = await collection.findOne(query, "playerState.turn")
         let countryOrder = [data.playerState.orangeStar._id, data.playerState.blueMoon._id,]
         if (!req.user || req.user._id !== countryOrder[data.playerState.turn]) {
-            res.json({error: 'error'})
+           res.json({error: 'error'})
         } else {
             //let findGame = await collection.findOne({_id: new mongo.ObjectId(req.query.id)})
             let tilesToUpdate = [initialTile, newTile]
@@ -40,10 +40,11 @@ router.post("/saveGameAction", loggedIn, async (req, res) => {
             collection.updateOne(query, {$set: {playerState: playerState }});
 
             //lets add our new unit to the refresh array
+
             let unitsToRefresh = `playerState.unitsToRefresh`
-            collection.updateOne(query, {$push: {[unitsToRefresh]: newTile.index }});
+            await collection.updateOne(query, {$push: {[unitsToRefresh]: newTile.index }});
             res.sendStatus(200)
-        }
+       }
     } catch (e) {
         console.log(e)
         res.sendStatus(401)
@@ -64,23 +65,32 @@ router.post("/passTheTurn", loggedIn, async (req, res) => {
         //lets do some error validation
         let data = await collection.findOne(query, "playerState.turn")
         let countryOrder = [data.playerState.orangeStar._id, data.playerState.blueMoon._id,]
+
         if (!req.user || req.user._id !== countryOrder[data.playerState.turn]) {
             res.json({error: 'error'})
         } else {
 
             //lets free every used unit
+        /*
             if (unitsToRefresh && unitsToRefresh?.length > 0) {
-                unitsToRefresh.forEach(tileIndex => {
-                    let unit = `gameState.${tileIndex}.tileUnit.isUsed`
-                    let refresh = {$set: {[unit]: false}};
-                    collection.updateOne(query, refresh);
-                })
+                try {
+                    unitsToRefresh.forEach(tileIndex => {
+                        console.log(tileIndex)
+                        let unit = `gameState.${tileIndex}.tileUnit.isUsed`
+                        let refresh = {$set: {[unit]: false}};
+                        collection.updateOne(query, refresh);
+                    })
+                } catch (e ) {
+                    console.log(e)
+                }
             }
+
+         */
 
             //lets update our playerstate
             collection.updateOne(query, {$set: {playerState: req.body.playerState}});
 
-            //lets update our playerstate
+            //lets update our gamState
             collection.updateOne(query, {$set: {gameState: req.body.gameState}});
 
             //lets empty our units to refresh array
