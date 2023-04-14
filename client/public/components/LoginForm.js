@@ -3,11 +3,9 @@ import { SmallContainer } from "./template/Container";
 import styles from "../style/Form.module.sass";
 import "../style/abstracts/flashMessage.sass";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export function Login() {
-  const navigate = useNavigate();
   const { register, handleSubmit, watch } = useForm({
     defaultValues: {
       username: "",
@@ -62,7 +60,7 @@ export function Login() {
               });
               //give the user some time to read success message
               setTimeout(() => {
-                navigate("/");
+                window.location = "/"
               }, 1500);
             })
             .catch((err) => {

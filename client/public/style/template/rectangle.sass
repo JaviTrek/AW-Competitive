@@ -1,0 +1,93 @@
+@use '../abstracts/variables' as variables
+
+.rectangle
+  display: grid
+  margin: 20px
+  grid-template-columns: 60% 40% 
+  max-width: 1080px
+  filter: drop-shadow(20px 20px 10px rgba(0, 0, 0, 0.5))
+  background: linear-gradient(-90deg, #304478 43.23%, #152B62 63.54%, #162754 84.9%) 
+  @media (max-width: 800px)
+    display: block
+  &:hover
+    .image10
+      transform: rotate(1deg) scale(1.01)
+
+.textHalf
+  padding: 30px
+  padding-top: 70px
+  display: flex
+  position: relative
+  flex-direction: column
+  @media (max-width: 800px)
+    padding-top: 30px
+
+.rectangleUnitImage
+  position: absolute
+  width: 84px !important
+  height: 84px !important
+  @media (max-width: 800px)
+    width: 50px !important
+    height: 50px !important
+  top: 30px
+  right: 30px
+  
+.rectangleSubtitleHeader
+  font-size: 2rem
+  line-height: 30px
+  color: variables.$color-primary-variant
+  @media (max-width: 800px)
+    margin-top: 40px
+
+.rectangleTitleHeader
+  padding-left: 0
+  line-height: 50px
+  margin-right: 100px
+  @media (max-width: 800px)
+    padding: 0.5rem 0
+
+.titleImage
+  display: grid
+  grid-template-columns: 50% 50%
+  grid-column-end: 2 
+
+.image10
+  width: 100%
+  height: 100%
+  transition: transform 0.1s ease-in-out
+  @media (max-width: 800px)
+    height: 200px
+
+.buttonsContainer
+  display: grid
+  grid-template-columns: 50% 50%
+
+.paragraph
+  padding-bottom: 6%
+
+.but1
+  font-size: 14px
+  background-color: #E47220
+  max-width: 40%
+  padding-left: 12%
+  padding-top: 2%
+  border-radius: 5px
+  margin-left: 50%
+  filter: drop-shadow(0px 8px 10px rgba(48, 79, 254, 0.14)) drop-shadow(0px 3px 14px rgba(48, 79, 254, 0.12)) drop-shadow(0px 4px 5px rgba(48, 79, 254, 0.2))
+
+.but2
+  font-size: 14px
+  background-color: #E47220
+  max-width: 40%
+  padding-left: 12%
+  padding-top: 2%
+  border-radius: 5px
+  filter: drop-shadow(0px 8px 10px rgba(48, 79, 254, 0.14)) drop-shadow(0px 3px 14px rgba(48, 79, 254, 0.12)) drop-shadow(0px 4px 5px rgba(48, 79, 254, 0.2))
+
+.but1:hover
+  cursor: pointer
+
+.but2:hover
+  cursor: pointer
+
+

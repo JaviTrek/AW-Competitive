@@ -100,7 +100,7 @@ export const NewGame = () => {
               onClick={() => setSelectedCountry(key)}
               className={`
               ${selectedCountry == key ? "selectedCountry" : ""} 
-              ${key == "Orange Star" || key == "Blue Moon" ? "" : "unavailable"}
+              ${key == "Orange Star" ? "" : "unavailable"}
               `}
               name={key}
               color={countries[key]}
@@ -150,10 +150,7 @@ export const NewGame = () => {
       </div>
 
       <p className="disclaimerText">
-        Pressing play will first look for a game with the same map selected
-        above and an opposing player with a country color different from the one
-        selected above. If none are found, the game will be created and wait for
-        an opponent to join.
+        Pressing play will create a new game where other players can join from the "Join a Game" page. 
       </p>
 
       <div

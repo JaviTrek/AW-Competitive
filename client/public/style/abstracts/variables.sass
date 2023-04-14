@@ -26,6 +26,10 @@ $container-height-lg: 850px
   margin: 20px 30px
   background-color: #1f1f1f
   border: 5px solid #000
+  @media (max-width: 800px) 
+    padding: 15px
+    margin: 20px 0
+    border: none
 
 @mixin sectionTitle()
   color: $color-primary-variant
@@ -36,9 +40,11 @@ $container-height-lg: 850px
 @mixin sectionSubtitle()
   color: #B4B4B4
   font-weight: 400
-  font-size: 14px
+  font-size: 1rem
   line-height: 21px
   margin-bottom: 15px
+  @media (max-width: 800px) 
+    font-size: 0.85rem
 
 
 // for responsiveness in the future
