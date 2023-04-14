@@ -45,8 +45,7 @@ export function App() {
   };
 
   return (
-    <React.Fragment>
-      <div></div>
+    <div className="homepage">
       <div className="homePageBanner">
         <div className="tile" />
         <img className="charactersLined" src={charactersGroupshot} alt="" />
@@ -183,6 +182,6 @@ export function App() {
         </a>
         <br />
       </div> */}
-    </React.Fragment>
+    </div>
   );
 }
