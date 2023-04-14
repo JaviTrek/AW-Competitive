@@ -14,13 +14,57 @@
   flex-direction: column 
   > h3
     margin: 10px 
-  > article, > div
+  > article
     margin: 10px 0  
   > button
+    margin-top: 10px
     margin-left: auto
+  .myModalXIcon
+    position: absolute
+    top: 20px
+    right: 20px
+    &:hover
+      cursor: pointer
+  @media (max-width: 1000px)
+    width: 95%
+
+@media screen and ( max-width: 800px )
+  .myModal
+    padding: 0
+    .currentGame
+      width: 100%
+      margin: 0
+    .myModalXIcon
+      position: absolute
+      top: 0
+      right: 10px
+    .btn
+      margin: 0px auto 10px
+  .myModal *
+    border: none
+
+@media screen and ( max-height: 650px )
+  .myModal 
+    > a
+      display: none
+    .myModalSection
+      height: 70vh
+    .btn
+      width: 100px !important
+      height: 35px
+      padding: 0
 
 .myModalSection
   @include variables.section()
+  margin: auto 5px
+  height: 410px
+  overflow-y: scroll
+  @media screen and ( max-width: 800px )
+    height: 40vh
+    max-height: 400px
+  @media screen and ( max-width: 600px )
+    max-height: none
+    
 
 .darkBG 
   z-index: 900
