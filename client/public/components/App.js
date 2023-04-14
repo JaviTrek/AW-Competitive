@@ -16,7 +16,7 @@ export function App() {
     className: "rectangleL",
     title: "Matchmaking",
     paragraph:
-      "Online matchmaking allows players to connect with each other over the internet and play the game against each other in a competitive environment. It enables players to find opponents of similar skill levels, set up matches, and compete against each other in real-time, either one-on-one or in teams.",
+      "Online matchmaking allows players to connect with each other over the internet and play the game against each other in a competitive environment. It enables players to set up matches, and compete against each other in real-time, either one-on-one or in teams.",
     icon: "../images/homePageImages/rectangleIcon1.png", // should be the path from homePageRect
     halfImage: "../images/homePageImages/rectangleImage1.png",
   };
@@ -24,7 +24,7 @@ export function App() {
     className: "rectangleR",
     title: "Design Maps",
     paragraph:
-      "Players can use the in-game map editor to design their own maps, selecting terrain types, adding buildings and other structures, and placing units strategically. ",
+      "Players can use the in-game map editor to design their own maps, selecting terrain types, adding buildings and other structures. ",
     icon: "../images/homePageImages/rectangleIcon2.png", // should be the path from homePageRect
     halfImage: "../images/homePageImages/rectangleImage2.png",
   };
@@ -53,11 +53,9 @@ export function App() {
         <img className="logo" src={awLogo} alt="" />
       </div>
 
-      <div className="btn playNowBtn">
-        <a href="/login">
-          <p1> Play Now</p1>
-        </a>
-      </div>
+      <a className="btn playNowBtn" href="/login">
+        Play Now
+      </a>
 
       <div className="logosGrid">
         <a href="https://github.com/FemboyDeveloper/AW-Competitive">

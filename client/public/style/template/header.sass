@@ -5,53 +5,100 @@ a
   &visited
     color: variables.$text-main
 .header
+  display: flex
   align-items: center
+  justify-content: space-between
+  padding-right: 35px
   height: 85px
   background: rgba(0, 0, 0, 0.5)
   color: white 
   width: 100vw
-  margin: 0 auto
-  column-gap: 5vw
-  display: grid
-  grid-template-columns: max-content auto auto max-content
-  font-size: 1.6vw
-  max-height: 7%
+  font-size: 1.25rem
   font-weight: 500px
-  
-
 
 .headerLogo
-  max-width: 216px
+  display: block
+  width: 216px
   cursor: pointer
-  grid-template-columns: min-content auto min-content
+  > img
+    width: 100%
  
 .headerMenu
-  display: grid
-  grid-template-columns: max-content auto auto auto auto max-content
-  column-gap: 2vw
-  padding-left: 4vw
+  display: flex
   
+.headerNav
+  margin: 0 20px
+  transition: .1s ease-in-out
+  @media (max-width: 1200px) 
+    margin: 0 10px
+
 .headerNav:hover
   color: variables.$color-primary  
   cursor: pointer
+  transform: scale(1.1)
   
 // login and user display; needs to be reviewed
-.usernameTitle
-  position: relative
+.triangleDown 
+  width: 0
+  height: 0
+  border-left: 8px solid transparent
+  border-right: 8px solid transparent
+  border-top: 8px solid variables.$color-primary
+  border-radius: 5px
+  font-size: 0
+  line-height: 0
+  float: left
 
+.usernameHeader
+  height: 30px
+  position: relative
+  display: flex
+  align-items: center
+  gap: 5px
+  color: variables.$color-primary
   .dropdownMenu
     display: none
+    z-index: 500
     position: absolute
-
-    background-color: #000000
-    top: 1.25em
+    text-align: center
+    right: 0
+    top: 30px
+    border: 2px black solid
+    border-radius: 0.4rem
+    background-color: variables.$container-color
     margin: 0 auto
+    animation: fade-in 0.1s 1 linear both
+    > a
+      display: block
+      vertical-align: middle
+      width: 120px
+      height: 30px
   &:hover
     .dropdownMenu
-      width: 100%
       display: block
-      text-align: center
 
-      a
-        display: block
-        padding: 0.5em 0.25em
+@media only screen and (max-width: 1100px)
+  .header
+    padding-top: 10px
+    padding-left: 20px
+    height: auto 
+    position: relative
+    display: block
+    align-items: start
+  .headerMenu
+    flex-direction: column
+    > a
+      line-height: 50px
+  .headerNav:hover
+    color: variables.$color-primary  
+    cursor: pointer
+    transform: none
+  .usernameHeader
+    position: absolute
+    top: 10px
+    right: 20px
+  .triangleDown
+    display: none
+  .usernameHeader:hover
+    .dropdownMenu
+      display: none
