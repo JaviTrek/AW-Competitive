@@ -1,74 +1,72 @@
-
-.footerGrid  
-  max-width: 100%
+@use "../abstracts/variables" as variables
+  
+.footer  
+  max-width: 100vw
   background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 83.85%)
   margin: 0 auto
-  padding: 1rem
+  margin-top: 100px
+  display: flex
+  flex-direction: column
   align-items: center
   
-  
-.logoElementGridF
-  dispaly: grid
-  grid-template-columns: 50%
-  padding-top: 2%
-  padding-left: 44%
 .imageLogo
-  height: 17%
-  width: 17%
+  width: 216px
+  display: block
+  margin-bottom: 20px
+
 .imageLogo:hover
   cursor: pointer
 
-.menuElementGridF
-  font-family: inter
-  font-size: 1.3vw
-  padding-top: 1.8%
-  display: grid
-  grid-template-columns: max-content auto auto auto auto max-content
+.menuFooter
+  font-size: 1.25rem
+  display: flex
   justify-content: center
-  grid-column-gap: 3%
-  padding-left: 4%
-.menuButtonElementGridF:hover
-  color: orange
+  gap: 20px
+.menuButtonElementFooter:hover
+  color: variables.$color-primary
   cursor: pointer
   
 
 .horizontalLine
-  padding-top: 1%
-  display: grid
-  border-bottom: 1px solid #ccc
-  max-width: 63%
-  margin-left: 20%
+  border-bottom: 2px solid variables.$container-color
+  width: 80%
+  max-width: 1300px
   
 
 .iconElements
-  display: grid
-  grid-template-columns: 3% 3% 3%
+  display: flex
+  gap: 30px
   justify-content: center
-  padding-top: 1.2%
-.iconButtonElementGridRedditF
-  height: 100%
-  width: 50%
-  justify-content: end
-.iconButtonElementGridDiscordF
-  display: grid
-  height: 100%
-  width: 50%
-  justify-items: center 
-.iconButtonElementGridGhF
-  display: grid
-  height: 100%
-  width: 50%
-.iconButtonElementGridRedditF:hover
+  margin: 25px 0
+.iconButtonElementRedditF
+  height: 30px
+  width: 30px
+.iconButtonElementDiscordF
+  height: 30px
+  width: 30px
+.iconButtonElementGhF
+  height: 30px
+  width: 30px
+.iconButtonElementRedditF:hover
   cursor: pointer
-.iconButtonElementGridDiscordF:hover
+.iconButtonElementDiscordF:hover
   cursor: pointer
-.iconButtonElementGridGhF:hover
+.iconButtonElementGhF:hover
   cursor: pointer
 
 
 .copyrightElement
-  font-family: inter
-  padding-top: 1.4%
-  display: grid
-  justify-content: center
-  font-size: 0.8vw
+  text-align: center
+  margin: 25px 0 50px
+  font-size: 16px
+  font-weight: normal
+  color: white
+
+@media only screen and (max-width: 800px)
+  .menuFooter
+    flex-direction: column
+    align-items: center
+  .copyrightElement
+    font-size: 0.85rem
+
+  

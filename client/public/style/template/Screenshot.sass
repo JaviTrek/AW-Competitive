@@ -1,0 +1,90 @@
+@use '../abstracts/variables' as variables
+    
+.scrnShotBox
+    height: 600px
+    background: rgba(0, 0, 0, 0.38)
+    text-align: center
+    margin: 150px 0
+    
+.ssbTitle
+    width: 100%
+    text-align: center
+    color: variables.$color-primary
+    font-size: 3rem
+    font-weight: normal
+
+.screenshotContainer
+    position: relative
+    margin: auto
+    width: 900px
+    height: 350px
+    > *
+        margin-top: auto
+        margin-bottom: auto
+        top: 0
+        bottom: 0
+        filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.8))
+
+.centerImage    
+    position: absolute
+    width: 700px
+    height: 350px
+    margin-left: auto
+    margin-right: auto
+    right: 0
+    left: 0
+    z-index: 3
+
+.left2Image
+    position: absolute
+    z-index: 2
+    left: 50px
+    height: 280px
+    width: 600px
+.left1Image
+    position: absolute 
+    z-index: 1
+    left: 0
+    width: 450px
+    height: 200px
+.right2Image
+    position: absolute   
+    z-index: 2  
+    right: 50px
+    height: 280px
+    width: 600px
+.right1Image                  
+    position: absolute
+    z-index: 1
+    right: 0
+    width: 450px
+    height: 200px
+
+@media (max-width: 850px)
+    .left2Image, .left1Image, .right1Image, .right2Image
+        display: none
+    .centerImage
+        display: block
+        width: 100vw
+        margin: auto 0
+
+@media (max-width: 850px)
+    .ssbTitle
+        font-size: 2.5rem
+
+.slider
+    width: fit-content
+    margin: 28px auto 0
+    display: flex
+    align-items: center
+    gap: 15px
+
+.dotIndic
+    height: 12px
+    width: 12px
+.dotIndic:hover
+    cursor: pointer
+.leftSlider
+    cursor: pointer    
+.rightSlider
+    cursor: pointer     

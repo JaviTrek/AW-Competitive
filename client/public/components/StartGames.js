@@ -5,6 +5,7 @@ import { GameEntry } from "./GameEntry";
 import { useNavigate } from "react-router-dom";
 import "../style/template/modal.sass";
 import { SelectCharacter } from "./SelectCharacter";
+import xicon from "../images/template/XIcon.png";
 
 export const StartGames = () => {
   const navigate = useNavigate();
@@ -73,6 +74,15 @@ export const StartGames = () => {
             }}
           />
           <div className="myModal">
+            <img
+              onClick={() => {
+                setIsOpen(false);
+              }}
+              tabIndex={0}
+              className="myModalXIcon"
+              src={xicon}
+              alt="X button to go back"
+            />
             <h3>Joining Game</h3>
             {data[gameSelected.index]}
             <div className="myModalSection">
@@ -100,8 +110,10 @@ export const StartGames = () => {
           </div>
         </>
       )}
-      <Container title="Pending Games" subtitle={"Join a game by clicking on it!"}>
-
+      <Container
+        title="Pending Games"
+        subtitle={"Join a game by clicking on it!"}
+      >
         {/* <GameEntry
         title="This is the title!!!"
         day="This is the Day of the game"

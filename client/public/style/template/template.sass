@@ -31,7 +31,6 @@ body
   font-weight: 400
   // line-height: 1.7
   // will need to change this in the future for making the website responsive
-  line-height: 26px
 
 input[type="text"], input[type="password"]
   padding: 5px
@@ -53,12 +52,20 @@ h1, h2, h3, h4, h5
 
 h1 
   font-size: 2.5rem
+  @media (max-width: 800px)
+    font-size: 1.5rem
 
 h2
   font-size: 1.5rem
+  @media (max-width: 800px)
+    font-size: 1.25rem
 
 h3
   font-size: 1.25rem
+
+p 
+  @media (max-width: 800px)
+    font-size: 0.85rem
 
 
 
@@ -95,11 +102,20 @@ section > h2
   border: 1px solid variables.$color-primary
   transition: variables.$transition
   text-align: center
+  @media (max-width: 800px)
+    font-size: 0.85rem
+  &:hover 
+    background: darken(variables.$color-primary, 5%)
+    color: darken(white, 5%)
+    border-color: transparent
 
-.btn:hover 
-  background: darken(variables.$color-primary, 5%)
-  color: darken(white, 5%)
-  border-color: transparent
+.btn-disabled
+  background: #222
+  color: #888
+  border: none
+  &:hover 
+    background: darken(#222, 5%)
+    color: darken(#888, 5%)
 
 /* ==================== ACCESSABILITY STYLES ==================== */
 

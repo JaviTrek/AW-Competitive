@@ -13,7 +13,7 @@
   background: #1F1F1F
   border: 5px solid #000000
   display: grid
-  grid-template-rows: [top] 32px [title-bottom] auto [bottom]
+  grid-template-rows: [top] 32px [title-bottom] 32px [thin-player-section-bottom] auto [bottom]
   grid-template-columns: [left] 44.5% [map-left] 16.5% [map-right] auto [right]
   cursor: pointer
 
@@ -86,7 +86,53 @@
     flex-direction: column
     width: 100%
     font-weight: 400
-    font-size: 14px
+    font-size: 1rem
     line-height: 28px
     .CGSpan
       color: variables.$color-primary-variant
+
+// @media (min-width: 710px) and (max-width: 1000px)
+@media (max-width: 1000px)
+  .currentGame
+    margin: 5px
+    width: calc(100% - 10px)
+    .CGUsers 
+      grid-row-start: title-bottom
+      grid-row-end: bottom
+      grid-column-start: left
+      grid-column-end: right
+      padding: 0 5px
+      justify-content: space-between
+      align-items: center
+      .VSImage
+        display: none
+    .CGMap 
+      grid-column-start: left
+      grid-column-end: right
+      background: rgb(0, 0, 0, 0) 
+      > .CGMapImage
+        display: none
+    .CGInfo
+      grid-row-start: thin-player-section-bottom
+      grid-row-end: bottom
+      grid-column-start: left
+      grid-column-end: right
+      padding: 5px
+      align-items: center
+      justify-content: space-evenly
+  .currentGame:hover
+    transform: scale(1)
+
+@media (max-width: 710px)
+  .currentGame
+    .CGUsers 
+      grid-row-start: title-bottom 
+      grid-row-end: thin-player-section-bottom 
+      .NameCOImage
+        display: none
+    .CGMap 
+      grid-row-start: thin-player-section-bottom 
+      align-items: end 
+      padding: 5px
+    .CGInfo
+      align-items: start

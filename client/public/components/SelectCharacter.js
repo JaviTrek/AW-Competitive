@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import "../style/SelectCharacter.sass";
 import { importAll } from "./util";
 
-export const SelectCharacter = ({selectedCO, setSelectedCO}) => {
+export const SelectCharacter = ({ selectedCO, setSelectedCO }) => {
   const cos = importAll(
     // tells webpack to turn images (.png, .jpeg, .svg) from ../images/co into a dynamic list
     require.context("../images/CO", false, /\.(png|jpe?g|svg)$/)
@@ -52,29 +52,29 @@ export const SelectCharacter = ({selectedCO, setSelectedCO}) => {
           Choose your Commanding Officer (CO):
         </h2>
         <p className="characterSectionSubtitle">
-          Currently characters don't have any skills/impact in gameplay so feel free to pick by who you think looks cooler!
-
+          Currently characters don't have any skills/impact in gameplay so feel
+          free to pick by who you think looks cooler!
         </p>
         <div className="characterSectionGrid">
           <div className="characterTier">
             <p>Tier 0</p>
-            {tier0.map(imgMapping)}
+            <div className="characterTierIcons">{tier0.map(imgMapping)}</div>
           </div>
           <div className="characterTier">
             <p>Tier 1</p>
-            {tier1.map(imgMapping)}
+            <div className="characterTierIcons">{tier1.map(imgMapping)}</div>
           </div>
           <div className="characterTier">
             <p>Tier 2</p>
-            {tier2.map(imgMapping)}
+            <div className="characterTierIcons">{tier2.map(imgMapping)}</div>
           </div>
           <div className="characterTier">
             <p>Tier 3</p>
-            {tier3.map(imgMapping)}
+            <div className="characterTierIcons">{tier3.map(imgMapping)}</div>
           </div>
           <div className="characterTier">
             <p>Tier 4</p>
-            {tier4.map(imgMapping)}
+            <div className="characterTierIcons">{tier4.map(imgMapping)}</div>
           </div>
         </div>
       </div>

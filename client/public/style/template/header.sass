@@ -5,62 +5,176 @@ a
   &visited
     color: variables.$text-main
 .header
-  padding: 11px 40px 11px 13px
   display: flex
-  justify-content: space-between
   align-items: center
+  justify-content: space-between
+  padding-right: 35px
   height: 85px
   background: rgba(0, 0, 0, 0.5)
-  color: white
+  color: white 
   width: 100vw
-  margin: 0 auto
-
-  display: grid
-  grid-template-columns: 28% 60% 12% 
-  font-size: 1.6vw
-  max-height: 7%
-
+  z-index: 500
+  font-size: 1.25rem
   font-weight: 500px
-  // max-width: 107%
-  // display: grid
-  // grid-template-columns: 28% 60% 12% 
-  // max-height: 7%
 
 .headerLogo
-  max-width: 216px
+  display: block
+  width: 216px
   cursor: pointer
-  // grid-template-columns: min-content auto min-content
-  // padding-top: 3%
-  // max-height: 50%
-  // max-width: 60%
-
+  margin-bottom: 10px
+  > img
+    width: 100%
+  @media (max-width: 1200px) 
+    width: 150px
+ 
 .headerMenu
-  display: grid
-  grid-template-columns: 1fr 1fr 1fr 1fr
-  grid-gap: 50px
-
+  display: flex
+  .drawerLogoutButton
+    display: none
+  
+.headerNav
+  margin: 0 20px
+  transition: .1s ease-in-out
+  @media (max-width: 1100px) 
+    margin: 5px 0
 
 .headerNav:hover
   color: variables.$color-primary  
   cursor: pointer
+  transform: scale(1.1)
   
 // login and user display; needs to be reviewed
-.usernameTitle
-  position: relative
+.triangleDown 
+  width: 0
+  height: 0
+  border-left: 8px solid transparent
+  border-right: 8px solid transparent
+  border-top: 8px solid variables.$color-primary
+  border-radius: 5px
+  font-size: 0
+  line-height: 0
+  float: left
 
+.usernameHeader, .loginButton
+  height: 30px
+
+.usernameHeader
+  display: flex
+  align-items: center
+  position: relative
+  gap: 5px
+  color: variables.$color-primary
   .dropdownMenu
     display: none
+    z-index: 501
     position: absolute
-
-    background-color: #000000
-    top: 1.25em
+    text-align: center
+    right: 0
+    top: 30px
+    border: 2px black solid
+    border-radius: 0.4rem
+    background-color: variables.$container-color
     margin: 0 auto
+    animation: fade-in 0.1s 1 linear both
+    > a
+      display: block
+      vertical-align: middle
+      width: 120px
+      height: 30px
   &:hover
     .dropdownMenu
-      width: 100%
       display: block
-      text-align: center
 
-      a
+.headerDrawerButton
+  display: none
+
+@media only screen and (max-width: 1100px)
+  .headerMenuClosed
+    backface-visibility: hidden
+    transform-origin: top
+    transform: scale(1, 0)
+    transition: transform 0.3s ease-out
+  .headerMenuOpened
+    backface-visibility: hidden
+    transform-origin: top
+    transform: scale(1, 1)
+    transition: transform 0.3s ease-out
+  .header
+    min-height: 65px
+    padding-top: 10px
+    padding-left: 20px
+    height: auto 
+    position: relative
+    display: block
+    align-items: start
+    .headerMenu
+      position: absolute
+      top: 55px
+      left: 0
+      width: 100vw
+      background: rgba(0, 0, 0, 0.8)
+      flex-direction: column
+      .drawerLogoutButton
         display: block
-        padding: 0.5em 0.25em
+
+  .headerMenu
+    margin: 10px 0 0
+  .headerNav
+    margin: 5px 20px
+  .headerNav:hover
+    color: variables.$color-primary  
+    cursor: pointer
+    transform: none
+  .usernameHeader, .loginButton
+    position: absolute
+    right: 75px
+  .loginButton
+    top: 15px
+  .usernameHeader
+    top: 18px
+  .triangleDown
+    display: none
+  .usernameHeader:hover
+    .dropdownMenu
+      display: none
+
+  .headerDrawerButton
+    display: block 
+    position: absolute
+    top: 10px
+    right: 20px 
+    font-size: 30px
+    text-align: center
+    width: 40px
+    transform: rotate(90deg)
+    -webkit-touch-callout: none /* iOS Safari */
+    -webkit-user-select: none /* Safari */
+     -khtml-user-select: none /* Konqueror HTML */
+       -moz-user-select: none /* Old versions of Firefox */
+        -ms-user-select: none /* Internet Explorer/Edge */
+            user-select: none
+
+  .headerDarkBG 
+    z-index: 499
+    background-color: rgba(0, 0, 0, 0.6)
+    width: 100vw
+    height: 100vh
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -50%)
+    position: fixed
+    animation: fade-in 0.2s 1 linear both
+
+@media only screen and (max-width: 650px)
+  .header
+    font-size: 1rem
+  .headerLogo
+    margin-top: 5px 
+    width: 125px
+  .headerNav
+    font-size: 1.25rem
+
+  .usernameHeader, .loginButton
+    right: 65px
+  .headerDrawerButton
+    right: 15px
