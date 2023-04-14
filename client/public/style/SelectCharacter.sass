@@ -15,8 +15,11 @@
     .characterTier
       display: flex
       gap: 14px
+      .characterTierIcons
+        display: flex
+        gap: 14px
       p
-        width: 81px
+        width: 50px
       img
         width: 44px
         height: 44px
@@ -42,3 +45,20 @@
     text-align: center
   img 
     max-width: 144px
+
+@media screen and (max-width: 720px) 
+  .characterSection
+    .characterSectionGrid
+      gap: 10px
+      .characterTierIcons
+        flex-wrap: wrap
+      .characterTier
+        gap: 0
+        .characterTierIcons
+          gap: 0px
+
+@media screen and (max-width: 600px) 
+  .characterSection
+    display: flex
+    flex-direction: column
+    align-items: center
