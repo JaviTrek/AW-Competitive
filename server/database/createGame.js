@@ -9,14 +9,10 @@ const router = Router()
             let dbConnect = database.getDatabase()
             //lets make sure our player doesnt have more than 3 games, 3 games is the limit!
             let userColl = dbConnect.collection("learn")
-            const currentUser = await userColl.findOne({_id: req.session._id})
-            if (currentUser.games.length > 3) {
-                res.json({
-                    flash: "error"
-                })
-            }
+
             //doesnt have more than 3 games so they can make a game!
-            else {
+
+                console.log('create')
                 let collection = dbConnect.collection("startGame")
                 const data =  fs.readFileSync('./scripts/parsedMap.json', 'utf8');
                 const parsedData = await JSON.parse(data)
@@ -46,7 +42,7 @@ const router = Router()
                 //lets find our user and add them to this game
                 await userColl.updateOne({_id: req.session._id}, {$push: {games: findGame._id }})
                 res.redirect('/')
-            }
+
 
         } catch (e) {
             console.log(e)

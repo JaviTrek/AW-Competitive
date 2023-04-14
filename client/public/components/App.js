@@ -2,7 +2,7 @@ import React from "react";
 import "../style/App.sass";
 import "../style/template/template.sass";
 import awLogo from "../images/awLogo.webp";
-import charactersGroupshot from "../images/homePageImages/charactersGroup.png";
+import charactersGroupshot from "../images/homePageImages/charactersGroup.webp";
 import redditLogo from "../images/footerImages/Reddit.png";
 import ghLogo from "../images/footerImages/GitHub.png";
 import discordLogo from "../images/footerImages/Discord.png";
@@ -17,7 +17,7 @@ export function App() {
     paragraph:
       "Online matchmaking allows players to connect with each other over the internet and play the game against each other in a competitive environment. It enables players to set up matches, and compete against each other in real-time, either one-on-one or in teams.",
     icon: "orangeStarTank", // should be the path from homePageRect
-    halfImage: "../images/homePageImages/rectangleImage1.png",
+    halfImage: "../images/homePageImages/rectangleImage1.webp",
   };
   const secondBlock = {
     className: "rectangleR",
@@ -25,7 +25,7 @@ export function App() {
     paragraph:
       "Players can use the in-game map editor to design their own maps, selecting terrain types, adding buildings and other structures. ",
     icon: "blueMoonInfantry", // should be the path from homePageRect
-    halfImage: "../images/homePageImages/rectangleImage2.png",
+    halfImage: "../images/homePageImages/rectangleImage2.webp",
   };
   const thirdBlock = {
     className: "rectangleL",
@@ -33,7 +33,7 @@ export function App() {
     paragraph:
       "Competitive mode offers a structured, high-stakes gameplay experience for players looking to test their skills against others. Competitive mode features matchmaking systems that pair players of similar skill levels, ranking systems that track player progress and determine rewards, and rulesets that enforce fair play and balance.",
     icon: "yellowCometSub", // should be the path from homePageRect
-    halfImage: "../images/homePageImages/rectangleImage3.png",
+    halfImage: "../images/homePageImages/rectangleImage3.webp",
   };
   const fourthBlock = {
     className: "rectangleR",
@@ -41,7 +41,7 @@ export function App() {
     paragraph:
       "Tournaments are organized events that offer players the opportunity to compete against each other for prizes and recognition. Tournaments can be structured in a variety of formats, such as single-elimination, double-elimination, round-robin, or Swiss. ",
     icon: "greenEarthFighter", // should be the path from homePageRect
-    halfImage: "../images/homePageImages/rectangleImage4.png",
+    halfImage: "../images/homePageImages/rectangleImage4.webp",
   };
 
   return (

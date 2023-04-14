@@ -301,15 +301,9 @@ app.post("/joinGame", loggedIn, async (req, res) => {
     try {
 // getting database
         let dbConnect = database.getDatabase();
-        let userColl = dbConnect.collection("learn")
-        const currentUser = await userColl.findOne({_id: req.session._id})
-        if (currentUser.games.length > 5) {
-            res.json({
-                flash: "error"
-            })
-        }
+
         //doesnt have more than 3 games so they can make a game!
-        else {
+
 
             // getting startGame colleciton
             let startGameCollection = dbConnect.collection("startGame");
@@ -344,7 +338,7 @@ app.post("/joinGame", loggedIn, async (req, res) => {
             await userColl.updateOne({_id: req.session._id}, {$push: {games: new mongo.ObjectId(req.body.gameId)}})
 
             res.sendStatus(200);
-        }
+
     } catch (e) {
         console.log(e);
     }
